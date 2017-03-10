@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>JavaScript形式のカレンダー</title>
+
+    <!-- Bootstrapのスタイルシートの読み込み -->
+    <link rel="stylesheet" href="../lib/vendor/bootstrap/3.2.0/css/bootstrap.css">
+    <link rel="stylesheet" href="../lib/vendor/bootstrap/3.2.0/css/bootstrap-theme.css">
+    <link rel="stylesheet" href="../lib/vendor/bootstrap-datepicker/datepicker3.css">
+  </head>
+  <body>
+
+    <h1>JavaScript形式のカレンダー</h1>
+
+    <!-- フォーカスを契機にカレンダーが表示されるテキストフィールド -->
+    <label>日付: <input id="datepicker" type="text" value="2014/09/09" ></label>
+
+    <!-- jQuery、Bootstrap及びBootstrap-datepickerのJavaScript、
+         カレンダーの日本語対応のJavaScriptの読み込み -->
+    <script src="../lib/vendor/jquery/1.11.1/jquery-1.11.1.min.js"></script>
+    <script src="../lib/vendor/bootstrap/3.2.0/js/bootstrap.js"></script>
+    <script src="../lib/vendor/bootstrap-datepicker/bootstrap-datepicker.js"></script>
+    <script src="../lib/vendor/bootstrap-datepicker/bootstrap-datepicker.ja.js"></script>
+    
+    <!-- 独自に実装したJavaScriptの読み込み -->
+    <script src="js/bootstrap-datepicker-javascript.js"></script>
+  </body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>SlickGridによるページネーションサンプル</title>
+
+    <!-- SlickGrid用のスタイルシートの読み込み -->
+    <link rel="stylesheet" href="../lib/vendor/slickgrid/2.1.0/slick.grid.css">
+
+    <!-- SlickGrid Pagerプラグイン用のスタイルシートの読み込み -->
+    <link rel="stylesheet" href="../lib/vendor/slickgrid/2.1.0/controls/slick.pager.css">
+    <link rel="stylesheet" href="../lib/vendor/slickgrid/2.1.0/css/smoothness/jquery-ui-1.8.16.custom.css">
+
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/pagination.css">
+  </head>
+  <body>
+
+    <h1>SlickGridによるページネーションサンプル</h1>
+    <p>
+      グリッドの下部にあるページネーション用のパネルを操作して任意の位置のデータを表示できます。
+    </p>
+
+    <div id="border">
+
+      <!-- SlickGridテーブルの表示領域となる要素 -->
+      <div id="myGrid" class="grid" style="grid"></div>
+
+      <!-- SlickGridページネーションコントロールの表示領域となる要素 -->
+      <div id="pager"></div>
+    </div>
+
+    <!-- 依存ライブラリの読み込み -->
+    <script src="../lib/vendor/jquery/1.11.1/jquery-1.11.1.min.js"></script>
+    <script src="../lib/vendor/jquery.event.drag-drop/2.2/jquery.event.drag.js"></script>
+    <script src="../lib/vendor/jquery-ui/1.11.1/jquery-ui.min.js"></script>
+
+    <!-- SlickGridモジュールの読み込み -->
+    <script src="../lib/vendor/slickgrid/2.1.0/slick.core.js"></script>
+    <script src="../lib/vendor/slickgrid/2.1.0/slick.grid.js"></script>
+    <script src="../lib/vendor/slickgrid/2.1.0/slick.dataview.js"></script>
+    <script src="../lib/vendor/slickgrid/2.1.0/controls/slick.pager.js"></script>
+
+    <!-- 実装したJavaScriptファイルの読み込み -->
+    <script src="js/pagination.js"></script>
+  </body>
+</html>

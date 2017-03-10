@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>入力値チェックサンプル</title>
+    <link href="css/main.css" rel="stylesheet" type="text/css">
+  </head>
+  <body>
+
+    <p>
+      <span class="requires">*</span>印は入力必須です。
+    </p>
+
+    <form id="form" method="get" action="validation.html">
+      <div>
+        <label for="name">名前 <span class="requires">*</span></label><br>
+        <input id="name" name="name" type="text"
+               data-parsley-required="true">
+      </div>
+      <div>
+        <label for="age">年齢</label><br>
+        <input id="age" name="age" type="text"
+               data-parsley-type="digits"
+               data-parsley-min="20" data-parsley-min-message="未成年は登録できません。">
+      </div>
+      <div>
+        <label for="birth-of-date">生年月日 </label><br>
+        <input id="birth-of-date" name="birth_of_date" type="text"
+               data-parsley-dateiso="true">
+      </div>
+      <div>
+        <label for="user-id">ユーザーID <span class="requires">*</span></label><br>
+        <input id="user-id" name="user-id" type="text"
+               data-parsley-required="true"
+               data-parsley-length="[2, 8]">
+      </div>
+      <div>
+        <label for="password">パスワード <span class="requires">*</span></label><br>
+        <input id="password" name="password" type="password"
+               data-parsley-required="true">
+      </div>
+      <div>
+        <label for="confirm-password">パスワード再入力 <span class="requires">*</span></label><br>
+        <input id="confirm-password" name="confirm-password" type="password"
+               data-parsley-required="true"
+               data-parsley-equalto="#password">
+      </div>
+      <div>
+        <label for="email">メールアドレス <span class="requires">*</span></label><br>
+        <input id="email" name="email" type="email"
+               data-parsley-required="true"
+               data-parsley-type="email">
+      </div>
+      <div>
+        <label for="agree">承認する</label>
+        <input type="checkbox" class="checkbox" id="agree" name="agree"
+               data-parsley-required="true">
+      </div>
+      <div>
+        <input type="submit" value="送信">
+      </div>
+    </form>
+
+    <!-- jQueryとParsley、独自に実装したJavaScriptを読み込む。 -->
+    <script src="../lib/vendor/jquery/1.11.1/jquery-1.11.1.min.js"></script>
+    <script src="../lib/vendor/parsleyjs/2.0.6/extra/validator/dateiso.js"></script>
+    <script src="../lib/vendor/parsleyjs/2.0.6/parsley.min.js"></script>
+    <script src="../lib/vendor/parsleyjs/2.0.6/i18n/ja.js"></script>
+    <script src="js/validation.js"></script>
+  </body>
+</html>

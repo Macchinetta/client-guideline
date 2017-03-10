@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>部品連動機能サンプル</title>
+  </head>
+  <body>
+    <h1>画面要素間の連動サンプル</h1>
+    <ul>
+      <li>地域区分のドロップダウンリストが選択された際に、都道府県のドロップダウンリストを変更します</li>
+    </ul>
+    <br>
+    <h3>地域区分：</h3>
+    <select id="region">
+      <option>-- 地域区分 --</option>
+      <option value="hokkaido">北海道</option>
+      <option value="tohoku">東北</option>
+      <option value="kanto">関東</option>
+      <option value="chubu">中部</option>
+      <option value="kinki">近畿</option>
+      <option value="chugoku">中国</option>
+      <option value="shikoku">四国</option>
+      <option value="kyushu">九州・沖縄</option>
+    </select>
+    <br>
+    <h3>都道府県：</h3>
+    <select id="prefecture">
+      <option>-- 都道府県 --</option>
+    </select>
+    <!-- jQueryと、独自に実装したJavaScriptを読み込む -->
+    <script src="../lib/vendor/jquery/1.11.1/jquery-1.11.1.min.js"></script>
+    <script src="js/work-with-element-ajax.js"></script>
+  </body>
+</html>

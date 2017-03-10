@@ -1,0 +1,14 @@
+#font-size-div {
+  width:400px;
+  margin:20px;
+}
+#slider-change-fontsize {
+  width:380px;
+  float:left;
+}
+#min {
+  float:left;margin-right:1em;
+}
+#max {
+  float:left;margin-left:1em;
+}

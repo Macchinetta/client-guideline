@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>カレンダー</title>
+
+    <!-- jQuery UIのスタイルシートの読み込み -->
+    <link rel="stylesheet" href="../lib/vendor/jquery-ui/1.11.1/jquery-ui.min.css">
+  </head>
+  <body>
+
+    <h1>カレンダー</h1>
+    <h2>シンプルなカレンダー</h2>
+
+    <!-- フォーカスを契機にカレンダーが表示されるテキストフィールド -->
+    <label>日付: <input type="text" id="jquery-ui-datepicker"></label>
+
+    <!-- jQueryとjQuery UIのJavaScript、カレンダーの日本語対応のJavaScript、
+         独自に実装したJavaScriptの読み込み -->
+    <script src="../lib/vendor/jquery/1.11.1/jquery-1.11.1.min.js"></script>
+    <script src="../lib/vendor/jquery-ui/1.11.1/jquery-ui.min.js"></script>
+    <!-- JQuery UI本体読み込み後にローカライズファイルを読み込む -->
+    <script src="../lib/vendor/jquery-ui/1.11.1/i18n/datepicker-ja.js"></script>
+    <script src="js/datepicker-basic.js"></script>
+  </body>
+</html>

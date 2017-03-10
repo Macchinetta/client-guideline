@@ -1,0 +1,25 @@
+/* タブ領域の設定 */
+.tabs-bottom .ui-tabs-nav {
+  
+  /* デフォルトの配置と同じ割合で、タブをパネル側へ寄せる */
+  padding: 0 .2em .2em .2em;
+}
+
+/* タブの設定 */
+.tabs-bottom .ui-tabs-nav .ui-state-default {
+  
+  /* タブの間隔を調節する。 */
+  margin: 0 .2em 1px 0;
+  /* 上側の境界線の幅を0にする */
+  border-top-width: 0;
+}
+
+/* 選択中のタブの設定 */
+.tabs-bottom .ui-tabs-nav .ui-state-default.ui-tabs-active {
+  
+  /* 選択中のタブをパネルに繋げる */
+  margin-top: -1px;
+  padding-top: 1px;
+  margin-bottom: 0px;
+  padding-bottom: 0px;
+}

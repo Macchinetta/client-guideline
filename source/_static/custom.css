@@ -1,0 +1,56 @@
+/* -- table width ----------------------------------------------------------- */
+
+h3, h4, h5, h6 {
+  margin: 2em 0 0 0;
+}
+
+h4, h5, h6 {
+  font-size: 1.17em;
+}
+
+table.docutils.footnote {
+  width: initial;
+}
+table.docutils {
+  width: 100%;
+  margin-top: 1em;
+}
+
+.admonition table {
+  padding: 1em;
+  margin: 0;
+  border-collapse: initial;
+  border-spacing: 0;
+}
+
+.highlight .c{
+  color:#ffcc33 !important;
+  font-style: initial !important;
+}
+
+.highlight .c1{
+  color:#ffcc33 !important;
+  font-style: initial !important;
+}
+
+.caption {
+  margin: 0 0 2em 0;
+}
+
+@media print {
+  *{
+    color: black;
+  }
+}
+
+table.docutils ul {
+  padding: 0 0 0 1.5em;
+  margin: 0;
+}
+
+.text-red {
+  color: red;
+}
+.text-green {
+  color: green;
+}
