@@ -1,0 +1,25 @@
+.content {
+  width: 600px;
+  margin: auto;
+  padding: 20px;
+  background-color: #DDDDDD;
+}
+.sliderP {
+  height: 100px;
+  width: 580px;
+  margin: 10px auto;
+  position: relative;
+}
+.slider h3 {
+  background-color: #FFFFFF;
+  padding: 3px;
+  margin: 3px;
+  text-align: center;
+}
+.sliderFor h3 {
+  height: 100px;
+  line-height: 100px;
+}
+.carousel-center .slick-current h3{
+  color:#e67e22;
+}

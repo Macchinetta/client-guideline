@@ -1,0 +1,46 @@
+/* パネル領域の設定 */
+.tabs-left .ui-tabs-panel {
+  
+  /* 左の余白を設定 */
+  margin-left: 5em;
+}
+
+/* タブ領域の設定 */
+.tabs-left .ui-tabs-nav {
+  
+  /* 領域の幅を設定 */
+  width: 5em;
+  
+  /* 領域を左に寄せる */
+  float: left; 
+  
+  /* デフォルトの配置と同じ設定で、タブをパネル側へ寄せる */
+  padding: .2em 1px .2em .2em; 
+}
+
+/* タブの設定 */
+.tabs-left .ui-tabs-nav .ui-state-default {
+  
+  /* タブを縦に並べるために幅を100%に設定する */
+  width: 100%;
+  
+  /* 右側の境界線の幅を0にする */
+  border-right-width: 0; 
+}
+
+/* 文字列の設定 */
+.tabs-left .ui-tabs-nav .ui-state-default .ui-tabs-anchor {
+  
+  /* 文字列の幅を設定(左右のpaddingがそれぞれ1emのため、領域の幅との差分を設定) */
+  width: 3em;
+}
+
+/* 選択中のタブの設定 */
+.tabs-left .ui-tabs-nav .ui-state-default.ui-tabs-active {
+  
+  /* 選択中のタブをパネルに繋げる */
+  margin-right: -1px;
+  padding-right: 1px;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}

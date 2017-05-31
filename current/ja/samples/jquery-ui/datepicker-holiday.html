@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>カレンダー</title>
+
+    <!-- jQuery UIのスタイルシートの読み込み -->
+    <link rel="stylesheet" href="../lib/vendor/jquery-ui/1.11.1/jquery-ui.min.css">
+    <link rel="stylesheet" href="css/datepicker-holiday.css">
+  </head>
+  <body>
+
+    <h1>カレンダー</h1>
+    <h2>休日設定</h2>
+    <p>日曜日・土曜日と以下に定義した祝日・休日にそれぞれ独自CSSスタイルを適用する</p>
+    <table id="holidayInfo">
+        <tr>
+            <th>年月日</th>
+            <th>選択可否</th>
+            <th>ラベル名</th>
+        </tr>
+        <tr>
+            <td>2016-01-01</td>
+            <td>可</td>
+            <td>元日</td>
+        </tr>
+        <tr>
+            <td>2016-04-01</td>
+            <td>不可</td>
+            <td>任意の休日</td>
+        </tr>
+        <tr>
+            <td>2016-11-03</td>
+            <td>可</td>
+            <td>文化の日</td>
+        </tr>
+        <tr>
+            <td>2016-11-23</td>
+            <td>不可</td>
+            <td>勤労感謝の日</td>
+        </tr>
+    </table>
+    <br />
+
+    <!-- フォーカスを契機にカレンダーが表示されるテキストフィールド -->
+    <label>日付: <input type="text" id="jquery-ui-datepicker-holiday"></label>
+
+    <!-- jQueryとjQuery UIのJavaScript、カレンダーの日本語対応のJavaScript、
+         独自に実装したJavaScriptの読み込み -->
+    <script src="../lib/vendor/jquery/1.11.1/jquery-1.11.1.min.js"></script>
+    <script src="../lib/vendor/jquery-ui/1.11.1/jquery-ui.min.js"></script>
+    <!-- JQuery UI本体読み込み後にローカライズファイルを読み込む -->
+    <script src="../lib/vendor/jquery-ui/1.11.1/i18n/datepicker-ja.js"></script>
+    <script src="js/datepicker-holiday.js"></script>
+    <script src="js/datepicker-holiday-definition.js"></script>
+  </body>
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>ボタン</title>
+
+    <!-- Bootstrapのスタイルシートの読み込み -->
+    <link rel="stylesheet" href="../lib/vendor/bootstrap/3.2.0/css/bootstrap.min.css">
+    <!-- 独自のスタイルシートの読み込み -->
+    <link rel="stylesheet" href="css/button-common.css">
+  </head>
+  <body>
+    <h1>ボタン</h1>
+    <div>
+      <!-- ボタンを生成するbutton要素やinput要素、a要素にclass属性を付与する -->
+      <button class="btn btn-default" type="submit">button</button>
+      <input class="btn btn-default" type="button" value="input button">
+      <input class="btn btn-default" type="submit" value="input submit">
+      <a class="btn btn-default" href="#" role="button">a要素</a>
+    </div>
+    <br>
+    <!-- ラジオボタンやチェックボックスの場合、対象のinput要素をlabel要素とdiv要素で囲う -->
+    <div data-toggle="buttons">
+      <label class="btn btn-default">
+        <input type="checkbox" id="checkbox1">checkbox
+      </label>
+    </div>
+    <br>
+    <div data-toggle="buttons">
+      <label for="radio1" class="btn btn-default">
+        <input type="radio" id="radio1" name="radio">radiobutton1
+      </label>
+      <label for="radio2" class="btn btn-default">
+        <input type="radio" id="radio2" name="radio">radiobutton2
+      </label>
+    </div>
+
+    <!-- jQueryとBootstrapのJavaScript、独自に実装したJavaScriptの読み込み -->
+    <script src="../lib/vendor/jquery/1.11.1/jquery-1.11.1.min.js"></script>
+    <script src="../lib/vendor/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+  </body>
+</html>

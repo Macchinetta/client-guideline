@@ -1,0 +1,14 @@
+.background-grey {
+  background-color: #CCCCCC;
+}
+.slide-content {
+  width: 150px;
+  height: 150px;
+  text-align: center;
+  text-indent: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.custom-indicator {
+  text-align: center;
+}

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>jQuery UI形式のタブ</title>
+    <!-- jquery-uiのスタイルシートの読み込み -->
+    <link rel="stylesheet" href="../lib/vendor/jquery-ui/1.11.1/jquery-ui.css">
+  </head>
+  <body>
+    <h1>基本的なタブ</h1>
+    <!-- タブ全体の領域 -->
+    <div id="tabs">
+      <!-- タブ領域 -->
+      <ul>
+        <!-- 1つ目のタブ -->
+        <li><a href="#tabs-1">タブ１</a></li>
+        <!-- 2つ目のタブ -->
+        <li><a href="#tabs-2">タブ２</a></li>
+        <!-- 3つ目のタブ -->
+        <li><a href="#tabs-3">タブ３</a></li>
+      </ul>
+      <!-- 1つ目のパネル -->
+      <div id="tabs-1">
+        <p>タブ１のパネルを表示します。</p>
+      </div>
+      <!-- 2つ目のパネル -->
+      <div id="tabs-2">
+        <p>タブ２のパネルを表示します。</p>
+      </div>
+      <!-- 3つ目のパネル -->
+      <div id="tabs-3">
+        <p>タブ３のパネルを表示します。</p>
+      </div>
+    </div>
+    <!-- jQuery、jQuery UIのJavaScriptの読み込み -->
+    <script src="../lib/vendor/jquery/1.11.1/jquery-1.11.1.min.js"></script>
+    <script src="../lib/vendor/jquery-ui/1.11.1/jquery-ui.min.js"></script>
+    <!-- 独自に実装したJavaScriptの読み込み -->
+    <script src="js/tabs.js"></script>
+  </body>
+</html>

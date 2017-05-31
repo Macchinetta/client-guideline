@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>7. JavaScriptの開発方法 &#8212; Macchinetta Client (1.x) Development Guideline 1.1.0.RELEASE documentation</title>
+    
+    <link rel="stylesheet" href="_static/solar.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.1.0.RELEASE',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="8. 付録" href="appendix.html" />
+    <link rel="prev" title="6. 非同期処理" href="async/index.html" /><link href='http://fonts.googleapis.com/css?family=Source+Code+Pro|Open+Sans:300italic,400italic,700italic,400,300,700' rel='stylesheet' type='text/css'>
+<link href="_static/solarized-dark.css" rel="stylesheet">
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="appendix.html" title="8. 付録"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="async/index.html" title="6. 非同期処理"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Macchinetta Client (1.x) Development Guideline 1.1.0.RELEASE documentation</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">7. JavaScriptの開発方法</a><ul>
+<li><a class="reference internal" href="#javascript-perfomance">7.1. JavaScriptの性能チューニング</a><ul>
+<li><a class="reference internal" href="#javascript-basic">7.1.1. JavaScriptの処理と性能</a><ul>
+<li><a class="reference internal" href="#cache-local">7.1.1.1. キャッシュの利用</a></li>
+<li><a class="reference internal" href="#conditional-expressions">7.1.1.2. 配列やオブジェクトの参照を利用した条件判定</a></li>
+<li><a class="reference internal" href="#loop-control">7.1.1.3. ループ処理の最適化</a></li>
+<li><a class="reference internal" href="#screen-redraw">7.1.1.4. 画面再描画回数の削減</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#jquery">7.1.2. jQuery利用時のチューニング</a><ul>
+<li><a class="reference internal" href="#use-simple-selector">7.1.2.1. シンプルなセレクタの利用</a></li>
+<li><a class="reference internal" href="#not-use-extensions">7.1.2.2. jQuery独自の拡張セレクタを利用しない</a></li>
+<li><a class="reference internal" href="#use-cache">7.1.2.3. キャッシュの利用</a></li>
+<li><a class="reference internal" href="#use-method-chain">7.1.2.4. メソッドチェーンの利用</a></li>
+<li><a class="reference internal" href="#find">7.1.2.5. find()の利用</a></li>
+<li><a class="reference internal" href="#javascriptapi">7.1.2.6. JavaScriptのネイティブAPIを利用</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="async/index.html"
+                        title="previous chapter">6. 非同期処理</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="appendix.html"
+                        title="next chapter">8. 付録</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="javascript">
+<span id="javascript-howto"></span><h1>7. JavaScriptの開発方法<a class="headerlink" href="#javascript" title="Permalink to this headline">¶</a></h1>
+<div class="line-block">
+<div class="line">jQueryを利用したクライアントサイドの開発では、必然的にJavaScriptを効率よく開発することが重要となる。</div>
+<div class="line">JavaScriptエンジンの発展や標準化によってブラウザ間での挙動の差異は少なくなり、またjQueryをはじめとするライブラリの導入が当たり前になったことで、少ないコード量で画面を開発することが可能となった。</div>
+<div class="line">一方で、クライアントマシンの性能向上やネットワーク環境の向上により、より複雑でリッチな画面を開発することも多くなったため、開発するコード量は以前よりも多く、また難易度も上がってきている。</div>
+</div>
+<div class="line-block">
+<div class="line">複雑でリッチな画面を開発することで、様々な問題が発生することが想定される。</div>
+<div class="line">複数メンバで開発する場合には、メンバ間のスキルのばらつきがあり、統制が取れなかったことが原因で、生産性や品質、保守性の低下を招くことがある。</div>
+<div class="line">また、複雑でリッチな画面の場合には、画面描画が遅くなったり性能が問題になることもある。</div>
+</div>
+<div class="line-block">
+<div class="line">この章では、ガイドラインで紹介しているライブラリを用いて画面を開発する際に、問題の発生を未然に防ぐ方法や、問題が発生した際にどういうアプローチで解決すればよいか、またどういった解決策があるかを紹介する。</div>
+</div>
+<div class="section" id="javascript-perfomance">
+<span id="id1"></span><h2>7.1. JavaScriptの性能チューニング<a class="headerlink" href="#javascript-perfomance" title="Permalink to this headline">¶</a></h2>
+<div class="line-block">
+<div class="line">クライアントサイドの開発では、以前からJavaScriptの性能が問題となることが多かった。</div>
+<div class="line">近年はブラウザのJavaScriptエンジンの高速化によって改善されてきているが、処理コストが大きかったり、無駄があるコードが原因となり、体感できるほどの性能問題を引き起こす事もある。</div>
+<div class="line">JavaScriptの性能問題は、ユーザビリティの低下を招くことにも繋がることがあるため、コードを見直し、処理性能の改善に取り組むべきである。</div>
+<div class="line">一つ一つの改善効果は小さいかもしれないが、積み重ねることが重要である。</div>
+</div>
+<div class="line-block">
+<div class="line">ここでは、JavaScriptの性能チューニングの参考となるコーディングについて、説明する。</div>
+</div>
+<div class="line-block">
+<div class="line">ガイドラインで紹介しているUIコンポーネントを組み合わせて複雑な画面を作成する際に性能問題が起きた場合は、ここに記載されている事項を確認し、より効率的な処理への変更や実現したい要件に適した実装へ見直すことで問題が解決するかもしれない。</div>
+<div class="line">また、設計やコーディングを行う前に事前に注意点を確認した上で作業することで、性能問題の発生を未然に防ぐことに努めてほしい。</div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>性能問題が発生した場合、ChromeのデベロッパーツールのTimelineやProfile、Firefoxの開発ツールのパフォーマンス、IEの開発者ツールのプロファイラーなどを利用すると、どのメソッドで時間がかかったのか調査しやすい。</p>
+<p>またChromeのデベロッパーツールの場合、コード内に以下のメソッドを記述することで、その区間のプロファイルを取得する事ができる。</p>
+<p><code class="docutils literal"><span class="pre">profile</span></code>メソッドにtitleを設定することで、同じtitleの<code class="docutils literal"><span class="pre">profileEnd</span></code>メソッドまでの間のみを解析してくれるため、複数の区間に分けて取得する事もできる。</p>
+<blockquote>
+<div><div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="nx">console</span><span class="p">.</span><span class="nx">profile</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">);</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">profileEnd</span><span class="p">(</span><span class="s1">&#39;title&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>性能改善は、下記の大まかなフローで実施する。</p>
+<ul class="last simple">
+<li>ツールを用いて処理時間の調査を行うことで、どのメソッドにどれだけ時間がかかったのかを明らかにする。</li>
+<li>処理時間のかかっているメソッドを確認し、改善すべき処理の絞り込みを行う。</li>
+<li>改善すべき処理に対して、対策を実施する。</li>
+</ul>
+</div>
+<div class="section" id="javascript-basic">
+<span id="id2"></span><h3>7.1.1. JavaScriptの処理と性能<a class="headerlink" href="#javascript-basic" title="Permalink to this headline">¶</a></h3>
+<div class="line-block">
+<div class="line">ここでは、JavaScriptの基本的な記述方法について、性能改善のためのポイントを説明する。</div>
+</div>
+<div class="section" id="cache-local">
+<span id="id3"></span><h4>7.1.1.1. キャッシュの利用<a class="headerlink" href="#cache-local" title="Permalink to this headline">¶</a></h4>
+<div class="line-block">
+<div class="line">JavaScript では、ローカル変数のアクセスが最も速く、スコープチェーンの外側にある変数へのアクセスほど遅くなる。このため、スコープチェーンの一番外側にあるグローバル変数へのアクセスが最も遅い。</div>
+<div class="line">よって、頻繁にアクセスが必要なグローバル変数は、可能な限りローカル変数にキャッシュした方が良い。</div>
+</div>
+<div class="line-block">
+<div class="line">以下に例を示す。</div>
+</div>
+<div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="kd">var</span> <span class="nx">foo</span><span class="p">;</span>
+
+<span class="c1">// (1)</span>
+<span class="kd">var</span> <span class="nx">fooTest</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+  <span class="nx">foo</span> <span class="o">=</span> <span class="s1">&#39;foo&#39;</span><span class="p">;</span>
+  <span class="nx">foo</span> <span class="o">+=</span> <span class="s1">&#39; test&#39;</span><span class="p">;</span>
+  <span class="k">return</span> <span class="nx">foo</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="c1">// (2)</span>
+<span class="kd">var</span> <span class="nx">barTest</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">bar</span><span class="p">;</span>
+  <span class="nx">bar</span> <span class="o">=</span> <span class="s1">&#39;bar&#39;</span><span class="p">;</span>
+  <span class="nx">bar</span> <span class="o">+=</span> <span class="s1">&#39; test&#39;</span><span class="p">;</span>
+  <span class="k">return</span> <span class="nx">bar</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="c1">// (3)</span>
+<span class="kd">var</span> <span class="nx">bizTest</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">biz</span> <span class="o">=</span> <span class="nx">foo</span><span class="p">;</span>
+  <span class="nx">biz</span> <span class="o">=</span> <span class="s1">&#39;biz&#39;</span><span class="p">;</span>
+  <span class="nx">biz</span> <span class="o">+=</span> <span class="s1">&#39; test&#39;</span><span class="p">;</span>
+  <span class="k">return</span> <span class="nx">biz</span><span class="p">;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="11%" />
+<col width="89%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">項番</th>
+<th class="head">説明</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><div class="first last line-block">
+<div class="line">(1)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">グローバル変数へのアクセスは遅い。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><div class="first last line-block">
+<div class="line">(2)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">ローカル変数へのアクセスは速い。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><div class="first last line-block">
+<div class="line">(3)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">グローバル変数はローカル変数にキャッシュすることで、高速にアクセスできる。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="line-block">
+<div class="line">上記コードでは利用回数が少ないのであまり差は出ないが、ループ内で利用される変数や頻繁に利用される変数はローカル変数にキャッシュした方が良い。</div>
+</div>
+</div>
+<div class="section" id="conditional-expressions">
+<span id="id4"></span><h4>7.1.1.2. 配列やオブジェクトの参照を利用した条件判定<a class="headerlink" href="#conditional-expressions" title="Permalink to this headline">¶</a></h4>
+<div class="line-block">
+<div class="line">一般的に条件判定にはif文やswitch文が使われるが、数値や文字列と言った特定のキーに対して固定の値を返すような処理の場合、候補となる項目数が増えるほど生産性や保守性の面で効率が悪い。</div>
+<div class="line">そのような処理の場合、配列やオブジェクトの参照を利用すればキーから値を直接返すことができるので効率が良い。</div>
+<div class="line">また、項目数が膨大であるほど性能面で優れている。</div>
+</div>
+<div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="kd">var</span> <span class="nx">value1</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">value2</span> <span class="o">=</span> <span class="s1">&#39;c&#39;</span><span class="p">;</span>
+
+<span class="c1">// (1)</span>
+<span class="kd">var</span> <span class="nx">data1</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;result 0&#39;</span><span class="p">,</span> <span class="s1">&#39;result 1&#39;</span><span class="p">,</span> <span class="s1">&#39;result 2&#39;</span><span class="p">,</span> <span class="s1">&#39;result 3&#39;</span><span class="p">,</span>
+             <span class="s1">&#39;result 4&#39;</span><span class="p">,</span> <span class="s1">&#39;result 5&#39;</span><span class="p">,</span> <span class="s1">&#39;result 6&#39;</span><span class="p">,</span> <span class="s1">&#39;result 7&#39;</span><span class="p">];</span>
+<span class="kd">var</span> <span class="nx">result1</span> <span class="o">=</span> <span class="nx">data1</span><span class="p">[</span><span class="nx">value1</span><span class="p">]</span> <span class="o">||</span> <span class="s1">&#39;no result&#39;</span><span class="p">;</span>
+
+<span class="c1">// (2)</span>
+<span class="kd">var</span> <span class="nx">data2</span> <span class="o">=</span> <span class="p">{</span><span class="nx">a</span><span class="o">:</span><span class="s1">&#39;result a&#39;</span> <span class="p">,</span><span class="nx">b</span><span class="o">:</span><span class="s1">&#39;result b&#39;</span><span class="p">,</span> <span class="nx">c</span><span class="o">:</span><span class="s1">&#39;result c&#39;</span><span class="p">,</span> <span class="nx">d</span><span class="o">:</span><span class="s1">&#39;result d&#39;</span><span class="p">};</span>
+<span class="kd">var</span> <span class="nx">result2</span> <span class="o">=</span> <span class="nx">data2</span><span class="p">[</span><span class="nx">value2</span><span class="p">]</span> <span class="o">||</span> <span class="s1">&#39;no result&#39;</span><span class="p">;</span>
+</pre></div>
+</div>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="11%" />
+<col width="89%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">項番</th>
+<th class="head">説明</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><div class="first last line-block">
+<div class="line">(1)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">配列を利用した例。一致する項目がない場合は<code class="docutils literal"><span class="pre">undefined</span></code>ととなる。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><div class="first last line-block">
+<div class="line">(2)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">オブジェクトを利用した例。一致する項目がない場合は<code class="docutils literal"><span class="pre">undefined</span></code>ととなる。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="loop-control">
+<span id="id5"></span><h4>7.1.1.3. ループ処理の最適化<a class="headerlink" href="#loop-control" title="Permalink to this headline">¶</a></h4>
+<div class="line-block">
+<div class="line">ループでは同じ記述が何度も利用されるため、一層の配慮が必要となる。また、ループ終了条件の判定で、よく<code class="docutils literal"><span class="pre">i</span> <span class="pre">&lt;</span> <span class="pre">list.length</span></code>という使い方がされているが、以下のように、ループの前でローカル変数にキャッシュする対処をすべきである。</div>
+</div>
+<div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="kd">var</span> <span class="nx">i</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">list</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="s1">&#39;c&#39;</span><span class="p">,</span> <span class="s1">&#39;d&#39;</span><span class="p">];</span>
+
+<span class="c1">// (1)</span>
+<span class="k">for</span> <span class="p">(</span><span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">list</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">resultString</span><span class="p">(</span><span class="nx">list</span><span class="p">[</span><span class="nx">i</span><span class="p">]);</span>
+<span class="p">}</span>
+
+<span class="c1">// (2)</span>
+<span class="kd">var</span> <span class="nx">length</span> <span class="o">=</span> <span class="nx">list</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span>
+<span class="k">for</span> <span class="p">(</span><span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">length</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">resultString</span><span class="p">(</span><span class="nx">list</span><span class="p">[</span><span class="nx">i</span><span class="p">]);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="11%" />
+<col width="89%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">項番</th>
+<th class="head">説明</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><div class="first last line-block">
+<div class="line">(1)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">よく利用されるfor文。ループ回数分、.lengthの取得処理が実行されてしまう。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><div class="first last line-block">
+<div class="line">(2)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">list.lengthをローカル変数にキャッシュする事で、.lengthの取得処理は1回のみとなる。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="line-block">
+<div class="line">このような対応はfor文だけでなく、do-while文、while文でも同様に有効である。</div>
+</div>
+<div class="line-block">
+<div class="line">ループ条件だけでなく、ループ内の処理にも注意すること。</div>
+<div class="line">jQueryオブジェクトやDOMの取得、再描画が発生するDOM操作といったような、性能に影響する処理は可能な限りループの外で行ったほうが良い。</div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>for文、do-while文、while文のループの性能はどれも同程度となる。</p>
+<p>しかし、for-in文はオブジェクトの列挙可能なプロパティを全て探しだすため、上記の3つと異なり性能は大きく劣る。</p>
+<p>そのため、for-in文を利用するのは、オブジェクトのプロパティを扱うときのみ利用する。</p>
+<p class="last">また、for-in文は順番が規定されていないため、ブラウザによって処理する順序が異なってしまう可能性がある点も注意すること。</p>
+</div>
+</div>
+<div class="section" id="screen-redraw">
+<span id="id6"></span><h4>7.1.1.4. 画面再描画回数の削減<a class="headerlink" href="#screen-redraw" title="Permalink to this headline">¶</a></h4>
+<div class="line-block">
+<div class="line">JavaScriptで要素に子要素を追加する、といったような、DOMが画面表示に影響する変更を受けると、画面の再描画が発生する。</div>
+<div class="line">再描画は変更された要素だけでなく画面全体で行われるため、その処理はとても重い。</div>
+</div>
+<div class="line-block">
+<div class="line">再描画は以下のようなタイミングで起こる。</div>
+</div>
+<blockquote>
+<div><ul class="simple">
+<li>画面の初期表示</li>
+<li>要素の追加や削除</li>
+<li>要素の位置変更</li>
+<li>要素のサイズ変更</li>
+<li>テキストの変更</li>
+<li>ブラウザのサイズ変更（スマートフォンやタブレットでの縦横回転）</li>
+</ul>
+</div></blockquote>
+<div class="line-block">
+<div class="line">そのため、再描画を極力減らすことが重要となる。</div>
+</div>
+<div class="line-block">
+<div class="line"><code class="docutils literal"><span class="pre">main</span></code>というidのdivの下に5つのdivを配置する場合を考える。</div>
+</div>
+<div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="kd">var</span> <span class="nx">main</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;main&#39;</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">div1</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s1">&#39;div&#39;</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">div2</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s1">&#39;div&#39;</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">div3</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s1">&#39;div&#39;</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">div4</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s1">&#39;div&#39;</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">div5</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s1">&#39;div&#39;</span><span class="p">);</span>
+
+<span class="c1">// (1)</span>
+<span class="nx">main</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">div1</span><span class="p">);</span>
+<span class="nx">main</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">div2</span><span class="p">);</span>
+<span class="nx">main</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">div3</span><span class="p">);</span>
+<span class="nx">main</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">div4</span><span class="p">);</span>
+<span class="nx">main</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">div5</span><span class="p">);</span>
+</pre></div>
+</div>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="11%" />
+<col width="89%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">項番</th>
+<th class="head">説明</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><div class="first last line-block">
+<div class="line">(1)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">そのままappendChildを実行した例。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="line-block">
+<div class="line"><code class="docutils literal"><span class="pre">main</span></code>で<code class="docutils literal"><span class="pre">appendChild()</span></code>を5回実行すると、再描画も5回実行されてしまう。</div>
+<div class="line">このような場合に再描画を減らす方法としては、ドキュメントフラグメントを利用する。</div>
+</div>
+<div class="line-block">
+<div class="line">元となるHTMLドキュメントとは独立したドキュメントフラグメントを作成し、ドキュメントフラグメントでDOMを構築して元となるHTMLドキュメントに追加する。</div>
+<div class="line">これにより、再描画はHTMLドキュメントに追加する1回のみとなる。</div>
+</div>
+<div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="c1">// (1)</span>
+<span class="kd">var</span> <span class="nx">fragment</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createDocumentFragment</span><span class="p">();</span>
+<span class="c1">// (2)</span>
+<span class="nx">fragment</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">div1</span><span class="p">);</span>
+<span class="nx">fragment</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">div2</span><span class="p">);</span>
+<span class="nx">fragment</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">div3</span><span class="p">);</span>
+<span class="nx">fragment</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">div4</span><span class="p">);</span>
+<span class="nx">fragment</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">div5</span><span class="p">);</span>
+<span class="c1">// (3)</span>
+<span class="nx">main</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">fragment</span><span class="p">);</span>
+</pre></div>
+</div>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="11%" />
+<col width="89%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">項番</th>
+<th class="head">説明</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><div class="first last line-block">
+<div class="line">(1)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">ドキュメントフラグメントの作成。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><div class="first last line-block">
+<div class="line">(2)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">ドキュメントフラグメントに子要素を追加する。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><div class="first last line-block">
+<div class="line">(3)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">対象にドキュメントフラグメントを追加する。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="line-block">
+<div class="line">ドキュメントフラグメントでは親要素に<code class="docutils literal"><span class="pre">appendChild()</span></code>した際に、自身の子要素を丸ごと親要素に渡すことができ、通常の<code class="docutils literal"><span class="pre">appendChild()</span></code>では出来ない、複数の子要素の受け渡しも可能になる。</div>
+</div>
+</div>
+</div>
+<div class="section" id="jquery">
+<span id="jquery-selector"></span><h3>7.1.2. jQuery利用時のチューニング<a class="headerlink" href="#jquery" title="Permalink to this headline">¶</a></h3>
+<div class="line-block">
+<div class="line">jQueryの特徴は、CSSセレクタを利用した簡単なDOMアクセスと、豊富なDOM操作機能である。</div>
+<div class="line"><code class="docutils literal"><span class="pre">#id</span> <span class="pre">.class</span></code>といったようなCSSセレクタの形式で指定することで、簡単に該当のDOMにアクセスすることができるため、コードをシンプルにすることができ、生産性や保守性の面でメリットとなっている。</div>
+<div class="line">セレクタで指定したDOMはjQueryオブジェクトと呼ばれるオブジェクトに変換されることで、様々なAPIが利用できる。</div>
+<div class="line">jQueryのDOMアクセスはそのままでも高度に最適化されているが、セレクタの記述方法によって性能に差が出る事もある。</div>
+</div>
+<div class="line-block">
+<div class="line">jQueryを利用する際に注意すべきポイントについて以降で説明する。</div>
+</div>
+<div class="section" id="use-simple-selector">
+<span id="id7"></span><h4>7.1.2.1. シンプルなセレクタの利用<a class="headerlink" href="#use-simple-selector" title="Permalink to this headline">¶</a></h4>
+<div class="line-block">
+<div class="line">jQueryでセレクタを利用すると、jQueryの内部の手順は大きく分けて以下の3段階で処理される。</div>
+</div>
+<blockquote>
+<div><ol class="arabic simple">
+<li>ネイティブAPIの<code class="docutils literal"><span class="pre">getElementById()</span></code>、<code class="docutils literal"><span class="pre">getElementsByTagName()</span></code>、<code class="docutils literal"><span class="pre">getElementsByClassName()</span></code>が利用できるのであれば使用する</li>
+<li>1.に当てはまらない場合、CSSセレクタ形式として、<code class="docutils literal"><span class="pre">querySelectorAll()</span></code>を使用する</li>
+<li>2.にも当てはまらない場合（CSSセレクタとして解析できない場合）、セレクターエンジンSizzleがセレクタを解析する</li>
+</ol>
+</div></blockquote>
+<div class="line-block">
+<div class="line">処理速度はネイティブAPIが高速で、その中でも<code class="docutils literal"><span class="pre">getElementById()</span></code>が最速となる。</div>
+<div class="line"><code class="docutils literal"><span class="pre">querySelectorAll()</span></code>は若干低速で、Sizzleは他と比べるととても低速である。</div>
+<div class="line">このため、セレクタは可能な限り、id指定、タグ指定、クラス指定のいずれかのみのシンプルなセレクタが最も望ましい。</div>
+<div class="line">１つの指定で絞りきれないような条件の場合でも、CSSセレクタでの形式（<code class="docutils literal"><span class="pre">querySelectorAll()</span></code>でエラーにならない形式）が望ましい。</div>
+</div>
+<div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="c1">// (1)</span>
+<span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#foo&#39;</span><span class="p">);</span>
+
+<span class="c1">// (2)</span>
+<span class="nx">$</span><span class="p">(</span><span class="s1">&#39;.bar&#39;</span><span class="p">);</span>
+
+<span class="c1">// (3)</span>
+<span class="nx">$</span><span class="p">(</span><span class="s1">&#39;span&#39;</span><span class="p">);</span>
+
+<span class="c1">// (4)</span>
+<span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#foo .bar&#39;</span><span class="p">);</span>
+
+<span class="c1">// (5)</span>
+<span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#foo:first&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="11%" />
+<col width="89%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">項番</th>
+<th class="head">説明</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><div class="first last line-block">
+<div class="line">(1)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">最も高速なid指定。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><div class="first last line-block">
+<div class="line">(2)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">高速なクラス指定。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><div class="first last line-block">
+<div class="line">(3)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">高速なタグ指定。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><div class="first last line-block">
+<div class="line">(4)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">若干低速なCSSセレクタ形式。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><div class="first last line-block">
+<div class="line">(5)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">とても低速な拡張セレクタ利用。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="not-use-extensions">
+<span id="id8"></span><h4>7.1.2.2. jQuery独自の拡張セレクタを利用しない<a class="headerlink" href="#not-use-extensions" title="Permalink to this headline">¶</a></h4>
+<div class="line-block">
+<div class="line">jQueryではCSSセレクタ以外に、「<code class="docutils literal"><span class="pre">:first</span></code>」「<code class="docutils literal"><span class="pre">:even</span></code>」といったようなjQuery独自の拡張セレクタが利用できる。</div>
+<div class="line">しかし、これらのセレクタを利用するとセレクターエンジンSizzleでの処理となってしまうため、性能は落ちてしまう。このため、可能な限り拡張セレクタは利用せず、<code class="docutils literal"><span class="pre">querySelectorAll()</span></code>で解析可能な、CSSセレクタを利用すべきである。</div>
+</div>
+<div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="c1">// (1)</span>
+<span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#foo li:even&#39;</span><span class="p">);</span>
+
+<span class="c1">// (2)</span>
+<span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#foo li:nth-child(odd)&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="11%" />
+<col width="89%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">項番</th>
+<th class="head">説明</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><div class="first last line-block">
+<div class="line">(1)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">拡張セレクタである、<code class="docutils literal"><span class="pre">:even</span></code>を利用した例。Sizzleが利用されるため、低速。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><div class="first last line-block">
+<div class="line">(2)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">CSS3のセレクタで記述した例。<code class="docutils literal"><span class="pre">querySelectorAll()</span></code>で処理されるため、(1)よりも高速。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="use-cache">
+<span id="id9"></span><h4>7.1.2.3. キャッシュの利用<a class="headerlink" href="#use-cache" title="Permalink to this headline">¶</a></h4>
+<div class="line-block">
+<div class="line">jQueryオブジェクトの生成はコストがかかるため、複数回利用するjQueryオブジェクトはローカル変数へキャッシュしておくことで、生成する手間を省くことができる。</div>
+</div>
+<div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="c1">// (1)</span>
+<span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#foo&#39;</span><span class="p">).</span><span class="nx">addClass</span><span class="p">(</span><span class="s1">&#39;bar&#39;</span><span class="p">);</span>
+<span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#foo&#39;</span><span class="p">).</span><span class="nx">removeClass</span><span class="p">(</span><span class="s1">&#39;baz&#39;</span><span class="p">);</span>
+<span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#foo&#39;</span><span class="p">).</span><span class="nx">toggleClass</span><span class="p">(</span><span class="s1">&#39;qux&#39;</span><span class="p">);</span>
+<span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#foo&#39;</span><span class="p">).</span><span class="nx">text</span><span class="p">(</span><span class="s1">&#39;change text&#39;</span><span class="p">);</span>
+
+<span class="c1">// (2)</span>
+<span class="kd">var</span> <span class="nx">foo</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#foo&#39;</span><span class="p">);</span>
+<span class="nx">foo</span><span class="p">.</span><span class="nx">addClass</span><span class="p">(</span><span class="s1">&#39;bar&#39;</span><span class="p">);</span>
+<span class="nx">foo</span><span class="p">.</span><span class="nx">removeClass</span><span class="p">(</span><span class="s1">&#39;baz&#39;</span><span class="p">);</span>
+<span class="nx">foo</span><span class="p">.</span><span class="nx">toggleClass</span><span class="p">(</span><span class="s1">&#39;qux&#39;</span><span class="p">);</span>
+<span class="nx">foo</span><span class="p">.</span><span class="nx">text</span><span class="p">(</span><span class="s1">&#39;change text&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="11%" />
+<col width="89%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">項番</th>
+<th class="head">説明</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><div class="first last line-block">
+<div class="line">(1)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">毎回jQueryオブジェクトを生成すると処理コストがかかる。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><div class="first last line-block">
+<div class="line">(2)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">生成したjQueryオブジェクトをキャッシュすることで、生成するのは一回だけとなるため、こちらの方が高速。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="line-block">
+<div class="line">キャッシュすることで、実際に処理を実行するかの判定にも利用しやすい。</div>
+<div class="line">処理によってはセレクタから取得したjQueryオブジェクトに選択要素が含まれていなくてもオーバーヘッドが発生する事がある。</div>
+<div class="line">例として、<code class="docutils literal"><span class="pre">.slideUp()</span></code>や<code class="docutils literal"><span class="pre">.slideDown()</span></code>等のエフェクトAPIには、要素の存在チェックの前に、アニメーション処理の為の前処理が実行されてしまうため、それがオーバーヘッドとなる。</div>
+<div class="line">そのため、jQueryオブジェクトの.lengthが0であれば処理を行わない、といった分岐を作成する際に利用できる。</div>
+</div>
+<div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="c1">// (1)</span>
+<span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#foo&#39;</span><span class="p">).</span><span class="nx">slideUp</span><span class="p">();</span>
+
+<span class="c1">// (2)</span>
+<span class="kd">var</span> <span class="nx">foo</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#foo&#39;</span><span class="p">);</span>
+<span class="k">if</span> <span class="p">(</span><span class="nx">foo</span><span class="p">.</span><span class="nx">length</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">foo</span><span class="p">.</span><span class="nx">slideUp</span><span class="p">();</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="11%" />
+<col width="89%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">項番</th>
+<th class="head">説明</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><div class="first last line-block">
+<div class="line">(1)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">idがfooという要素がなくても処理が発生する。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><div class="first last line-block">
+<div class="line">(2)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">事前に存在をチェックすることで、無駄な処理を発生させない。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>jQueryのセレクタで取得したjQueryオブジェクトに要素が存在するかチェックする場合、<code class="docutils literal"><span class="pre">.length</span></code>を利用すること。</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="kd">var</span> <span class="nx">foo</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#foo&#39;</span><span class="p">);</span>
+
+<span class="c1">// (1)</span>
+<span class="k">if</span> <span class="p">(</span><span class="nx">foo</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">foo</span><span class="p">.</span><span class="nx">slideToggle</span><span class="p">();</span>
+<span class="p">}</span>
+
+<span class="c1">// (2)</span>
+<span class="k">if</span> <span class="p">(</span><span class="nx">foo</span><span class="p">.</span><span class="nx">length</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">foo</span><span class="p">.</span><span class="nx">slideToggle</span><span class="p">();</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<table border="1" class="colwidths-given last docutils">
+<colgroup>
+<col width="11%" />
+<col width="89%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">項番</th>
+<th class="head">説明</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><div class="first last line-block">
+<div class="line">(1)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">オブジェクト自体は存在しているため、当てはまる要素が存在しない場合でも、trueとして扱われてしまう。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><div class="first last line-block">
+<div class="line">(2)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line"><code class="docutils literal"><span class="pre">.length</span></code>は当てはまる要素の個数を返すので、存在しない場合は0を返し、falseとして扱われる。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="use-method-chain">
+<span id="id10"></span><h4>7.1.2.4. メソッドチェーンの利用<a class="headerlink" href="#use-method-chain" title="Permalink to this headline">¶</a></h4>
+<div class="line-block">
+<div class="line">あるjQueryオブジェクトに連続して処理を行う場合は、キャッシュの利用以外にもメソッドチェーンを利用する方法がある。</div>
+<div class="line">利用箇所がそのメソッドチェーンのみで済む場合、ローカル変数を増やす必要がなくなる。</div>
+</div>
+<div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="c1">// (1)</span>
+<span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#foo&#39;</span><span class="p">).</span><span class="nx">addClass</span><span class="p">(</span><span class="s1">&#39;bar&#39;</span><span class="p">);</span>
+<span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#foo&#39;</span><span class="p">).</span><span class="nx">removeClass</span><span class="p">(</span><span class="s1">&#39;baz&#39;</span><span class="p">);</span>
+<span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#foo&#39;</span><span class="p">).</span><span class="nx">toggleClass</span><span class="p">(</span><span class="s1">&#39;qux&#39;</span><span class="p">);</span>
+<span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#foo&#39;</span><span class="p">).</span><span class="nx">text</span><span class="p">(</span><span class="s1">&#39;change text&#39;</span><span class="p">);</span>
+
+<span class="c1">// (2)</span>
+<span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#foo&#39;</span><span class="p">)</span>
+    <span class="p">.</span><span class="nx">addClass</span><span class="p">(</span><span class="s1">&#39;bar&#39;</span><span class="p">)</span>
+    <span class="p">.</span><span class="nx">removeClass</span><span class="p">(</span><span class="s1">&#39;baz&#39;</span><span class="p">)</span>
+    <span class="p">.</span><span class="nx">toggleClass</span><span class="p">(</span><span class="s1">&#39;qux&#39;</span><span class="p">)</span>
+    <span class="p">.</span><span class="nx">text</span><span class="p">(</span><span class="s1">&#39;change text&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="11%" />
+<col width="89%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">項番</th>
+<th class="head">説明</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><div class="first last line-block">
+<div class="line">(1)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">毎回jQueryオブジェクトを生成すると処理コストがかかる。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><div class="first last line-block">
+<div class="line">(2)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">メソッドチェーンを利用することでjQueryオブジェクトの生成は一回だけとなる。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="find">
+<span id="use-find"></span><h4>7.1.2.5. find()の利用<a class="headerlink" href="#find" title="Permalink to this headline">¶</a></h4>
+<div class="line-block">
+<div class="line">セレクタの条件が、idで対象の範囲を絞込み、別の条件で検索するようなパターンの場合、<code class="docutils literal"><span class="pre">find()</span></code>を利用すると速くなる場合がある。</div>
+<div class="line">ただし、DOMの構成やセレクタの条件によっては、通常の<code class="docutils literal"><span class="pre">querySelectorAll()</span></code>で実行できる1回のセレクタ記述の方が速い場合がある。</div>
+</div>
+<div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="c1">// (1)</span>
+<span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#foo span:hidden&#39;</span><span class="p">);</span>
+
+<span class="c1">// (2)</span>
+<span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#foo&#39;</span><span class="p">).</span><span class="nx">find</span><span class="p">(</span><span class="s1">&#39;span:hidden&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="11%" />
+<col width="89%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">項番</th>
+<th class="head">説明</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><div class="first last line-block">
+<div class="line">(1)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">id指定と拡張セレクタの組み合わせ。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><div class="first last line-block">
+<div class="line">(2)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">高速なid指定で絞り込んだ後に、低速な拡張セレクタで検索する。DOMの構成によっては高速。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="javascriptapi">
+<span id="use-native-method"></span><h4>7.1.2.6. JavaScriptのネイティブAPIを利用<a class="headerlink" href="#javascriptapi" title="Permalink to this headline">¶</a></h4>
+<div class="line-block">
+<div class="line">jQueryのAPIを利用する必要がない場合は、<code class="docutils literal"><span class="pre">getElementById()</span></code>といったようなネイティブのAPIを利用した方が高速となる。</div>
+<div class="line">コードの統一性や可読性等の点からはセレクタを利用した方が良いが、どうしても性能を追求したい場合はネイティブAPIの利用も検討すること。</div>
+</div>
+<div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="c1">// (1)</span>
+<span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#foo&#39;</span><span class="p">);</span>
+<span class="nx">$</span><span class="p">(</span><span class="s1">&#39;span&#39;</span><span class="p">);</span>
+<span class="nx">$</span><span class="p">(</span><span class="s1">&#39;.bar&#39;</span><span class="p">);</span>
+<span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#foo .bar&#39;</span><span class="p">);</span>
+
+<span class="c1">// (2)</span>
+<span class="nb">document</span><span class="p">.</span><span class="nx">getElementById</span><span class="p">(</span><span class="s1">&#39;foo&#39;</span><span class="p">);</span>
+<span class="nb">document</span><span class="p">.</span><span class="nx">getElementsByTagName</span><span class="p">(</span><span class="s1">&#39;span&#39;</span><span class="p">);</span>
+<span class="nb">document</span><span class="p">.</span><span class="nx">getElementsByClassName</span><span class="p">(</span><span class="s1">&#39;bar&#39;</span><span class="p">);</span>
+<span class="nb">document</span><span class="p">.</span><span class="nx">querySelectorAll</span><span class="p">(</span><span class="s1">&#39;#foo .bar&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="11%" />
+<col width="89%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">項番</th>
+<th class="head">説明</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><div class="first last line-block">
+<div class="line">(1)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">jQueryオブジェクトを取得するためのid指定、タグ指定、クラス指定、CSSセレクタ指定の例。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><div class="first last line-block">
+<div class="line">(2)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">ネイティブAPIでDOMを取得するためのid指定、タグ指定、クラス指定、CSSセレクタ指定の例。jQueryオブジェクトの取得よりも高速。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="appendix.html" title="8. 付録"
+             >next</a></li>
+        <li class="right" >
+          <a href="async/index.html" title="6. 非同期処理"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Macchinetta Client (1.x) Development Guideline 1.1.0.RELEASE documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2017 NTT Corporation.
+    </div>
+  </body>
+</html>

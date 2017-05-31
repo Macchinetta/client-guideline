@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>jQuery UI形式のモーダルダイアログ</title>
+
+    <!-- jQuery UIのスタイルシートの読み込み -->
+    <link rel="stylesheet" href="../lib/vendor/jquery-ui/1.11.1/jquery-ui.min.css">
+  </head>
+  <body>
+    <div class="container">
+      <h1>jQuery UI形式のモーダルダイアログ</h1>
+      <p>jQuery UI形式のモーダルダイアログです。</p>
+
+      <!-- 時間のかかる処理を行うダミーのフォーム -->
+      <form id="dummy-form">
+        <input type="text">
+        <input type="submit">
+      </form>
+
+      <!-- モーダルダイアログ -->
+      <div class="modal" id="myModal">
+        <p>
+          処理中... (処理完了後に自動的に閉じます)
+        </p>
+        <button id="cancel-btn">キャンセル</button>
+      </div>
+    </div>
+
+    <!-- jQueryとjQuery UIのJavaScript、独自に実装したJavaScriptの読み込み -->
+    <script src="../lib/vendor/jquery/1.11.1/jquery-1.11.1.min.js"></script>
+    <script src="../lib/vendor/jquery-ui/1.11.1/jquery-ui.min.js"></script>
+    <script src="js/modal.js"></script>
+  </body>
+</html>

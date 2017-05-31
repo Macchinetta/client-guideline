@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>ボタングループ</title>
+
+    <!-- Bootstrapのスタイルシートの読み込み -->
+    <link rel="stylesheet" href="../lib/vendor/bootstrap/3.2.0/css/bootstrap.min.css">
+    <!-- 独自のスタイルシートの読み込み -->
+    <link rel="stylesheet" href="css/button-common.css">
+  </head>
+  <body>
+    <h1>ボタングループ</h1>
+    <!-- グループ化する対象をdiv要素で囲い、class属性に btn-group を指定する -->
+    <div class="btn-group">
+      <h4>Button</h4>
+      <a class="btn btn-default" href="#" role="button">button1</a>
+      <a class="btn btn-default" href="#" role="button">button2</a>
+      <a class="btn btn-default" href="#" role="button">button3</a>
+    </div>
+    <br>
+    <div class="btn-group" data-toggle="buttons">
+      <h4>Checkbox</h4>
+      <label class="btn btn-default">
+        <input type="checkbox" id="checkbox1">checkbox1
+      </label>
+      <label class="btn btn-default">
+        <input type="checkbox" id="checkbox2">checkbox2
+      </label>
+      <label class="btn btn-default">
+        <input type="checkbox" id="checkbox3">checkbox3
+      </label>
+    </div>
+    <br>
+    <div class="btn-group" data-toggle="buttons">
+      <h4>Radio Button</h4>
+      <label for="radio1" class="btn btn-default">
+        <input type="radio" id="radio1" name="radio">radiobutton1
+      </label>
+      <label for="radio2" class="btn btn-default">
+        <input type="radio" id="radio2" name="radio">radiobutton2
+      </label>
+      <label for="radio3" class="btn btn-default">
+        <input type="radio" id="radio3" name="radio">radiobutton3
+      </label>
+    </div>
+
+    <!-- jQueryとBootstrapのJavaScriptの読み込み -->
+    <script src="../lib/vendor/jquery/1.11.1/jquery-1.11.1.min.js"></script>
+    <script src="../lib/vendor/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+  </body>
+</html>

@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>6. 非同期処理 &#8212; Macchinetta Client (1.x) Development Guideline 1.1.0.RELEASE documentation</title>
+    
+    <link rel="stylesheet" href="../_static/solar.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.1.0.RELEASE',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="7. JavaScriptの開発方法" href="../development-javascript.html" />
+    <link rel="prev" title="5. 操作性向上・制御" href="../manipulation/index.html" /><link href='http://fonts.googleapis.com/css?family=Source+Code+Pro|Open+Sans:300italic,400italic,700italic,400,300,700' rel='stylesheet' type='text/css'>
+<link href="../_static/solarized-dark.css" rel="stylesheet">
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../development-javascript.html" title="7. JavaScriptの開発方法"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="../manipulation/index.html" title="5. 操作性向上・制御"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Macchinetta Client (1.x) Development Guideline 1.1.0.RELEASE documentation</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">6. 非同期処理</a><ul>
+<li><a class="reference internal" href="#deferred">6.1. Deferredによる非同期処理制御</a><ul>
+<li><a class="reference internal" href="#event-serializationoutline">6.1.1. 概要</a></li>
+<li><a class="reference internal" href="#event-serializationadvantage">6.1.2. Deferredのメリット</a></li>
+<li><a class="reference internal" href="#event-serializationhowtouse">6.1.3. Deferredの利用方法</a><ul>
+<li><a class="reference internal" href="#deferred-then">6.1.3.1. Deferredによるコールバックの切り替え（then）</a></li>
+<li><a class="reference internal" href="#deferred-donefail">6.1.3.2. Deferredによるコールバックの切り替え（done・fail）</a></li>
+<li><a class="reference internal" href="#when">6.1.3.3. 非同期処理の並列連結（when）</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#event-serializationhowtoextend">6.1.4. 応用方法</a><ul>
+<li><a class="reference internal" href="#ajax">6.1.4.1. Ajaxの再利用</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../manipulation/index.html"
+                        title="previous chapter">5. 操作性向上・制御</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../development-javascript.html"
+                        title="next chapter">7. JavaScriptの開発方法</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="asynchronous-processing">
+<span id="id1"></span><h1>6. 非同期処理<a class="headerlink" href="#asynchronous-processing" title="Permalink to this headline">¶</a></h1>
+<p>この章では、非同期処理の実装や制御に関連する方法を説明する。</p>
+<div class="section" id="deferred">
+<span id="event-serialization"></span><h2>6.1. Deferredによる非同期処理制御<a class="headerlink" href="#deferred" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="event-serializationoutline">
+<span id="id2"></span><h3>6.1.1. 概要<a class="headerlink" href="#event-serializationoutline" title="Permalink to this headline">¶</a></h3>
+<div class="line-block">
+<div class="line">Deferredは、複数のコールバックを柔軟に扱うことができるユーティリティー機能である。Deferredを利用することで、非同期処理実装時に陥りがちな、コールバックが多段階でネストする状態を避け、ソースコードの可読性・保守性を保つことができる。</div>
+</div>
+<blockquote>
+<div><div class="figure align-center" id="id10">
+<a class="reference internal image-reference" href="../_images/deferred-nested-callback.png"><img alt="deferred-nested-callback" src="../_images/deferred-nested-callback.png" style="width: 585.75px; height: 363.75px;" /></a>
+<p class="caption"><span class="caption-text"><strong>図: コールバックのネスト例</strong></span></p>
+</div>
+</div></blockquote>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="20%" />
+<col width="40%" />
+<col width="40%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">利用ライブラリ</th>
+<th class="head">サンプル</th>
+<th class="head">参考ページ</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>jQuery</td>
+<td>-</td>
+<td><a class="reference external" href="http://api.jquery.com/category/deferred-object/">Deferred Object | jQuery</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="event-serializationadvantage">
+<span id="id3"></span><h3>6.1.2. Deferredのメリット<a class="headerlink" href="#event-serializationadvantage" title="Permalink to this headline">¶</a></h3>
+<div class="line-block">
+<div class="line">Deferredを利用すると、非同期処理をネストすることなく実装できる。</div>
+<div class="line">ここでは、非同期処理のネストをDeferredを利用して解消する方法を紹介する。</div>
+</div>
+<div class="line-block">
+<div class="line">まず、Deferredを利用せずに非同期処理を実装したサンプルを示す。以下は1秒毎にメッセージを3つ出力する。</div>
+</div>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="100%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">サンプル</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><a class="reference external" href="../samples/jquery/deferred-promise-async.html">1秒毎にメッセージを出力</a></td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="nx">setTimeout</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+  <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#deferred-area&#39;</span><span class="p">).</span><span class="nx">append</span><span class="p">(</span><span class="s1">&#39;&lt;p&gt;1&lt;/p&gt;&#39;</span><span class="p">);</span>
+  <span class="nx">setTimeout</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#deferred-area&#39;</span><span class="p">).</span><span class="nx">append</span><span class="p">(</span><span class="s1">&#39;&lt;p&gt;2&lt;/p&gt;&#39;</span><span class="p">);</span>
+    <span class="nx">setTimeout</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+      <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#deferred-area&#39;</span><span class="p">).</span><span class="nx">append</span><span class="p">(</span><span class="s1">&#39;&lt;p&gt;3&lt;/p&gt;&#39;</span><span class="p">);</span>
+    <span class="p">},</span> <span class="mi">1000</span><span class="p">);</span>
+  <span class="p">},</span> <span class="mi">1000</span><span class="p">);</span>
+<span class="p">},</span> <span class="mi">1000</span><span class="p">);</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">次に、上記のサンプルにDeferredを適用し、ネストを解消する。</div>
+</div>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="100%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">サンプル</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><a class="reference external" href="../samples/jquery/deferred-promise.html">1秒毎にメッセージを出力（Deferred適用）</a></td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="c1">// (1)</span>
+<span class="kd">var</span> <span class="nx">outputMessage1</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+
+  <span class="c1">// (2)</span>
+  <span class="kd">var</span> <span class="nx">dfd</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">$</span><span class="p">.</span><span class="nx">Deferred</span><span class="p">();</span>
+
+  <span class="nx">setTimeout</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#deferred-area&#39;</span><span class="p">).</span><span class="nx">append</span><span class="p">(</span><span class="s1">&#39;&lt;p&gt;1&lt;/p&gt;&#39;</span><span class="p">);</span>
+
+    <span class="c1">// (3)</span>
+    <span class="nx">dfd</span><span class="p">.</span><span class="nx">resolve</span><span class="p">();</span>
+  <span class="p">},</span> <span class="mi">1000</span><span class="p">);</span>
+
+  <span class="c1">// (4)</span>
+  <span class="k">return</span> <span class="nx">dfd</span><span class="p">.</span><span class="nx">promise</span><span class="p">();</span>
+<span class="p">};</span>
+
+<span class="c1">// (5)</span>
+<span class="kd">var</span> <span class="nx">outputMessage2</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+  <span class="cm">/* omitted */</span>
+<span class="p">};</span>
+
+<span class="c1">// (5)</span>
+<span class="kd">var</span> <span class="nx">outputMessage3</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+  <span class="cm">/* omitted */</span>
+<span class="p">};</span>
+
+<span class="c1">// (6)</span>
+<span class="nx">outputMessage1</span><span class="p">()</span>
+<span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">outputMessage2</span><span class="p">)</span>
+<span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">outputMessage3</span><span class="p">);</span>
+</pre></div>
+</div>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="11%" />
+<col width="89%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">項番</th>
+<th class="head">説明</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><div class="first last line-block">
+<div class="line">(1)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">1秒後にメッセージ「1」を出力する関数。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><div class="first last line-block">
+<div class="line">(2)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">deferredオブジェクトを生成する。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><div class="first last line-block">
+<div class="line">(3)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">非同期処理内で最後にdeferredオブジェクトの状態を変更する。</div>
+<div class="line">deferredオブジェクトの状態については後述する。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><div class="first last line-block">
+<div class="line">(4)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">promiseオブジェクトを返却する。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><div class="first last line-block">
+<div class="line">(5)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">メッセージ「2」「3」を出力する関数。</div>
+<div class="line"><cite>outputMessage1</cite>とほぼ同一であるため、実装は省略する。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><div class="first last line-block">
+<div class="line">(6)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line"><cite>outputMessage1</cite>を実行し、<cite>then</cite>で後続の非同期処理を連結する。</div>
+<div class="line"><cite>then</cite>については後述する。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="line-block">
+<div class="line">Deferred適用前後を比較すると、前者はメッセージ数分ネストしているが、後者はネストが解消している。Deferred特有の実装が必要だが、ネストを浅く保つことができる。</div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p><cite>then</cite>を実行すると、promiseオブジェクトにコールバックを設定し、新たなpromiseオブジェクトが返却される。<cite>then</cite>を繰り返すとpromiseオブジェクトが連鎖し、コールバックが直列的に実行される。</p>
+<blockquote class="last">
+<div><div class="figure align-center" id="id11">
+<a class="reference internal image-reference" href="../_images/deferred-then.png"><img alt="deferred-then" src="../_images/deferred-then.png" style="width: 511.0px; height: 172.0px;" /></a>
+<p class="caption"><span class="caption-text"><strong>図: promiseオブジェクトの連鎖とコールバック</strong></span></p>
+</div>
+</div></blockquote>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">promiseオブジェクトは、deferredオブジェクトから状態を変更するメソッドを削除したサブセットである。状態を変更できる箇所を限定することで、意図せず後続処理が実行されることを抑止する。</p>
+</div>
+</div>
+<div class="section" id="event-serializationhowtouse">
+<span id="id6"></span><h3>6.1.3. Deferredの利用方法<a class="headerlink" href="#event-serializationhowtouse" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="deferred-then">
+<span id="event-serializationbranchthen"></span><h4>6.1.3.1. Deferredによるコールバックの切り替え（then）<a class="headerlink" href="#deferred-then" title="Permalink to this headline">¶</a></h4>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="#event-serializationadvantage"><span class="std std-ref">Deferredのメリット</span></a> では、<cite>then</cite>で非同期処理を連結した。<cite>then</cite>は非同期処理の連結だけでなく、deferredオブジェクトの状態に応じてコールバックを切り替えることもできる。</div>
+</div>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="100%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">サンプル</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><a class="reference external" href="../samples/jquery/deferred-promise-branch-then.html">thenによるコールバックの切り替え</a></td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="c1">// (1)</span>
+<span class="kd">var</span> <span class="nx">random</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="nb">Math</span><span class="p">.</span><span class="nx">floor</span><span class="p">(</span><span class="nb">Math</span><span class="p">.</span><span class="nx">random</span><span class="p">()</span> <span class="o">*</span> <span class="mi">2</span><span class="p">)</span> <span class="o">===</span> <span class="mi">1</span> <span class="o">?</span> <span class="kc">true</span> <span class="o">:</span> <span class="kc">false</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="kd">var</span> <span class="nx">async</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+
+  <span class="kd">var</span> <span class="nx">dfd</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">$</span><span class="p">.</span><span class="nx">Deferred</span><span class="p">();</span>
+
+  <span class="nx">setTimeout</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">result</span> <span class="o">=</span> <span class="nx">random</span><span class="p">();</span>
+    <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#deferred-area&#39;</span><span class="p">).</span><span class="nx">append</span><span class="p">(</span><span class="s1">&#39;&lt;p&gt;Result is &#39;</span> <span class="o">+</span> <span class="nx">result</span> <span class="o">+</span> <span class="s1">&#39;.&lt;/p&gt;&#39;</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">result</span><span class="p">)</span> <span class="p">{</span>
+
+      <span class="c1">// (2)</span>
+      <span class="nx">dfd</span><span class="p">.</span><span class="nx">resolve</span><span class="p">();</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+
+      <span class="c1">// (2)</span>
+      <span class="nx">dfd</span><span class="p">.</span><span class="nx">reject</span><span class="p">();</span>
+    <span class="p">}</span>
+  <span class="p">},</span> <span class="mi">1000</span><span class="p">);</span>
+
+  <span class="k">return</span> <span class="nx">dfd</span><span class="p">.</span><span class="nx">promise</span><span class="p">();</span>
+<span class="p">};</span>
+
+<span class="c1">// (3)</span>
+<span class="kd">var</span> <span class="nx">success</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+  <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#deferred-area&#39;</span><span class="p">).</span><span class="nx">append</span><span class="p">(</span><span class="s1">&#39;&lt;p&gt;success&lt;/p&gt;&#39;</span><span class="p">);</span>
+<span class="p">};</span>
+
+<span class="c1">// (3)</span>
+<span class="kd">var</span> <span class="nx">failure</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+  <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#deferred-area&#39;</span><span class="p">).</span><span class="nx">append</span><span class="p">(</span><span class="s1">&#39;&lt;p&gt;failure&lt;/p&gt;&#39;</span><span class="p">);</span>
+<span class="p">};</span>
+
+<span class="c1">// (4)</span>
+<span class="nx">async</span><span class="p">().</span><span class="nx">then</span><span class="p">(</span><span class="nx">success</span><span class="p">,</span> <span class="nx">failure</span><span class="p">);</span>
+</pre></div>
+</div>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="11%" />
+<col width="89%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">項番</th>
+<th class="head">説明</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><div class="first last line-block">
+<div class="line">(1)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">trueかfalseをランダムに返却する関数。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><div class="first last line-block">
+<div class="line">(2)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">ランダム関数の結果に応じてdeferredオブジェクトの状態を変更する。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><div class="first last line-block">
+<div class="line">(3)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">メッセージを出力する関数。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><div class="first last line-block">
+<div class="line">(4)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">引数にコールバックを渡す。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="line-block">
+<div class="line"><cite>then</cite>に設定したコールバックは、deferredオブジェクトの状態に応じて実行される。対応関係を以下に示す。</div>
+</div>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="20%" />
+<col width="20%" />
+<col width="60%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">メソッド</th>
+<th class="head">状態</th>
+<th class="head">実行するコールバック</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><div class="first last line-block">
+<div class="line"><cite>resolve</cite></div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">resolved</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">第1引数</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><div class="first last line-block">
+<div class="line"><cite>reject</cite></div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">rejected</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">第2引数</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="line-block">
+<div class="line">なお、resolvedに対応するコールバックが不要の場合はnullを設定すればよい。</div>
+</div>
+</div>
+<div class="section" id="deferred-donefail">
+<span id="event-serializationbranchdonefail"></span><h4>6.1.3.2. Deferredによるコールバックの切り替え（done・fail）<a class="headerlink" href="#deferred-donefail" title="Permalink to this headline">¶</a></h4>
+<div class="line-block">
+<div class="line">ここでは、<cite>then</cite>と同様に<cite>done</cite>・<cite>fail</cite>でコールバックを切り替える方法を紹介する。</div>
+</div>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="100%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">サンプル</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><a class="reference external" href="../samples/jquery/deferred-promise-branch-done.html">done・failによるコールバックの切り替え</a></td>
+</tr>
+</tbody>
+</table>
+<div class="line-block">
+<div class="line">JavaScriptは <a class="reference internal" href="#event-serializationbranchthen"><span class="std std-ref">Deferredによるコールバックの切り替え（then）</span></a> との差分のみ記述する。</div>
+</div>
+<div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="c1">// (1)</span>
+<span class="nx">async</span><span class="p">()</span>
+<span class="p">.</span><span class="nx">done</span><span class="p">(</span><span class="nx">success</span><span class="p">)</span>
+<span class="p">.</span><span class="nx">fail</span><span class="p">(</span><span class="nx">failure</span><span class="p">);</span>
+</pre></div>
+</div>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="11%" />
+<col width="89%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">項番</th>
+<th class="head">説明</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><div class="first last line-block">
+<div class="line">(1)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">引数にコールバックを渡す。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="line-block">
+<div class="line">deferredオブジェクトの状態と、実行するコールバックの対応関係を以下に示す。</div>
+</div>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="20%" />
+<col width="20%" />
+<col width="60%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">メソッド</th>
+<th class="head">状態</th>
+<th class="head">実行するコールバック</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><div class="first last line-block">
+<div class="line"><cite>resolve</cite></div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">resolved</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line"><cite>done</cite>の引数</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><div class="first last line-block">
+<div class="line"><cite>reject</cite></div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">rejected</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line"><cite>fail</cite>の引数</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p><cite>done</cite>・<cite>fail</cite>を実行すると、promiseオブジェクトにコールバックを設定し、同一のpromiseオブジェクトが返却される。<cite>done</cite>・<cite>fail</cite>を繰り返すと1つのpromiseオブジェクトに複数のコールバックが積み上げられ、ほぼ同時に実行される。<cite>then</cite>と挙動が異なる点に注意すること。</p>
+<blockquote class="last">
+<div><div class="figure align-center" id="id12">
+<a class="reference internal image-reference" href="../_images/deferred-done-fail.png"><img alt="deferred-done" src="../_images/deferred-done-fail.png" style="width: 157.0px; height: 219.0px;" /></a>
+<p class="caption"><span class="caption-text"><strong>図: promiseオブジェクトとコールバック</strong></span></p>
+</div>
+</div></blockquote>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last"><cite>then</cite>・<cite>done</cite>・<cite>fail</cite>の他に<cite>always</cite>がある。<cite>always</cite>はresolved・rejectedのどちらの状態でも実行される。</p>
+</div>
+</div>
+<div class="section" id="when">
+<span id="event-serializationparallel"></span><h4>6.1.3.3. 非同期処理の並列連結（when）<a class="headerlink" href="#when" title="Permalink to this headline">¶</a></h4>
+<div class="line-block">
+<div class="line">ここでは、非同期処理を並列的に連結する方法を紹介する。<cite>when</cite>は、複数の非同期処理を並列に実行し、結果に応じてコールバックを切り替えることができる。</div>
+</div>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="100%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">サンプル</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><a class="reference external" href="../samples/jquery/deferred-promise-parallel.html">非同期処理の並列連結</a></td>
+</tr>
+</tbody>
+</table>
+<div class="line-block">
+<div class="line">JavaScriptは、非同期処理を3つ用意し、<cite>when</cite>の引数に設定する。</div>
+</div>
+<div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="c1">// (1)</span>
+<span class="kd">var</span> <span class="nx">asyncFuncA</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+
+  <span class="kd">var</span> <span class="nx">dfd</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">$</span><span class="p">.</span><span class="nx">Deferred</span><span class="p">();</span>
+
+  <span class="nx">setTimeout</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#deferred-area&#39;</span><span class="p">).</span><span class="nx">append</span><span class="p">(</span><span class="s1">&#39;&lt;p&gt;functionA has ended.&lt;/p&gt;&#39;</span><span class="p">);</span>
+    <span class="nx">dfd</span><span class="p">.</span><span class="nx">resolve</span><span class="p">();</span>
+  <span class="p">},</span> <span class="mi">1000</span><span class="p">);</span>
+  <span class="k">return</span> <span class="nx">dfd</span><span class="p">.</span><span class="nx">promise</span><span class="p">();</span>
+<span class="p">};</span>
+
+<span class="c1">// (2)</span>
+<span class="kd">var</span> <span class="nx">asyncFuncB</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+  <span class="cm">/* omitted */</span>
+<span class="p">};</span>
+
+<span class="c1">// (2)</span>
+<span class="kd">var</span> <span class="nx">asyncFuncC</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+  <span class="cm">/* omitted */</span>
+<span class="p">};</span>
+
+<span class="c1">// (3)</span>
+<span class="kd">var</span> <span class="nx">outputMessage</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+  <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#deferred-area&#39;</span><span class="p">).</span><span class="nx">append</span><span class="p">(</span><span class="s1">&#39;&lt;p&gt;All of the function has ended.&lt;/p&gt;&#39;</span><span class="p">);</span>
+<span class="p">};</span>
+
+<span class="c1">// (4)</span>
+<span class="nx">$</span><span class="p">.</span><span class="nx">when</span><span class="p">(</span><span class="nx">asyncFuncA</span><span class="p">(),</span> <span class="nx">asyncFuncB</span><span class="p">(),</span> <span class="nx">asyncFuncC</span><span class="p">())</span>
+<span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">outputMessage</span><span class="p">);</span>
+</pre></div>
+</div>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="11%" />
+<col width="89%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">項番</th>
+<th class="head">説明</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><div class="first last line-block">
+<div class="line">(1)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">非同期処理終了後にメッセージを出力する関数。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><div class="first last line-block">
+<div class="line">(2)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">非同期処理終了後にメッセージを出力する関数。</div>
+<div class="line"><cite>asyncFuncA</cite>と同様であるため、実装は省略。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><div class="first last line-block">
+<div class="line">(3)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">全ての処理が完了後にメッセージを出力する関数。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><div class="first last line-block">
+<div class="line">(4)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">非同期処理からpromiseオブジェクトを受け取る。</div>
+<div class="line"><cite>then</cite>の引数にメッセージ出力処理を設定する。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="line-block">
+<div class="line">上記の通り実装すると、各非同期処理の完了を待って<cite>then</cite>のコールバックが実行される。</div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p><cite>when</cite>に複数の非同期処理を渡すと、pendingの状態を持つpromiseオブジェクトが返却される。
+promiseオブジェクトは各非同期処理の状態を管理しており、全ての非同期処理がresolvedになるか、1つでもrejectedになると<cite>then</cite>のコールバックを実行する。</p>
+<p class="last">なお、後者の場合は実行中の非同期処理の完了を待ったり、中断することなくコールバックの実行に移る。必要に応じて中断処理などを実装すること。</p>
+</div>
+</div>
+</div>
+<div class="section" id="event-serializationhowtoextend">
+<span id="id8"></span><h3>6.1.4. 応用方法<a class="headerlink" href="#event-serializationhowtoextend" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="ajax">
+<span id="event-serializationhowtoreuseajax"></span><h4>6.1.4.1. Ajaxの再利用<a class="headerlink" href="#ajax" title="Permalink to this headline">¶</a></h4>
+<div class="line-block">
+<div class="line"><cite>ajax</cite>は、非同期通信完了後にコールバックを実行できる。コールバックに業務処理を設定した場合、それらが密に結合される。Deferredを利用すると、非同期通信とコールバックの結合を疎にし、非同期通信のみ再利用することができる。</div>
+</div>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="100%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">サンプル</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><a class="reference external" href="../samples/jquery/deferred-promise-ajax.html">Ajaxの再利用</a></td>
+</tr>
+</tbody>
+</table>
+<div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="kd">var</span> <span class="nx">doAjax</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+
+  <span class="kd">var</span> <span class="nx">dfd</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">$</span><span class="p">.</span><span class="nx">Deferred</span><span class="p">();</span>
+
+  <span class="c1">// (1)</span>
+  <span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span>
+    <span class="nx">url</span> <span class="o">:</span> <span class="s1">&#39;js/deferred-promise-sleep.js&#39;</span><span class="p">,</span>
+    <span class="nx">dataType</span> <span class="o">:</span> <span class="s1">&#39;script&#39;</span>
+
+  <span class="c1">// (2)</span>
+  <span class="p">}).</span><span class="nx">then</span><span class="p">(</span><span class="nx">dfd</span><span class="p">.</span><span class="nx">resolve</span><span class="p">);</span>
+  <span class="k">return</span> <span class="nx">dfd</span><span class="p">.</span><span class="nx">promise</span><span class="p">();</span>
+<span class="p">};</span>
+
+<span class="c1">// (3)</span>
+<span class="kd">var</span> <span class="nx">funcA</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+  <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#deferred-area&#39;</span><span class="p">).</span><span class="nx">append</span><span class="p">(</span><span class="s1">&#39;&lt;p&gt;Do function A.&lt;/p&gt;&#39;</span><span class="p">);</span>
+<span class="p">};</span>
+
+<span class="c1">// (3)</span>
+<span class="kd">var</span> <span class="nx">funcB</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+  <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#deferred-area&#39;</span><span class="p">).</span><span class="nx">append</span><span class="p">(</span><span class="s1">&#39;&lt;p&gt;Do function B.&lt;/p&gt;&#39;</span><span class="p">);</span>
+<span class="p">};</span>
+
+<span class="c1">// (4)</span>
+<span class="nx">doAjax</span><span class="p">().</span><span class="nx">then</span><span class="p">(</span><span class="nx">funcA</span><span class="p">);</span>
+
+<span class="c1">// (4)</span>
+<span class="nx">doAjax</span><span class="p">().</span><span class="nx">then</span><span class="p">(</span><span class="nx">funcB</span><span class="p">);</span>
+</pre></div>
+</div>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="11%" />
+<col width="89%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">項番</th>
+<th class="head">説明</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><div class="first last line-block">
+<div class="line">(1)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">非同期通信を実行する。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><div class="first last line-block">
+<div class="line">(2)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">非同期処理終了後に状態を変更する。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><div class="first last line-block">
+<div class="line">(3)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">メッセージを出力する関数。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><div class="first last line-block">
+<div class="line">(4)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">非同期通信を実行し、<cite>then</cite>の引数にメッセージを出力する関数を設定する。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="line-block">
+<div class="line">上記のサンプルを実行すると、非同期通信は同一だが、異なるメッセージを出力することができる。AjaxとDeferredを組み合わせることで、再利用性を高めることができる。</div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">サンプルでは、<cite>ajax</cite>に<cite>then</cite>を実装している。
+<cite>ajax</cite>は、jQuery XMLHttpRequest（以降、「jqXHR」とする。）を返却する。jqXHRはpromiseオブジェクトのインターフェースを実装しており、サンプルのように<cite>then</cite>や<cite>done</cite>・<cite>fail</cite>を実行することが可能である。詳細は <a class="reference external" href="http://jquery.com/">jQuery公式ウェブサイトのリファレンス</a>を参照すること。</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../development-javascript.html" title="7. JavaScriptの開発方法"
+             >next</a></li>
+        <li class="right" >
+          <a href="../manipulation/index.html" title="5. 操作性向上・制御"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Macchinetta Client (1.x) Development Guideline 1.1.0.RELEASE documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2017 NTT Corporation.
+    </div>
+  </body>
+</html>

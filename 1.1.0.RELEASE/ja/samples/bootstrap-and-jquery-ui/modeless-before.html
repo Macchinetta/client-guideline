@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>モードレスダイアログ</title>
+
+    <!-- BootstrapのスタイルシートとjQuery UIのスタイルシートの読み込み -->
+    <link rel="stylesheet" href="../lib/vendor/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../lib/vendor/jquery-ui/1.11.1/jquery-ui.min.css">
+
+  </head>
+  <body>
+    <div class="container">
+      <h1>モードレスダイアログ表示</h1>
+
+      <!-- モードレスダイアログ起動ボタン -->
+      <button id="modeless-launch">モードレスダイアログ起動ボタン</button>
+
+      <!-- 表示するモードレスダイアログ -->
+      <div id="dialoga">
+        <p>
+          コンテンツ
+        </p>
+      </div>
+
+      <hr>
+
+      <h3>ダイアログ外のコントロール</h3>
+      <p>
+        モーダレスダイアログ表示中でも操作できます。
+      </p>
+      <form>
+        <input type="radio" name="dummy">dummy 1
+        <input type="radio" name="dummy">dummy 2
+      </form>
+    </div>
+
+    <!-- jQuery、Bootstrap、jQuery UIと独自に実装したJavaScriptの読み込み -->
+    <script src="../lib/vendor/jquery/1.11.1/jquery-1.11.1.min.js"></script>
+    <script src="../lib/vendor/jquery-ui/1.11.1/jquery-ui.min.js"></script>
+    <script src="../lib/vendor/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="js/modeless-before.js"></script>
+  </body>
+</html>

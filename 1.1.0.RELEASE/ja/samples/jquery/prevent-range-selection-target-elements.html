@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>範囲選択防止サンプル</title>
+</head>
+<body>
+
+    <h1>範囲選択防止サンプル</h1>
+    <h2>特定要素の範囲選択不可</h2>
+    <table>
+        <tr>
+            <td>入力欄：</td>
+            <td><input type="text"/></td>
+        </tr>
+        <tr>
+            <td>パスワード欄：</td>
+            <td><input type="password"/></td>
+        </tr>
+    </table>
+    <textarea></textarea>
+    <br />
+    <label><input type="checkbox" />チェックボックスA</label>
+    <label><input type="checkbox" />チェックボックスB</label>
+    <br />
+    <label><input type="radio" name="radio" />ラジオA</label>
+    <label><input type="radio" name="radio" />ラジオB</label>
+    <br />
+    <p class="disable">
+        HTMLの特定の要素を選択不可とします
+    </p>
+
+    <input type="button" value="ボタンA" />
+    <button type="button">ボタンB</button>
+
+    <!-- jQueryと、独自に実装したJavaScriptを読み込む -->
+    <script src="../lib/vendor/jquery/1.11.1/jquery-1.11.1.min.js"></script>
+    <script src="js/prevent-range-selection-target-elements.js"></script>
+</body>
+</html>

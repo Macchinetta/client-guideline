@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>二度押し無効化サンプル</title>
+  </head>
+  <body>
+
+    <h1>二度押し無効化サンプル</h1>
+
+    <form id="the-form" action="prevent-continuous-click.html" method="post">
+      <label>Message: <input type="text" name="message"></label>
+      <input type="submit" value="送信">
+    </form>
+
+    <!-- jQueryと、独自に実装したJavaScriptファイルを読み込む。 -->
+    <script src="../lib/vendor/jquery/1.11.1/jquery-1.11.1.min.js"></script>
+    <script src="js/prevent-continuous-click.js"></script>
+  </body>
+</html>

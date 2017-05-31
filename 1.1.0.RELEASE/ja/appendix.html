@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>8. 付録 &#8212; Macchinetta Client (1.x) Development Guideline 1.1.0.RELEASE documentation</title>
+    
+    <link rel="stylesheet" href="_static/solar.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.1.0.RELEASE',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="7. JavaScriptの開発方法" href="development-javascript.html" /><link href='http://fonts.googleapis.com/css?family=Source+Code+Pro|Open+Sans:300italic,400italic,700italic,400,300,700' rel='stylesheet' type='text/css'>
+<link href="_static/solarized-dark.css" rel="stylesheet">
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="development-javascript.html" title="7. JavaScriptの開発方法"
+             accesskey="P">previous</a></li>
+        <li class="nav-item nav-item-0"><a href="index.html">Macchinetta Client (1.x) Development Guideline 1.1.0.RELEASE documentation</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">8. 付録</a><ul>
+<li><a class="reference internal" href="#tips">8.1. 構成ライブラリを使用する際のTips</a><ul>
+<li><a class="reference internal" href="#bootstrapslickgrid">8.1.1. BootstrapとSlickGridを同時に使用する際の注意点</a><ul>
+<li><a class="reference internal" href="#grid-solution-label">8.1.1.1. スタイル競合によるテーブルの表示崩れ</a></li>
+<li><a class="reference internal" href="#id3">8.1.1.2. タブ内へのテーブル表示の際の表示崩れ</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#bootstrapjquery-ui">8.1.2. BootstrapとjQuery UIを同時に使用する際の名前空間の競合</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id5">8.2. 構成ライブラリ以外の便利なライブラリ</a><ul>
+<li><a class="reference internal" href="#lo-dash">8.2.1. Lo-Dashによるコーディング支援</a><ul>
+<li><a class="reference internal" href="#lodash-array-function">8.2.1.1. リスト操作</a></li>
+<li><a class="reference internal" href="#lodash-template-engine">8.2.1.2. テンプレートエンジン</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#macchinetta-server-framework-1-x">8.3. Macchinetta Server Framework (1.x)との連携</a><ul>
+<li><a class="reference internal" href="#ajax">8.3.1. Ajaxを利用した連携</a><ul>
+<li><a class="reference internal" href="#ajaxgearingserveroutline">8.3.1.1. 概要</a></li>
+<li><a class="reference internal" href="#servergearinghowtouse">8.3.1.2. 利用方法</a><ul>
+<li><a class="reference internal" href="#get">8.3.1.2.1. GETを使ったサーバ連携</a></li>
+<li><a class="reference internal" href="#post">8.3.1.2.2. POSTを使ったサーバ連携</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="development-javascript.html"
+                        title="previous chapter">7. JavaScriptの開発方法</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="id1">
+<h1>8. 付録<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<p>この章では構成ライブラリを使用する際のTipsや構成ライブラリ以外の便利なライブラリの使用方法を説明する。</p>
+<div class="section" id="tips">
+<h2>8.1. 構成ライブラリを使用する際のTips<a class="headerlink" href="#tips" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="bootstrapslickgrid">
+<span id="grid-notice"></span><h3>8.1.1. BootstrapとSlickGridを同時に使用する際の注意点<a class="headerlink" href="#bootstrapslickgrid" title="Permalink to this headline">¶</a></h3>
+<p>ここでは、BootstrapとSlickGridを同時に使用する際の注意点を説明する。</p>
+<div class="section" id="grid-solution-label">
+<span id="id2"></span><h4>8.1.1.1. スタイル競合によるテーブルの表示崩れ<a class="headerlink" href="#grid-solution-label" title="Permalink to this headline">¶</a></h4>
+<p>スタイル競合によりテーブルの表示が崩れる。</p>
+<p><a class="reference external" href="samples/bootstrap-and-slickgrid-header/header-before.html">不具合事象サンプル</a></p>
+<div class="figure align-center" id="id10">
+<img alt="ヘッダとデータ行がずれる例" src="_images/styles-competion-example.png" />
+<p class="caption"><span class="caption-text"><strong>図: ヘッダとデータ行がずれる例</strong></span></p>
+</div>
+<p>SlickGridでは、<code class="docutils literal"><span class="pre">box-sizing</span></code>プロパティの値が<code class="docutils literal"><span class="pre">content-box</span></code>であることを前提にセルの幅と高さを計算してレイアウトを生成するが、Bootstrapはすべての要素に対して<code class="docutils literal"><span class="pre">box-sizing</span></code>プロパティの値に<code class="docutils literal"><span class="pre">border-box</span></code>を設定する。その結果、SlickGridとBootstrapの併用時にテーブルの表示が崩れる。</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last"><code class="docutils literal"><span class="pre">border-box</span></code>は、髙さと幅のプロパティである<code class="docutils literal"><span class="pre">width</span></code>、<code class="docutils literal"><span class="pre">height</span></code>に線の幅とパディングを含める設定（<code class="docutils literal"><span class="pre">width</span></code>、<code class="docutils literal"><span class="pre">height</span></code>が画面上の表示サイズと等しい）である。一方で<code class="docutils literal"><span class="pre">content-box</span></code>は線の幅とパディングを含めない設定（<code class="docutils literal"><span class="pre">width</span></code>、<code class="docutils literal"><span class="pre">height</span></code>に線の幅とパディングを含めたものが画面上の表示サイズと等しい）である。</p>
+</div>
+<p>この事象に対して、ヘッダーとデータ行のセルの<code class="docutils literal"><span class="pre">box-sizing</span></code>プロパティの値を<code class="docutils literal"><span class="pre">content-box</span></code>にすることで対処する。
+具体的には、ヘッダーのセルにSlickGridによって設定される<code class="docutils literal"><span class="pre">.slick-header-column.ui-state-default</span></code>とデータ行のセルに設定される<code class="docutils literal"><span class="pre">.slick-cell</span></code>に値を設定する。</p>
+<div class="highlight-css"><div class="highlight"><pre><span></span><span class="p">.</span><span class="nc">slick-header-column</span><span class="p">.</span><span class="nc">ui-state-default</span> <span class="p">{</span>
+  <span class="k">box-sizing</span><span class="p">:</span> <span class="kc">content-box</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="p">.</span><span class="nc">slick-cell</span> <span class="p">{</span>
+  <span class="k">box-sizing</span><span class="p">:</span> <span class="kc">content-box</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>対処後は崩れが解消される。</p>
+<p><a class="reference external" href="samples/bootstrap-and-slickgrid-header/header-after.html">対処済みサンプル</a></p>
+<div class="figure align-center" id="id11">
+<img alt="対処後の例" src="_images/styles-competion-solution.png" />
+<p class="caption"><span class="caption-text"><strong>図: 対処後の例</strong></span></p>
+</div>
+<p>上記では、ライブラリのスタイルシート、JavaScriptへの変更を行わずに独自に作成したスタイルシートで対処を実施しているが、他にも方法が議論されているため、必要に応じて参照すること。</p>
+<ul class="simple">
+<li><a class="reference external" href="https://github.com/mleibman/SlickGrid/issues/699">Support the &#8220;box-sizing: border-box;&#8221; css rule for column headers #699</a></li>
+<li><a class="reference external" href="https://github.com/mleibman/SlickGrid/issues/742">Conflict with bootstrap 3 #742</a></li>
+</ul>
+</div>
+<div class="section" id="id3">
+<h4>8.1.1.2. タブ内へのテーブル表示の際の表示崩れ<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h4>
+<p>初期状態で選択されていないタブのペイン内にテーブルを表示する場合、タブを切り替えてテーブルを表示すると右側のカラムが途中で欠ける場合がある。</p>
+<p>これは、タブのペインが<code class="docutils literal"><span class="pre">display:</span> <span class="pre">none</span></code>で非表示となっていることで、SligkGridがレイアウトする際に幅を計算できないことが原因である。</p>
+<p><a class="reference external" href="http://mleibman.github.io/SlickGrid/examples/example-explicit-initialization.html">公式ページ</a>でも<code class="docutils literal"><span class="pre">display:</span> <span class="pre">none</span></code>では正確に計算できないと記載がある。</p>
+<p><a class="reference external" href="samples/bootstrap-and-slickgrid-tab/tab-before.html">不具合事象サンプル</a></p>
+<div class="figure align-center" id="id12">
+<img alt="タブのペイン内にテーブル表示時、右側のカラムが欠ける例" src="_images/celldata-vanishing-example.png" />
+<p class="caption"><span class="caption-text"><strong>図: タブのペイン内にテーブル表示時、右側のカラムが欠ける例</strong></span></p>
+</div>
+<p>この事象に対して、初期表示時にテーブルを生成するのではなく、タブ切り替え時に初めてテーブルを作成するようにすることで対処する。
+具体的には、Bootstrapの<code class="docutils literal"><span class="pre">nav-tab</span></code>タブクリック時のイベントである、<code class="docutils literal"><span class="pre">shown.bs.tab</span></code>を契機にテーブルを作成する処理を実装する。</p>
+<p><a class="reference internal" href="grid/index.html#basic-usages-slickgrid"><span class="std std-ref">SlickGrid基本構成サンプル</span></a>のdefault.jsで実装している画面初期化処理を次のように実装する。</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#tab2btn&#39;</span><span class="p">).</span><span class="nx">one</span><span class="p">(</span><span class="s1">&#39;shown.bs.tab&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+  <span class="k">new</span> <span class="nx">Slick</span><span class="p">.</span><span class="nx">Grid</span><span class="p">(</span><span class="s1">&#39;#myGrid&#39;</span><span class="p">,</span> <span class="nx">data</span><span class="p">,</span> <span class="nx">columns</span><span class="p">,</span> <span class="nx">options</span><span class="p">);</span>
+<span class="p">});</span>
+</pre></div>
+</div>
+<p>対処後は正常に表示される。</p>
+<p><a class="reference external" href="samples/bootstrap-and-slickgrid-tab/tab-after.html">対処済みサンプル</a></p>
+<div class="figure align-center" id="id13">
+<img alt="対処後の例" src="_images/celldata-vanishing-solution.png" />
+<p class="caption"><span class="caption-text"><strong>図: 対処後の例</strong></span></p>
+</div>
+</div>
+</div>
+<div class="section" id="bootstrapjquery-ui">
+<span id="bootstrapandjqueryui"></span><h3>8.1.2. BootstrapとjQuery UIを同時に使用する際の名前空間の競合<a class="headerlink" href="#bootstrapjquery-ui" title="Permalink to this headline">¶</a></h3>
+<p>BootstrapとjQuery UIを同時使用する際に、名前空間が競合することにより正常に動作がしない場合ある。</p>
+<p>例えば、次のサンプルではモードレスダイアログの×ボタンが正常に表示されない。</p>
+<p><a class="reference external" href="samples/bootstrap-and-jquery-ui/modeless-before.html">不具合事象サンプル</a></p>
+<div class="figure align-center" id="id14">
+<img alt="モードレスダイアログの×ボタンが正常に表示されない例" src="_images/conflict-example.png" />
+<p class="caption"><span class="caption-text"><strong>図: モードレスダイアログの×ボタンが正常に表示されない例</strong></span></p>
+</div>
+<p>これはjQuery UIがモーダルダイアログ作成の際に内部で実行する<code class="docutils literal"><span class="pre">$.fn.button</span></code> メソッドがBootstrapのメソッドと競合・上書きされているため、実行できないことが原因である。</p>
+<p>この事象に対して、Bootstrapのメソッド毎に用意されている<code class="docutils literal"><span class="pre">noConflict</span></code>メソッドを使用することで対処する。このメソッドを使用することで、上書きされる前のメソッドに差し戻すことができる。このサンプルでは<code class="docutils literal"><span class="pre">$.fn.button</span></code>が競合しているため以下のように<code class="docutils literal"><span class="pre">$.fn.button.noConflict</span></code>を使用する。</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="nx">$</span><span class="p">.</span><span class="nx">fn</span><span class="p">.</span><span class="nx">bsbutton</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">fn</span><span class="p">.</span><span class="nx">button</span><span class="p">.</span><span class="nx">noConflict</span><span class="p">();</span>
+</pre></div>
+</div>
+<p>対処後は×ボタンが正常に表示されるようになる。</p>
+<p><a class="reference external" href="samples/bootstrap-and-jquery-ui/modeless-after.html">対処済みサンプル</a></p>
+<div class="figure align-center" id="id15">
+<img alt="対処後の例" src="_images/conflict-solution.png" />
+<p class="caption"><span class="caption-text"><strong>図: 対処後の例</strong></span></p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">jQueryでは<code class="docutils literal"><span class="pre">$</span></code>変数への競合のみ対処方法が用意されているが、Bootstrapのように個別のメソッドへの対処方法は用意されていない。そのため、BootstrapとjQuery UIを同時に使用する際は、基本的にBootstrapで名前空間の競合の対処を実施する。</p>
+</div>
+</div>
+</div>
+<div class="section" id="id5">
+<h2>8.2. 構成ライブラリ以外の便利なライブラリ<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="lo-dash">
+<h3>8.2.1. Lo-Dashによるコーディング支援<a class="headerlink" href="#lo-dash" title="Permalink to this headline">¶</a></h3>
+<p>Lo-Dashは、リスト操作やテンプレートエンジンなどの様々な便利な関数を提供するライブラリである。リスト操作関数は、ネイティブ実装が用意されていないレガシーブラウザへの対応にも役立つ。</p>
+<p>ここではLo-Dashを用いた以下の内容を説明する。</p>
+<ul class="simple">
+<li><a class="reference internal" href="#lodash-array-function"><span class="std std-ref">リスト操作</span></a></li>
+<li><a class="reference internal" href="#lodash-template-engine"><span class="std std-ref">テンプレートエンジン</span></a></li>
+</ul>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="20%" />
+<col width="10%" />
+<col width="30%" />
+<col width="40%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">利用ライブラリ</th>
+<th class="head">参考バージョン</th>
+<th class="head">サンプル</th>
+<th class="head">参考ページ</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Lo-Dash (Compatibility build)</td>
+<td>2.4.1</td>
+<td>なし</td>
+<td><a class="reference external" href="https://lodash.com/">Lo-Dash</a></td>
+</tr>
+</tbody>
+</table>
+<div class="section" id="lodash-array-function">
+<span id="id6"></span><h4>8.2.1.1. リスト操作<a class="headerlink" href="#lodash-array-function" title="Permalink to this headline">¶</a></h4>
+<p>ここでは代表的なメソッドのみ紹介する。
+完全な一覧は <a class="reference external" href="https://lodash.com/docs">Lo-Dashの公式リファレンス</a> を参照すること。</p>
+<ul>
+<li><p class="first"><code class="docutils literal"><span class="pre">_.each(collection,</span> <span class="pre">callback)</span></code></p>
+<p>リストのすべての要素に対して繰り返し処理する。(<code class="docutils literal"><span class="pre">Array.forEach</span></code>相当)</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="c1">// (1)</span>
+<span class="nx">_</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]).</span><span class="nx">forEach</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">num</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">num</span><span class="p">);</span>
+<span class="p">});</span>
+</pre></div>
+</div>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="11%" />
+<col width="89%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">項番</th>
+<th class="head">説明</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><div class="first last line-block">
+<div class="line">(1)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">リストの要素を1つずつコンソール出力する。</div>
+<div class="line">上記サンプルの場合、コンソールにリストの要素を1つずつ順に出力する。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">_.filter(collection,</span> <span class="pre">fn)</span></code></p>
+<p>リストの要素のうち、条件に一致した値だけのリストを返す。(<code class="docutils literal"><span class="pre">Array.filter</span></code>相当)</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="c1">// (2)</span>
+<span class="nx">_</span><span class="p">.</span><span class="nx">filter</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">],</span> <span class="kd">function</span><span class="p">(</span><span class="nx">num</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="nx">num</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">});</span>
+</pre></div>
+</div>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="11%" />
+<col width="89%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">項番</th>
+<th class="head">説明</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><div class="first last line-block">
+<div class="line">(2)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">2の倍数の要素からなるリストを返す。</div>
+<div class="line">上記サンプルでは [2, 4, 6] が返却される。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">_.map(collection,</span> <span class="pre">callback)</span></code></p>
+<p>リスト要素のそれぞれに関数を適用した結果の新たなリストを返す。(<code class="docutils literal"><span class="pre">Array.map</span></code>相当)</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="c1">// (3)</span>
+<span class="nx">_</span><span class="p">.</span><span class="nx">map</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="kd">function</span><span class="p">(</span><span class="nx">num</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">return</span> <span class="nx">num</span> <span class="o">*</span> <span class="mi">3</span><span class="p">;</span>
+<span class="p">});</span>
+</pre></div>
+</div>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="11%" />
+<col width="89%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">項番</th>
+<th class="head">説明</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><div class="first last line-block">
+<div class="line">(3)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">各要素の値を3倍したリストを作る。</div>
+<div class="line">上記サンプルでは [3, 6, 9] が返却される。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">_.where(collection,</span> <span class="pre">props)</span></code></p>
+<p>指定したプロパティに一致する要素からなるリストを返す。</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="kd">var</span> <span class="nx">characters</span> <span class="o">=</span> <span class="p">[</span>
+  <span class="p">{</span> <span class="s1">&#39;name&#39;</span><span class="o">:</span> <span class="s1">&#39;barney&#39;</span><span class="p">,</span> <span class="s1">&#39;age&#39;</span><span class="o">:</span> <span class="mi">36</span><span class="p">,</span> <span class="s1">&#39;pets&#39;</span><span class="o">:</span> <span class="p">[</span><span class="s1">&#39;hoppy&#39;</span><span class="p">]</span> <span class="p">},</span>
+  <span class="p">{</span> <span class="s1">&#39;name&#39;</span><span class="o">:</span> <span class="s1">&#39;fred&#39;</span><span class="p">,</span>   <span class="s1">&#39;age&#39;</span><span class="o">:</span> <span class="mi">40</span><span class="p">,</span> <span class="s1">&#39;pets&#39;</span><span class="o">:</span> <span class="p">[</span><span class="s1">&#39;baby puss&#39;</span><span class="p">,</span> <span class="s1">&#39;dino&#39;</span><span class="p">]</span> <span class="p">}</span>
+<span class="p">];</span>
+
+<span class="c1">// (4)</span>
+<span class="nx">_</span><span class="p">.</span><span class="nx">where</span><span class="p">(</span><span class="nx">characters</span><span class="p">,</span> <span class="p">{</span> <span class="s1">&#39;age&#39;</span><span class="o">:</span> <span class="mi">36</span> <span class="p">});</span>
+</pre></div>
+</div>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="11%" />
+<col width="89%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">項番</th>
+<th class="head">説明</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><div class="first last line-block">
+<div class="line">(4)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">ageプロパティが36である要素のリストを返す。</div>
+<div class="line">上記サンプルでは [{ &#8216;name&#8217;: &#8216;barney&#8217;, &#8216;age&#8217;: 36, &#8216;pets&#8217;: [&#8216;hoppy&#8217;] }] が返却される。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+</div>
+<div class="section" id="lodash-template-engine">
+<span id="id7"></span><h4>8.2.1.2. テンプレートエンジン<a class="headerlink" href="#lodash-template-engine" title="Permalink to this headline">¶</a></h4>
+<p><code class="docutils literal"><span class="pre">_.template(templateStr,</span> <span class="pre">data)</span></code> メソッドを用いることで、予め定義したテンプレート文字列と与えられたデータから、新たな文字列を生成することができる。</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="c1">// (1)</span>
+<span class="kd">var</span> <span class="nx">templateStr</span> <span class="o">=</span> <span class="s1">&#39;hello &lt;%= name %&gt;&#39;</span><span class="p">;</span>
+<span class="nx">_</span><span class="p">.</span><span class="nx">template</span><span class="p">(</span><span class="nx">templateStr</span><span class="p">,</span> <span class="p">{</span> <span class="s1">&#39;name&#39;</span><span class="o">:</span> <span class="s1">&#39;fred&#39;</span> <span class="p">});</span>
+
+<span class="c1">// (2)</span>
+<span class="kd">var</span> <span class="nx">templateStr</span> <span class="o">=</span> <span class="s1">&#39;&lt;b&gt;&lt;%- value %&gt;&lt;/b&gt;&#39;</span><span class="p">;</span>
+<span class="nx">_</span><span class="p">.</span><span class="nx">template</span><span class="p">(</span><span class="nx">templateStr</span><span class="p">,</span> <span class="p">{</span> <span class="s1">&#39;value&#39;</span><span class="o">:</span> <span class="s1">&#39;&lt;script&gt;&#39;</span> <span class="p">});</span>
+
+<span class="c1">// (3)</span>
+<span class="kd">var</span> <span class="nx">templateStr</span> <span class="o">=</span> <span class="s1">&#39;&lt;% _.forEach(people, function(name) { %&gt;&lt;li&gt;&lt;%- name %&gt;&lt;/li&gt;&lt;% }); %&gt;&#39;</span><span class="p">;</span>
+<span class="nx">_</span><span class="p">.</span><span class="nx">template</span><span class="p">(</span><span class="nx">templateStr</span><span class="p">,</span> <span class="p">{</span> <span class="s1">&#39;people&#39;</span><span class="o">:</span> <span class="p">[</span><span class="s1">&#39;fred&#39;</span><span class="p">,</span> <span class="s1">&#39;barney&#39;</span><span class="p">]</span> <span class="p">});</span>
+</pre></div>
+</div>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="11%" />
+<col width="89%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">項番</th>
+<th class="head">説明</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><div class="first last line-block">
+<div class="line">(1)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">プロパティの値で置き換える。( &#8216;&lt;%= ... %&gt;&#8217; を使用)</div>
+<div class="line">この場合、文字列 &#8216;hello fred&#8217; が設定される。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><div class="first last line-block">
+<div class="line">(2)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">プロパティの値をHTMLエスケープして置き換える。( &#8216;&lt;%- ... %&gt;&#8217; を使用)</div>
+<div class="line">この場合、文字列 &#8216;&lt;b&gt;&amp;lt;script&amp;gt;&lt;/b&gt;&#8217; が設定される。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><div class="first last line-block">
+<div class="line">(3)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">テンプレート内でJavaScriptコードを実行する。(&lt;% ... %&gt; を使用)</div>
+<div class="line">この場合、文字列 &#8216;&lt;li&gt;fred&lt;/li&gt;&lt;li&gt;barney&lt;/li&gt;&#8217; が設定される。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">XSS脆弱性を作らないよう、HTML上のテキスト出力には<code class="docutils literal"><span class="pre">&lt;%-</span> <span class="pre">...</span> <span class="pre">%&gt;</span></code>プレースホルダを使用すること。</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>JSPなど、他のテンプレートエンジンが用いるテンプレート記号との競合が起きる可能性がある。
+その場合は、Lo-Dashが用いるテンプレート記号を次のようにして変更することができる。</p>
+<blockquote class="last">
+<div><div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="nx">_</span><span class="p">.</span><span class="nx">templateSettings</span><span class="p">.</span><span class="nx">escape</span>      <span class="o">=</span> <span class="sr">/&lt;@-([\s\S]+?)@&gt;/g</span><span class="p">;</span> <span class="c1">// (1)</span>
+<span class="nx">_</span><span class="p">.</span><span class="nx">templateSettings</span><span class="p">.</span><span class="nx">interpolate</span> <span class="o">=</span> <span class="sr">/&lt;@=([\s\S]+?)@&gt;/g</span><span class="p">;</span> <span class="c1">// (2)</span>
+<span class="nx">_</span><span class="p">.</span><span class="nx">templateSettings</span><span class="p">.</span><span class="nx">evaluate</span>    <span class="o">=</span> <span class="sr">/&lt;@([\s\S]+?)@&gt;/g</span><span class="p">;</span>  <span class="c1">// (3)</span>
+</pre></div>
+</div>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="11%" />
+<col width="89%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">項番</th>
+<th class="head">説明</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><div class="first last line-block">
+<div class="line">(1)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">&#8216;&lt;%- ... %&gt;&#8217; を &#8216;&lt;&#64;- ... &#64;&gt;&#8217; に変更する。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><div class="first last line-block">
+<div class="line">(2)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">&#8216;&lt;%= ... %&gt;&#8217; を &#8216;&lt;&#64;= ... &#64;&gt;&#8217; に変更する。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><div class="first last line-block">
+<div class="line">(3)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">&#8216;&lt;% ... %&gt;&#8217;  を &#8216;&lt;&#64; ... &#64;&gt;&#8217;  に変更する。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="macchinetta-server-framework-1-x">
+<span id="gearing-macchinetta-server-framework"></span><h2>8.3. Macchinetta Server Framework (1.x)との連携<a class="headerlink" href="#macchinetta-server-framework-1-x" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="ajax">
+<span id="ajaxgearingserver"></span><h3>8.3.1. Ajaxを利用した連携<a class="headerlink" href="#ajax" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="ajaxgearingserveroutline">
+<span id="id8"></span><h4>8.3.1.1. 概要<a class="headerlink" href="#ajaxgearingserveroutline" title="Permalink to this headline">¶</a></h4>
+<div class="line-block">
+<div class="line">ここでは、jQueryのajaxとMacchinetta Server Framework (1.x)を連携させる方法を紹介する。</div>
+</div>
+<div class="line-block">
+<div class="line">クライアント側の実装に絞って説明するが、サーバ側の設定や実装も必要になる。詳細はMacchinettaオンライン版 開発ガイドライン ( <a class="reference external" href="http://macchinetta.github.io/server/guideline">http://macchinetta.github.io/server/guideline</a>/の Macchinetta Server Framework (1.x) Development Guideline ) の「Ajax」節と「CSRF対策」節を参照すること。</div>
+</div>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="20%" />
+<col width="40%" />
+<col width="40%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">利用ライブラリ</th>
+<th class="head">サンプル</th>
+<th class="head">参考ページ</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>jQuery</td>
+<td>-</td>
+<td><a class="reference external" href="http://api.jquery.com/category/ajax/">Ajax | jQuery</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="servergearinghowtouse">
+<span id="id9"></span><h4>8.3.1.2. 利用方法<a class="headerlink" href="#servergearinghowtouse" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="get">
+<span id="ajaxgearingserverusingget"></span><h5>8.3.1.2.1. GETを使ったサーバ連携<a class="headerlink" href="#get" title="Permalink to this headline">¶</a></h5>
+<div class="line-block">
+<div class="line">以下のサンプルは、入力欄に数値を入力すると、非同期でサーバ側にデータを送信し、結果を「Result」または「Error」に反映する。</div>
+</div>
+<div class="figure align-center" id="id16">
+<img alt="Ajaxを利用したサーバ連携のサンプル" src="_images/ajax_gearing_server.png" />
+<p class="caption"><span class="caption-text"><strong>図: Ajaxを利用したサーバ連携のサンプル</strong></span></p>
+</div>
+<div class="line-block">
+<div class="line">HTML（JSP）は以下のように実装する。</div>
+</div>
+<div class="highlight-html"><div class="highlight"><pre><span></span><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">charset</span><span class="o">=</span><span class="s">&quot;utf-8&quot;</span><span class="p">&gt;</span>
+    <span class="c">&lt;!-- (1) --&gt;</span>
+    <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;contextPath&quot;</span> <span class="na">content</span><span class="o">=</span><span class="s">&quot;${pageContext.request.contextPath}&quot;</span> <span class="p">/&gt;</span>
+    <span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span>Ajax<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">link</span> <span class="na">rel</span><span class="o">=</span><span class="s">&quot;stylesheet&quot;</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;vendor/jquery-ui/jquery-ui.css&quot;</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span>Ajax<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">form</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;ajaxForm&quot;</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>In this sample, it adds the input value, and then output to the &#39;Result&#39; area.<span class="p">&lt;</span><span class="nt">br</span> <span class="p">/&gt;</span>
+            If an error occurs, it outputs the cause to &#39;ERROR&#39; area.<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+        <span class="p">&lt;</span><span class="nt">label</span><span class="p">&gt;</span>Addition:<span class="p">&lt;/</span><span class="nt">label</span><span class="p">&gt;</span>
+        <span class="c">&lt;!-- (2) --&gt;</span>
+        <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;num1&quot;</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;num1&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;100&quot;</span> <span class="p">/&gt;</span>
+        <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;num2&quot;</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;num2&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;200&quot;</span> <span class="p">/&gt;</span>
+        <span class="c">&lt;!-- (3) --&gt;</span>
+        <span class="p">&lt;</span><span class="nt">br</span> <span class="p">/&gt;&lt;</span><span class="nt">label</span><span class="p">&gt;</span>Result： <span class="p">&lt;</span><span class="nt">span</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;result&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">span</span><span class="p">&gt;&lt;/</span><span class="nt">label</span><span class="p">&gt;</span>
+        <span class="c">&lt;!-- (4) --&gt;</span>
+        <span class="p">&lt;</span><span class="nt">br</span> <span class="p">/&gt;&lt;</span><span class="nt">label</span><span class="p">&gt;</span>Error： <span class="p">&lt;</span><span class="nt">span</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;error&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">span</span><span class="p">&gt;&lt;/</span><span class="nt">label</span><span class="p">&gt;</span>
+    <span class="p">&lt;/</span><span class="nt">form</span><span class="p">&gt;</span>
+    <span class="c">&lt;!-- JavaScript --&gt;</span>
+    <span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;${pageContext.request.contextPath}/resources/app/vendor/jquery/jquery-1.11.1.min.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;${pageContext.request.contextPath}/resources/app/vendor/jquery-ui/jquery-ui.min.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;${pageContext.request.contextPath}/resources/app/js/ajax.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="11%" />
+<col width="89%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">項番</th>
+<th class="head">説明</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><div class="first last line-block">
+<div class="line">(1)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">JavaScriptからWebアプリケーションのコンテキストパスを取得できるよう、HTML（JSP）のmeta要素に設定にする。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><div class="first last line-block">
+<div class="line">(2)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">値の入力欄を配置する。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><div class="first last line-block">
+<div class="line">(3)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">計算結果の出力欄を設置する。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><div class="first last line-block">
+<div class="line">(4)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">エラーの出力欄を設置する。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="line-block">
+<div class="line">JavaScriptは以下のように実装する。</div>
+</div>
+<div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="s1">&#39;use strict&#39;</span><span class="p">;</span>
+
+<span class="nx">$</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+
+  <span class="c1">// (1)</span>
+  <span class="kd">var</span> <span class="nx">contextPath</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;meta[name=&#39;contextPath&#39;]&quot;</span><span class="p">).</span><span class="nx">attr</span><span class="p">(</span><span class="s2">&quot;content&quot;</span><span class="p">);</span>
+  <span class="kd">var</span> <span class="nx">result</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#result&#39;</span><span class="p">);</span>
+  <span class="kd">var</span> <span class="nx">error</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#error&#39;</span><span class="p">);</span>
+
+  <span class="c1">// (2)</span>
+  <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#num1,#num2&#39;</span><span class="p">).</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;change&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+
+    <span class="nx">result</span><span class="p">.</span><span class="nx">html</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">);</span>
+    <span class="nx">error</span><span class="p">.</span><span class="nx">html</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">);</span>
+
+    <span class="c1">// (3)</span>
+    <span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span>
+      <span class="nx">url</span><span class="o">:</span> <span class="nx">contextPath</span> <span class="o">+</span> <span class="s1">&#39;/api/v1/dummyCalc&#39;</span><span class="p">,</span>
+      <span class="nx">type</span> <span class="o">:</span> <span class="s1">&#39;GET&#39;</span><span class="p">,</span>
+      <span class="nx">dataType</span> <span class="o">:</span> <span class="s1">&#39;json&#39;</span><span class="p">,</span>
+
+      <span class="c1">// (4)</span>
+      <span class="nx">data</span> <span class="o">:</span> <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#ajaxForm&#39;</span><span class="p">).</span><span class="nx">serialize</span><span class="p">(),</span>
+      <span class="nx">timeout</span> <span class="o">:</span> <span class="mi">5000</span>
+
+    <span class="c1">// (5)</span>
+    <span class="p">}).</span><span class="nx">done</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">result</span><span class="p">.</span><span class="nx">html</span><span class="p">(</span><span class="nx">data</span><span class="p">.</span><span class="nx">result</span><span class="p">);</span>
+      <span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
+
+    <span class="c1">// (6)</span>
+    <span class="p">}).</span><span class="nx">fail</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">jqXHR</span><span class="p">,</span> <span class="nx">textStatus</span><span class="p">,</span> <span class="nx">errorThrown</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">if</span> <span class="p">(</span><span class="nx">textStatus</span> <span class="o">===</span> <span class="s1">&#39;timeout&#39;</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">error</span><span class="p">.</span><span class="nx">html</span><span class="p">(</span><span class="nx">errorThrown</span><span class="p">);</span>
+
+      <span class="p">}</span>
+      <span class="k">if</span> <span class="p">(</span><span class="nx">jqXHR</span><span class="p">.</span><span class="nx">status</span> <span class="o">===</span> <span class="mi">400</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">error</span><span class="p">.</span><span class="nx">html</span><span class="p">(</span><span class="nx">errorThrown</span><span class="p">);</span>
+      <span class="p">}</span>
+      <span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
+    <span class="p">});</span>
+  <span class="p">});</span>
+<span class="p">});</span>
+</pre></div>
+</div>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="11%" />
+<col width="89%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">項番</th>
+<th class="head">説明</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><div class="first last line-block">
+<div class="line">(1)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">HTML（JSP）のmeta要素に設定したコンテキストパスを取得する。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><div class="first last line-block">
+<div class="line">(2)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line"><code class="docutils literal"><span class="pre">onchange</span></code>イベントの発生時に<code class="docutils literal"><span class="pre">$.ajax</span></code>を実行する。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><div class="first last line-block">
+<div class="line">(3)</div>
+</div>
+</td>
+<td><div class="first line-block">
+<div class="line"><code class="docutils literal"><span class="pre">$.ajax</span></code>メソッドの本体。</div>
+<div class="line">リクエスト先のURLやHTTPのメソッドを指定し、Ajax通信を実行する。<code class="docutils literal"><span class="pre">timeout</span></code>オプションは、指定した時間（ミリ秒）経過時にAjax通信が未完了の場合、タイムアウトを発生させる。</div>
+</div>
+<blockquote class="last">
+<div><div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last"><code class="docutils literal"><span class="pre">$.ajax</span></code>メソッドはThe jQuery XMLHttpRequest （以下、jqXHRとする）オブジェクトを返却する。jqXHR オブジェクトはPromiseインターフェースを実装しているため、<code class="docutils literal"><span class="pre">done</span></code>メソッド・<code class="docutils literal"><span class="pre">fail</span></code>メソッドが使用できる。Promise（とそのスーパーセットであるDeferred）については <a class="reference internal" href="async/index.html#event-serialization"><span class="std std-ref">Deferredによる非同期処理制御</span></a> や <a class="reference external" href="https://api.jquery.com/category/deferred-object/">jQuery公式ウェブサイトのリファレンス</a>を参照すること。</p>
+</div>
+</div></blockquote>
+</td>
+</tr>
+<tr class="row-odd"><td><div class="first last line-block">
+<div class="line">(4)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line"><code class="docutils literal"><span class="pre">$.serialize</span></code>メソッドを実行し、フォームデータをURLエンコードする。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><div class="first last line-block">
+<div class="line">(5)</div>
+</div>
+</td>
+<td><div class="first line-block">
+<div class="line">Ajax通信が正常終了した時の処理を実装する。</div>
+<div class="line">ここでは、以下のJSON形式のレスポンスを受信することを想定している。</div>
+</div>
+<blockquote class="last">
+<div><div class="highlight-json"><div class="highlight"><pre><span></span><span class="p">{</span><span class="nt">&quot;result&quot;</span><span class="p">:</span><span class="mi">500</span><span class="p">}</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">正常または異常終了はHTTPステータスコードで判断している。200番台と304番が正常終了と判断される。</p>
+</div>
+</div></blockquote>
+</td>
+</tr>
+<tr class="row-odd"><td><div class="first last line-block">
+<div class="line">(6)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">Ajax通信が異常終了した時の処理を実装する。</div>
+<div class="line">タイムアウトの場合、<code class="docutils literal"><span class="pre">textStatus</span></code>に「timeout」が設定される。</div>
+<div class="line">HTTPステータスコードは<code class="docutils literal"><span class="pre">jqXHR.status</span></code>から取得できる。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Ajaxの処理結果に応じて実行されるコールバック関数は従来は<cite>success</cite>・<cite>error</cite>・<cite>complete</cite>であったが、jQuery1.8から非推奨となり<cite>done</cite>・<cite>fail</cite>・<cite>always</cite>に置き換えられた。</p>
+</div>
+</div>
+<div class="section" id="post">
+<span id="ajaxgearingserverusingpost"></span><h5>8.3.1.2.2. POSTを使ったサーバ連携<a class="headerlink" href="#post" title="Permalink to this headline">¶</a></h5>
+<div class="line-block">
+<div class="line"><a class="reference internal" href="#ajaxgearingserverusingget"><span class="std std-ref">GETを使ったサーバ連携</span></a>ではGETメソッドを使用した。</div>
+<div class="line">POSTメソッドも利用できるが、サーバ側のCSRF対策に応じた実装が必要になる。ここでは、POSTメソッドを利用する場合の実装を紹介する。</div>
+</div>
+<div class="line-block">
+<div class="line">HTML（JSP）は、前述のサンプルに以下を追加する。</div>
+</div>
+<div class="highlight-html"><div class="highlight"><pre><span></span><span class="c">&lt;!-- (1) --&gt;</span>
+<span class="p">&lt;</span><span class="nt">sec:csrfMetaTags</span> <span class="p">/&gt;</span>
+</pre></div>
+</div>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="11%" />
+<col width="89%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">項番</th>
+<th class="head">説明</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><div class="first last line-block">
+<div class="line">(1)</div>
+</div>
+</td>
+<td><div class="first line-block">
+<div class="line">JavaScriptからCSRFトークンを取得できるよう、head要素にSpring Securityの&lt;sec:csrfMetaTags&gt;要素を実装する。なお、同要素はHTMLに以下のmeta要素を出力する。</div>
+</div>
+<blockquote class="last">
+<div><div class="highlight-html"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">meta</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;_csrf_parameter&quot;</span> <span class="na">content</span><span class="o">=</span><span class="s">&quot;_csrf&quot;</span> <span class="p">/&gt;</span>
+<span class="p">&lt;</span><span class="nt">meta</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;_csrf_header&quot;</span> <span class="na">content</span><span class="o">=</span><span class="s">&quot;X-CSRF-TOKEN&quot;</span> <span class="p">/&gt;</span>
+<span class="p">&lt;</span><span class="nt">meta</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;_csrf&quot;</span> <span class="na">content</span><span class="o">=</span><span class="s">&quot;0250c860-05d6-4a69-8dca-3d92681a2ee8&quot;</span> <span class="p">/&gt;</span>
+</pre></div>
+</div>
+</div></blockquote>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="line-block">
+<div class="line">JavaScriptは前述のサンプルに以下を追加する。</div>
+</div>
+<div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="kd">var</span> <span class="nx">csrfToken</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;meta[name=&#39;_csrf&#39;]&quot;</span><span class="p">).</span><span class="nx">attr</span><span class="p">(</span><span class="s2">&quot;content&quot;</span><span class="p">);</span>
+<span class="kd">var</span> <span class="nx">csrfHeaderName</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;meta[name=&#39;_csrf_header&#39;]&quot;</span><span class="p">).</span><span class="nx">attr</span><span class="p">(</span><span class="s2">&quot;content&quot;</span><span class="p">);</span>
+
+<span class="c1">// (1)</span>
+<span class="nx">$</span><span class="p">(</span><span class="nb">document</span><span class="p">).</span><span class="nx">ajaxSend</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">event</span><span class="p">,</span> <span class="nx">jqXHR</span><span class="p">,</span> <span class="nx">options</span><span class="p">)</span> <span class="p">{</span>
+  <span class="nx">jqXHR</span><span class="p">.</span><span class="nx">setRequestHeader</span><span class="p">(</span><span class="nx">csrfHeaderName</span><span class="p">,</span> <span class="nx">csrfToken</span><span class="p">);</span>
+<span class="p">});</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">また、<cite>ajax</cite>のオプションを以下に変更する。</div>
+</div>
+<div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="c1">// (2)</span>
+<span class="nx">type</span> <span class="o">:</span> <span class="s1">&#39;POST&#39;</span>
+</pre></div>
+</div>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="11%" />
+<col width="89%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">項番</th>
+<th class="head">説明</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><div class="first last line-block">
+<div class="line">(1)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line"><cite>ajax</cite>実行時に関数を実行し、HTTPリクエストヘッダにCSRFトークンを設定する。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><div class="first last line-block">
+<div class="line">(2)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line"><code class="docutils literal"><span class="pre">$.ajax</span></code>の<code class="docutils literal"><span class="pre">type</span></code>オプションをPOSTに修正する。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="development-javascript.html" title="7. JavaScriptの開発方法"
+             >previous</a></li>
+        <li class="nav-item nav-item-0"><a href="index.html">Macchinetta Client (1.x) Development Guideline 1.1.0.RELEASE documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2017 NTT Corporation.
+    </div>
+  </body>
+</html>

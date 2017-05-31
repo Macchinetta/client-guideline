@@ -1,0 +1,2977 @@
+<!DOCTYPE html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>5. 操作性向上・制御 &#8212; Macchinetta Client (1.x) Development Guideline 1.1.0.RELEASE documentation</title>
+    
+    <link rel="stylesheet" href="../_static/solar.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../',
+        VERSION:     '1.1.0.RELEASE',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="6. 非同期処理" href="../async/index.html" />
+    <link rel="prev" title="4. テーブル" href="../grid/index.html" /><link href='http://fonts.googleapis.com/css?family=Source+Code+Pro|Open+Sans:300italic,400italic,700italic,400,300,700' rel='stylesheet' type='text/css'>
+<link href="../_static/solarized-dark.css" rel="stylesheet">
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../async/index.html" title="6. 非同期処理"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="../grid/index.html" title="4. テーブル"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Macchinetta Client (1.x) Development Guideline 1.1.0.RELEASE documentation</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">5. 操作性向上・制御</a><ul>
+<li><a class="reference internal" href="#control-shortcut-key">5.1. ショートカットキー制御</a><ul>
+<li><a class="reference internal" href="#control-shortcut-key-outline">5.1.1. 概要</a></li>
+<li><a class="reference internal" href="#control-shortcut-key-howtouse">5.1.2. 利用方法</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#prevent-range-selection">5.2. 範囲選択防止</a><ul>
+<li><a class="reference internal" href="#preventrangeselectionoutline">5.2.1. 概要</a></li>
+<li><a class="reference internal" href="#preventrangeselectionhowtouse">5.2.2. 利用方法</a><ul>
+<li><a class="reference internal" href="#id11">5.2.2.1. ページ全体の範囲選択防止</a></li>
+<li><a class="reference internal" href="#id12">5.2.2.2. ページ内の特定要素の範囲選択防止</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#enable-and-disable-button">5.3. ボタンの活性状態の変更</a><ul>
+<li><a class="reference internal" href="#enable-and-disable-button-outline">5.3.1. 概要</a></li>
+<li><a class="reference internal" href="#enable-and-disable-button-howtouse">5.3.2. 利用方法</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#prevent-continuous-click">5.4. 二度押し無効化（二重送信防止）</a><ul>
+<li><a class="reference internal" href="#prevent-continuous-click-outline">5.4.1. 概要</a></li>
+<li><a class="reference internal" href="#prevent-continuous-click-howtouse">5.4.2. 利用方法</a></li>
+<li><a class="reference internal" href="#prevent-continuous-click-howtoextend">5.4.3. 応用方法</a><ul>
+<li><a class="reference internal" href="#prevent-continuous-click-howtoextend-multiplebuttons">5.4.3.1. 同一フォーム内に複数のボタンを設置する場合</a></li>
+<li><a class="reference internal" href="#prevent-continuous-click-howtoextend-loading">5.4.3.2. 非同期通信中を表示する場合</a></li>
+<li><a class="reference internal" href="#a">5.4.3.3. a要素によるリンクに対して二度押しを無効化する場合</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#disable-right-click">5.5. 右クリック無効</a><ul>
+<li><a class="reference internal" href="#disable-right-click-outline">5.5.1. 概要</a></li>
+<li><a class="reference internal" href="#disable-right-click-howtouse">5.5.2. 利用方法</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#work-with-element">5.6. 画面要素間の連動</a><ul>
+<li><a class="reference internal" href="#work-with-element-outline">5.6.1. 概要</a></li>
+<li><a class="reference internal" href="#work-with-element-howtouse">5.6.2. 利用方法</a></li>
+<li><a class="reference internal" href="#work-with-element-howtoextend-ajax">5.6.3. 応用方法</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#format-conversion">5.7. フォーマット変換・文字種変換</a><ul>
+<li><a class="reference internal" href="#format-conversion-outline">5.7.1. 概要</a></li>
+<li><a class="reference internal" href="#format-conversion-houtouse">5.7.2. 利用方法</a><ul>
+<li><a class="reference internal" href="#format-conversion-convert-date">5.7.2.1. 日付フォーマット変換</a></li>
+<li><a class="reference internal" href="#format-conversion-check-date">5.7.2.2. 日付妥当性チェック</a></li>
+<li><a class="reference internal" href="#format-conversion-convert-time">5.7.2.3. 時刻フォーマット変換</a></li>
+<li><a class="reference internal" href="#format-conversion-convert-zenkaku-hankaku">5.7.2.4. 特定文字の全角半角変換</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#validation">5.8. 入力値チェック</a><ul>
+<li><a class="reference internal" href="#id47">5.8.1. 概要</a></li>
+<li><a class="reference internal" href="#id49">5.8.2. 利用方法</a><ul>
+<li><a class="reference internal" href="#parsley-basic-usage">5.8.2.1. 基本的な使用方法</a></li>
+<li><a class="reference internal" href="#parsley-setting-default-messages">5.8.2.2. デフォルトエラーメッセージ定義と国際化対応</a></li>
+<li><a class="reference internal" href="#parsley-custom-validator">5.8.2.3. カスタムバリデータの実装方法</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="../grid/index.html"
+                        title="previous chapter">4. テーブル</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../async/index.html"
+                        title="next chapter">6. 非同期処理</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="id1">
+<h1>5. 操作性向上・制御<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<p>この章では、操作性向上のため、各種ライブラリを用いて操作を補助したり制限する方法を説明する。</p>
+<div class="section" id="control-shortcut-key">
+<span id="id2"></span><h2>5.1. ショートカットキー制御<a class="headerlink" href="#control-shortcut-key" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="control-shortcut-key-outline">
+<span id="id3"></span><h3>5.1.1. 概要<a class="headerlink" href="#control-shortcut-key-outline" title="Permalink to this headline">¶</a></h3>
+<p>ショートカットキー制御とは、指定したキー操作を無効化したり、動作を変更することである。</p>
+<p>ここでは、Mousetrapを用いて、 <em>Ctrl + c</em> および <em>Ctrl + v</em> による「コピーアンドペースト」、および <em>Ctrl + s</em> による「ページの保存」の動作を変更する方法を説明する。</p>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="20%" />
+<col width="40%" />
+<col width="40%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">利用ライブラリ</th>
+<th class="head">サンプル</th>
+<th class="head">参考ページ</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Mousetrap</td>
+<td><a class="reference external" href="../samples/mousetrap/disable-copy-paste.html">コピー・ペースト無効化</a></td>
+<td><a class="reference external" href="http://craig.is/killing/mice">Mousetrap - Keyboard shortcuts in Javascript</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="control-shortcut-key-howtouse">
+<span id="id5"></span><h3>5.1.2. 利用方法<a class="headerlink" href="#control-shortcut-key-howtouse" title="Permalink to this headline">¶</a></h3>
+<p>HTMLでは、Mousetrapと、ショートカットキーを制御するために実装したJavaScript(disable-copy-paste.js)を読み込む。</p>
+<p>留意点として、Mousetrapの仕様上、<code class="docutils literal"><span class="pre">textarea</span></code>・<code class="docutils literal"><span class="pre">input</span></code>・<code class="docutils literal"><span class="pre">select</span></code>要素にフォーカスがある場合は、キー操作時の動作は変更されない。
+これらの要素内でキー操作を変更する場合は、対象の要素に<code class="docutils literal"><span class="pre">mousetrap</span></code>クラスを指定する必要がある。</p>
+<div class="highlight-html"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">textarea</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;area1&quot;</span><span class="p">&gt;</span>No key-controls executed for this text-area.<span class="p">&lt;/</span><span class="nt">textarea</span><span class="p">&gt;</span>
+
+<span class="c">&lt;!-- (1) --&gt;</span>
+<span class="p">&lt;</span><span class="nt">textarea</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;area2&quot;</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;mousetrap&quot;</span><span class="p">&gt;</span>key-controls for copy(Ctrl + c) and paste(Ctrl + v) is disabled for this text-area.<span class="p">&lt;/</span><span class="nt">textarea</span><span class="p">&gt;</span>
+
+<span class="c">&lt;!-- (1) --&gt;</span>
+<span class="p">&lt;</span><span class="nt">textarea</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;area3&quot;</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;mousetrap&quot;</span><span class="p">&gt;</span>disable copy(Ctrl + c) and paste(Ctrl + v), and execute original function when key-control for save(Ctrl + s) is used.<span class="p">&lt;/</span><span class="nt">textarea</span><span class="p">&gt;</span>
+
+<span class="c">&lt;!-- (2) --&gt;</span>
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;../lib/vendor/mousetrap/1.4.6/mousetrap.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;js/disable-copy-paste.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="11%" />
+<col width="89%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">項番</th>
+<th class="head">説明</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><div class="first last line-block">
+<div class="line">(1)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">キー制御を有効化するため class属性に &#8220;mousetrap&#8221; を指定する。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><div class="first last line-block">
+<div class="line">(2)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">Mousetrapと、独自に実装したJavaScriptを読み込む。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<p>JavaScript(disable-copy-paste.js)では、<code class="docutils literal"><span class="pre">Mousetrap.bind</span></code>関数を用いて次の処理を実行する。</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="c1">// disable-copy-paste.js</span>
+
+<span class="s1">&#39;use strict&#39;</span><span class="p">;</span>
+
+<span class="nb">window</span><span class="p">.</span><span class="nx">onload</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+
+  <span class="c1">// (1)</span>
+  <span class="nx">Mousetrap</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="s1">&#39;ctrl+c&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
+  <span class="p">});</span>
+
+  <span class="c1">// (2)</span>
+  <span class="nx">Mousetrap</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="s1">&#39;ctrl+v&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
+  <span class="p">});</span>
+
+  <span class="c1">// (3)</span>
+  <span class="nx">Mousetrap</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="s1">&#39;ctrl+s&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nb">document</span><span class="p">.</span><span class="nx">activeElement</span><span class="p">.</span><span class="nx">id</span> <span class="o">===</span> <span class="s1">&#39;area3&#39;</span><span class="p">)</span> <span class="p">{</span>
+      <span class="nx">alert</span><span class="p">(</span><span class="s1">&#39;data is saved&#39;</span><span class="p">);</span>
+      <span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
+  <span class="p">});</span>
+
+<span class="p">};</span>
+</pre></div>
+</div>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="11%" />
+<col width="89%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">項番</th>
+<th class="head">説明</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><div class="first last line-block">
+<div class="line">(1)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line"><em>Ctrl + c</em> 実行時の操作を変更する。ここでは操作を無効化する。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><div class="first last line-block">
+<div class="line">(2)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line"><em>Ctrl + v</em> 実行時の操作を変更する。ここでは操作を無効化する。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><div class="first last line-block">
+<div class="line">(3)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line"><em>Ctrl + s</em> 実行時の操作を変更する。ここではフォーカスが #area3 にある場合のみ処理を変更する。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<p>標準動作を無効化するためには<code class="docutils literal"><span class="pre">Mousetrap.bind</span></code>関数のコールバック関数で<code class="docutils literal"><span class="pre">false</span></code>を返す。<code class="docutils literal"><span class="pre">true</span></code>を返すと標準動作が行われる。</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">ショートカットキー操作で起動できる動作は、JavaScriptで実行できる動作のみである。
+例えば、 <em>Ctrl + s</em> 操作による「ページの保存」のようなブラウザの標準動作は、JavaScriptから実行できないため、これを別のショートカットキー操作に割り当てることは不可能である。</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">対応可能なキーは <a class="reference external" href="http://craig.is/killing/mice">Mousetrapの公式リファレンス</a> の「Supported Keys」を参照すること。なお、「F12」など、「Supported Keys」に記載は無いが、制御可能なものもある。Mousetrapのソースコードを参照すること。</p>
+</div>
+</div>
+</div>
+<div class="section" id="prevent-range-selection">
+<span id="id6"></span><h2>5.2. 範囲選択防止<a class="headerlink" href="#prevent-range-selection" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="preventrangeselectionoutline">
+<span id="id7"></span><h3>5.2.1. 概要<a class="headerlink" href="#preventrangeselectionoutline" title="Permalink to this headline">¶</a></h3>
+<div class="line-block">
+<div class="line">範囲選択防止とは、マウスやキー操作によってページ内の文字列等がハイライトすることを抑止する機能である。</div>
+</div>
+<div class="line-block">
+<div class="line">範囲選択防止は、カスケード スタイル シート (CSS) プロパティである<code class="docutils literal"><span class="pre">user-select</span></code>プロパティを使用する。<code class="docutils literal"><span class="pre">user-select</span></code>プロパティは各ブラウザが独自に実装しており、設定がそれぞれ異なる。また、 Internet Explorer は Firefox ・ Chrome と比べてハイライトの挙動に差異がある。</div>
+</div>
+<div class="line-block">
+<div class="line">ここでは、ブラウザ毎の設定方法や、Internet Explorer の挙動の差異の吸収方法を紹介する。</div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last"><code class="docutils literal"><span class="pre">user-select</span></code>プロパティは World Wide Web Consortium (W3C) CSS Level 3（<a class="reference external" href="https://www.w3.org/TR/css-ui-3/">https://www.w3.org/TR/css-ui-3/</a>）に含まれておらず、CSS Level 4（<a class="reference external" href="https://www.w3.org/TR/css-ui-4/">https://www.w3.org/TR/css-ui-4/</a>）に記述されているものの、草案（Working Draft）に留まっている。</p>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">後述する範囲選択防止の実現のため用いるCSSやJavaScriptは、ブラウザ毎に挙動が異なり、またブラウザバージョンアップ後に動作が保証されているわけではない。本ガイドラインで紹介する実現方法については動作確認しているが、ブラウザのバージョンアップなども考慮した上で、範囲選択防止の要件を取り込むかどうか検討すること。</p>
+</div>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="20%" />
+<col width="40%" />
+<col width="40%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">利用ライブラリ</th>
+<th class="head">サンプル</th>
+<th class="head">参考ページ</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>jQuery</td>
+<td><ul class="first last simple">
+<li><a class="reference external" href="../samples/jquery/prevent-range-selection-all-elements.html">ページ全体を範囲選択防止</a></li>
+<li><a class="reference external" href="../samples/jquery/prevent-range-selection-target-elements.html">ページ内の特定要素の範囲選択防止</a></li>
+</ul>
+</td>
+<td>-</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="preventrangeselectionhowtouse">
+<span id="id10"></span><h3>5.2.2. 利用方法<a class="headerlink" href="#preventrangeselectionhowtouse" title="Permalink to this headline">¶</a></h3>
+<div class="line-block">
+<div class="line">ここでは、ページ全体、またはページの一部がハイライトできないよう制御する方法を紹介する。</div>
+</div>
+<div class="section" id="id11">
+<h4>5.2.2.1. ページ全体の範囲選択防止<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h4>
+<div class="line-block">
+<div class="line">ページ全体がハイライトできないよう制御する方法を紹介する。</div>
+</div>
+<div class="line-block">
+<div class="line">HTMLでは、jQueryと、ハイライトを防止するために実装したJavaScript(prevent-range-selection-all-elements.js)を読み込む。</div>
+</div>
+<div class="highlight-html"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;../lib/vendor/jquery/1.11.1/jquery-1.11.1.min.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;js/prevent-range-selection-all-elements.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">JavaScript(prevent-range-selection-all-elements.js)では、<code class="docutils literal"><span class="pre">html</span></code>要素に<code class="docutils literal"><span class="pre">css</span></code>関数を用いて<code class="docutils literal"><span class="pre">user-select</span></code>プロパティを指定する。</div>
+</div>
+<div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="c1">// (1)</span>
+<span class="nx">$</span><span class="p">(</span><span class="s1">&#39;html&#39;</span><span class="p">).</span><span class="nx">css</span><span class="p">({</span>
+  <span class="s1">&#39;user-select&#39;</span> <span class="o">:</span> <span class="s1">&#39;none&#39;</span><span class="p">,</span>
+
+  <span class="c1">// (2)</span>
+  <span class="s1">&#39;-moz-user-select&#39;</span> <span class="o">:</span> <span class="s1">&#39;none&#39;</span><span class="p">,</span>
+
+  <span class="c1">// (3)</span>
+  <span class="s1">&#39;-webkit-user-select&#39;</span> <span class="o">:</span> <span class="s1">&#39;none&#39;</span><span class="p">,</span>
+
+  <span class="c1">// (4)</span>
+  <span class="s1">&#39;-ms-user-select&#39;</span> <span class="o">:</span> <span class="s1">&#39;none&#39;</span>
+<span class="p">});</span>
+</pre></div>
+</div>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="11%" />
+<col width="89%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">項番</th>
+<th class="head">説明</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><div class="first last line-block">
+<div class="line">(1)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">CSSによる範囲選択防止を実装する。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><div class="first last line-block">
+<div class="line">(2)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">ブラウザがFirefoxの場合の定義を設定する。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><div class="first last line-block">
+<div class="line">(3)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">ブラウザがSafari、Chromeの場合の定義を設定する。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><div class="first last line-block">
+<div class="line">(4)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">ブラウザがInternet Explorerの場合の定義を設定する。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="id12">
+<h4>5.2.2.2. ページ内の特定要素の範囲選択防止<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h4>
+<div class="line-block">
+<div class="line">ここでは、ページ内の特定要素をハイライトできないよう制御する方法を紹介する。</div>
+</div>
+<div class="line-block">
+<div class="line">HTMLではハイライトを不可とする要素のクラス属性に<code class="docutils literal"><span class="pre">disable</span></code>を設定する。なお、クラス名はJavaScriptのセレクタと一致していれば他の名称でも問題ない。</div>
+</div>
+<div class="highlight-html"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">p</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;disable&quot;</span><span class="p">&gt;</span>
+    HTMLの特定の要素を選択不可とします
+<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">また、jQueryと、ハイライトを防止するために実装したJavaScript(prevent-range-selection-target-elements.js)を読み込む。</div>
+</div>
+<div class="highlight-html"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;../lib/vendor/jquery/1.11.1/jquery-1.11.1.min.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;js/prevent-range-selection-target-elements.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">JavaScriptでは、クラス属性に<code class="docutils literal"><span class="pre">disable</span></code>を設定した要素に<code class="docutils literal"><span class="pre">css</span></code>関数を用いて<code class="docutils literal"><span class="pre">user-select</span></code>プロパティを指定する。</div>
+</div>
+<div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="c1">// (1)</span>
+<span class="nx">$</span><span class="p">(</span><span class="s1">&#39;.disable&#39;</span><span class="p">).</span><span class="nx">css</span><span class="p">({</span>
+  <span class="s1">&#39;user-select&#39;</span> <span class="o">:</span> <span class="s1">&#39;none&#39;</span><span class="p">,</span>
+  <span class="s1">&#39;-moz-user-select&#39;</span> <span class="o">:</span> <span class="s1">&#39;none&#39;</span><span class="p">,</span>
+  <span class="s1">&#39;-webkit-user-select&#39;</span> <span class="o">:</span> <span class="s1">&#39;none&#39;</span><span class="p">,</span>
+  <span class="s1">&#39;-ms-user-select&#39;</span> <span class="o">:</span> <span class="s1">&#39;none&#39;</span>
+<span class="p">});</span>
+</pre></div>
+</div>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="11%" />
+<col width="89%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">項番</th>
+<th class="head">説明</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><div class="first last line-block">
+<div class="line">(1)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">CSSによる範囲選択防止。<code class="docutils literal"><span class="pre">class=&quot;disable&quot;</span></code>を設定した要素をハイライトできないように実装する。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">INPUT・TEXTAREAに<code class="docutils literal"><span class="pre">user-select</span></code>プロパティを設定した場合、ブラウザ毎に挙動が異なるため設定しないこと。</p>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+<div class="line">Internet Explorerは特定要素をハイライト不可としても、以下の操作を行うことでハイライトできる。</div>
+</div>
+<ul class="simple">
+<li><em>Ctrl + a</em> を押下する。</li>
+<li>ハイライト可の要素から不可の要素をマウスでドラッグする。</li>
+</ul>
+<div class="line-block">
+<div class="line">それらを防止するための方法を紹介する。</div>
+</div>
+<div class="line-block">
+<div class="line"><em>Ctrl + a</em> を防止する方法を以下に示す。</div>
+<div class="line"><code class="docutils literal"><span class="pre">keydown</span></code>イベントをトラップし、 <em>Ctrl + a</em> が押下された場合に<code class="docutils literal"><span class="pre">false</span></code>を返却する。</div>
+</div>
+<div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="c1">// (1)</span>
+<span class="nx">$</span><span class="p">(</span><span class="nb">document</span><span class="p">).</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;keydown&#39;</span><span class="p">,</span> <span class="nx">keyDownEvent</span><span class="p">);</span>
+
+<span class="c1">// (2)</span>
+<span class="kd">function</span> <span class="nx">keyDownEvent</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+
+  <span class="c1">// (3)</span>
+  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">isIE</span><span class="p">())</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="c1">// (4)</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">ctrlKey</span> <span class="o">&amp;&amp;</span> <span class="nx">event</span><span class="p">.</span><span class="nx">key</span> <span class="o">===</span> <span class="s1">&#39;a&#39;</span><span class="p">)</span> <span class="p">{</span>
+
+    <span class="c1">// (5)</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">nodeName</span> <span class="o">!==</span> <span class="s1">&#39;INPUT&#39;</span> <span class="o">&amp;&amp;</span>
+        <span class="nx">event</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">nodeName</span> <span class="o">!==</span> <span class="s1">&#39;TEXTAREA&#39;</span><span class="p">)</span> <span class="p">{</span>
+
+      <span class="c1">// (6)</span>
+      <span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="11%" />
+<col width="89%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">項番</th>
+<th class="head">説明</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><div class="first last line-block">
+<div class="line">(1)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">キー押下実行時に関数を呼び出す。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><div class="first last line-block">
+<div class="line">(2)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">キー操作が行われた場合に実行する関数を定義する。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><div class="first last line-block">
+<div class="line">(3)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">独自関数によるブラウザ判定を実施し、Internet Explorer以外の場合は処理を終了する。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><div class="first last line-block">
+<div class="line">(4)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">キー押下が <em>Ctrl + a</em> の場合の条件を実装する。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><div class="first last line-block">
+<div class="line">(5)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">入力系の要素は制御対象外とする。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><div class="first last line-block">
+<div class="line">(6)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">入力系以外の要素の場合にはキー操作を無効とする。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last"><em>Ctrl + a</em> の制御はMousetrapを用いて実現することもできる。<a class="reference external" href="#control-shortcut-key">ショートカットキー制御</a> を参照すること。</p>
+</div>
+<div class="line-block">
+<div class="line">次に、ドラッグを防止する方法を以下に示す。</div>
+<div class="line">範囲選択を開始した要素のみ選択可能とし、カーソルが別要素をマウスオーバーした時点で範囲選択を解除する。</div>
+</div>
+<div class="line-block">
+<div class="line"><code class="docutils literal"><span class="pre">selectstart</span></code>イベント発生時に範囲選択開始時点の要素を取得し、<code class="docutils literal"><span class="pre">mouseover</span></code>イベント発生時に開始時点の要素と一致しているかチェックする。不一致の場合は範囲選択開始時点の要素を格納する。また、<code class="docutils literal"><span class="pre">mouseup</span></code>イベント発生時に変数を初期化する。</div>
+</div>
+<div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="c1">// (1)</span>
+<span class="nx">$</span><span class="p">(</span><span class="nb">document</span><span class="p">).</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;mouseup&#39;</span><span class="p">,</span> <span class="nx">mouseUpEvent</span><span class="p">);</span>
+<span class="nx">$</span><span class="p">(</span><span class="nb">document</span><span class="p">).</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;selectstart&#39;</span><span class="p">,</span> <span class="nx">mouseSelectEvent</span><span class="p">);</span>
+<span class="nx">$</span><span class="p">(</span><span class="nb">document</span><span class="p">).</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;mouseover&#39;</span><span class="p">,</span> <span class="nx">mouseOverEvent</span><span class="p">);</span>
+
+<span class="c1">// (2)</span>
+<span class="kd">var</span> <span class="nx">select</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">range</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+<span class="kd">var</span> <span class="nx">selectStartNode</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">;</span>
+
+<span class="c1">// (3)</span>
+<span class="kd">function</span> <span class="nx">mouseUpEvent</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">isIE</span><span class="p">())</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="c1">// (4)</span>
+  <span class="nx">select</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+  <span class="nx">range</span> <span class="o">=</span> <span class="kc">null</span><span class="p">;</span>
+  <span class="nx">selectStartNode</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">;</span>
+
+  <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c1">// (5)</span>
+<span class="kd">function</span> <span class="nx">mouseSelectEvent</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">isIE</span><span class="p">())</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="kd">var</span> <span class="nx">selection</span> <span class="o">=</span> <span class="nb">window</span><span class="p">.</span><span class="nx">getSelection</span><span class="p">();</span>
+
+  <span class="c1">// (6)</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">selection</span><span class="p">.</span><span class="nx">rangeCount</span> <span class="o">===</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="c1">// (7)</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">event</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">tagName</span> <span class="o">===</span> <span class="s1">&#39;HTML&#39;</span> <span class="o">||</span>
+      <span class="nx">event</span><span class="p">.</span><span class="nx">target</span><span class="p">.</span><span class="nx">tagName</span> <span class="o">===</span> <span class="s1">&#39;BODY&#39;</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">selection</span><span class="p">.</span><span class="nx">removeAllRanges</span><span class="p">();</span>
+    <span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="c1">// (8)</span>
+  <span class="nx">select</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+  <span class="nx">range</span> <span class="o">=</span> <span class="nx">selection</span><span class="p">.</span><span class="nx">getRangeAt</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+  <span class="nx">selectStartNode</span> <span class="o">=</span> <span class="nx">selection</span><span class="p">.</span><span class="nx">anchorNode</span><span class="p">.</span><span class="nx">parentNode</span><span class="p">;</span>
+
+  <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c1">// (9)</span>
+<span class="kd">function</span> <span class="nx">mouseOverEvent</span><span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">isIE</span><span class="p">())</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="c1">// (10)</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">select</span> <span class="o">&amp;&amp;</span> <span class="nx">event</span><span class="p">.</span><span class="nx">target</span> <span class="o">!==</span> <span class="nx">selectStartNode</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">selection</span> <span class="o">=</span> <span class="nb">window</span><span class="p">.</span><span class="nx">getSelection</span><span class="p">();</span>
+    <span class="kd">var</span> <span class="nx">newRange</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createRange</span><span class="p">();</span>
+    <span class="nx">newRange</span><span class="p">.</span><span class="nx">selectNode</span><span class="p">(</span><span class="nx">range</span><span class="p">.</span><span class="nx">startContainer</span><span class="p">);</span>
+    <span class="nx">selection</span><span class="p">.</span><span class="nx">removeAllRanges</span><span class="p">();</span>
+
+    <span class="c1">// (11)</span>
+    <span class="nx">selection</span><span class="p">.</span><span class="nx">addRange</span><span class="p">(</span><span class="nx">newRange</span><span class="p">);</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="11%" />
+<col width="89%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">項番</th>
+<th class="head">説明</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><div class="first last line-block">
+<div class="line">(1)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">マウス操作時に範囲選択を防止するための関数を実行する。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><div class="first last line-block">
+<div class="line">(2)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">範囲選択制御に使用する変数(範囲選択ステータス、範囲選択開始時の領域、範囲選択開始時の要素名)を定義する。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><div class="first last line-block">
+<div class="line">(3)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">マウスキーが離された時に実行する関数を定義する。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><div class="first last line-block">
+<div class="line">(4)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">範囲選択制御に使用する変数を初期化する。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><div class="first last line-block">
+<div class="line">(5)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">範囲選択開始時に実行する関数を定義する。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><div class="first last line-block">
+<div class="line">(6)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">INPUT・TEXTAREAを除き、範囲選択を行っていない場合は対象外とする。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><div class="first last line-block">
+<div class="line">(7)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">タグがBODY・HTMLの場合は範囲選択不可とする。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><div class="first last line-block">
+<div class="line">(8)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">範囲選択制御に使用する変数をそれぞれ更新する。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><div class="first last line-block">
+<div class="line">(9)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">マウスオーバー時に実行する関数を定義する。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><div class="first last line-block">
+<div class="line">(10)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">カーソルが別要素に到達したら文字列選択をクリアする。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><div class="first last line-block">
+<div class="line">(11)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">範囲選択開始時の要素を設定することで、ハイライトしている範囲を限定する</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>上記のサンプルでは、ブラウザ判定を<code class="docutils literal"><span class="pre">isIE</span></code>関数で行っている。<code class="docutils literal"><span class="pre">isIE</span></code>の実装を以下に示す。</p>
+<blockquote>
+<div><div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="kd">function</span> <span class="nx">isIE</span><span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">userAgent</span> <span class="o">=</span> <span class="nb">window</span><span class="p">.</span><span class="nx">navigator</span><span class="p">.</span><span class="nx">userAgent</span><span class="p">.</span><span class="nx">toLowerCase</span><span class="p">();</span>
+  <span class="k">if</span> <span class="p">(</span><span class="nx">userAgent</span><span class="p">.</span><span class="nx">match</span><span class="p">(</span><span class="sr">/trident/</span><span class="p">))</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="kc">true</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p class="last">Internet Explorerの判定は、ユーザエージェントに特定の文字列（<code class="docutils literal"><span class="pre">trident</span></code>）が含まれるかどうかで行っている。ただし、ユーザエージェントはブラウザのバージョンアップ等で変更される可能性があるため、導入する場合は判定方法を別途検討すること。</p>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p>Internet Explorerにおいて、ブロック要素とインライン要素を入れ子にし、インライン要素に範囲選択防止の設定をした場合、ブロック要素上をドラッグ、またはダブルクリックすることでインライン要素をハイライトできる。</p>
+<p>HTMLの実装例と範囲選択防止が機能しない例のイメージを以下に示す。</p>
+<blockquote>
+<div><div class="highlight-html"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>
+    Make particular element of HTML <span class="p">&lt;</span><span class="nt">span</span> <span class="na">class</span><span class="o">=</span><span class="s">&quot;disable&quot;</span><span class="p">&gt;</span>non-selectable<span class="p">&lt;/</span><span class="nt">span</span><span class="p">&gt;</span>.<span class="p">&lt;</span><span class="nt">br</span> <span class="p">/&gt;</span>
+    Try to select the sentence above without mouse-overing &quot;non-selectable&quot;.
+<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<div class="figure align-center" id="id53">
+<img alt="マウスドラッグによる範囲選択防止を設定した要素のハイライト例" src="../_images/prevent-range-selection.png" />
+<p class="caption"><span class="caption-text"><strong>図: マウスドラッグによる範囲選択防止を設定した要素のハイライト例</strong></span></p>
+</div>
+</div></blockquote>
+<p class="last">本事象はInternet Explorerがハイライト可の要素を含めることで、不可の要素もハイライトできてしまうことに起因しており、範囲選択防止機能では制御できない。導入する際はブロック要素を範囲選択防止の対象とすること。</p>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="enable-and-disable-button">
+<span id="id14"></span><h2>5.3. ボタンの活性状態の変更<a class="headerlink" href="#enable-and-disable-button" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="enable-and-disable-button-outline">
+<span id="id15"></span><h3>5.3.1. 概要<a class="headerlink" href="#enable-and-disable-button-outline" title="Permalink to this headline">¶</a></h3>
+<p>ここでは、jQueryを用いて、ボタンの活性状態を変更する方法を説明する。</p>
+<p>例として、チェックボックスをチェックしないと送信ボタンが押せないサンプルを用いて説明する。</p>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="20%" />
+<col width="40%" />
+<col width="40%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">利用ライブラリ</th>
+<th class="head">サンプル</th>
+<th class="head">参考ページ</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>jQuery</td>
+<td><a class="reference external" href="../samples/jquery/enable-and-disable-button.html">ボタンの活性・非活性</a></td>
+<td>-</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="enable-and-disable-button-howtouse">
+<span id="id17"></span><h3>5.3.2. 利用方法<a class="headerlink" href="#enable-and-disable-button-howtouse" title="Permalink to this headline">¶</a></h3>
+<p>HTMLでは、jQueryと、ボタンの活性状態を制御するために実装したJavaScript(enable-and-disable-button.js)を読み込む。</p>
+<div class="highlight-html"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;../lib/vendor/jquery/1.11.1/jquery-1.11.1.min.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;js/enable-and-disable-button.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<p>JavaScript(enable-and-disable-button.js)では、チェックボックスの<code class="docutils literal"><span class="pre">change</span></code>イベントハンドラ内で、
+チェック状態に応じて送信ボタンの活性状態を変更する。</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="c1">// enable-and-disable-button.js</span>
+
+<span class="s1">&#39;use strict&#39;</span><span class="p">;</span>
+
+<span class="nx">$</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+
+  <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#check&#39;</span><span class="p">).</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;change&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">$submit</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#submit&#39;</span><span class="p">);</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">checked</span><span class="p">)</span> <span class="p">{</span>
+
+      <span class="c1">// (1)</span>
+      <span class="nx">$submit</span><span class="p">.</span><span class="nx">prop</span><span class="p">(</span><span class="s1">&#39;disabled&#39;</span><span class="p">,</span> <span class="kc">false</span><span class="p">);</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+
+      <span class="c1">// (2)</span>
+      <span class="nx">$submit</span><span class="p">.</span><span class="nx">prop</span><span class="p">(</span><span class="s1">&#39;disabled&#39;</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">});</span>
+
+<span class="p">});</span>
+</pre></div>
+</div>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="11%" />
+<col width="89%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">項番</th>
+<th class="head">説明</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><div class="first last line-block">
+<div class="line">(1)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">チェック状態の場合、送信ボタンを活性状態にする。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><div class="first last line-block">
+<div class="line">(2)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">非チェック状態の場合、送信ボタンを非活性状態にする。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="prevent-continuous-click">
+<span id="id18"></span><h2>5.4. 二度押し無効化（二重送信防止）<a class="headerlink" href="#prevent-continuous-click" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="prevent-continuous-click-outline">
+<span id="id19"></span><h3>5.4.1. 概要<a class="headerlink" href="#prevent-continuous-click-outline" title="Permalink to this headline">¶</a></h3>
+<p>ここでは、jQueryを用いて、ボタンの二度押しを無効化する方法を説明する。</p>
+<p>例として、ボタンがクリックされたら処理が完了するまでボタンを非活性化することで、二度押しを無効化するサンプルを用いて説明する。</p>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="20%" />
+<col width="40%" />
+<col width="40%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">利用ライブラリ</th>
+<th class="head">サンプル</th>
+<th class="head">参考ページ</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>jQuery</td>
+<td><a class="reference external" href="../samples/jquery/prevent-continuous-click.html">二度押し無効化(ボタン非活性化)</a></td>
+<td>-</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="prevent-continuous-click-howtouse">
+<span id="id21"></span><h3>5.4.2. 利用方法<a class="headerlink" href="#prevent-continuous-click-howtouse" title="Permalink to this headline">¶</a></h3>
+<p>HTMLでは、jQueryと、二度押しを無効化するために実装したJavaScript(prevent-continuous-click.js)を読み込む。</p>
+<div class="highlight-html"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;../lib/vendor/jquery/1.11.1/jquery-1.11.1.min.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;js/prevent-continuous-click.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<p>JavaScript(prevent-continuous-click.js)は、次のように実装する。</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="c1">// prevent-continuous-click.js</span>
+
+<span class="s1">&#39;use strict&#39;</span><span class="p">;</span>
+
+<span class="nx">$</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+
+  <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#the-form&#39;</span><span class="p">).</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;submit&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">e</span><span class="p">.</span><span class="nx">preventDefault</span><span class="p">();</span>
+
+    <span class="kd">var</span> <span class="nx">$form</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">),</span>
+        <span class="nx">$button</span> <span class="o">=</span> <span class="nx">$form</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="s1">&#39;[type=submit]&#39;</span><span class="p">);</span>
+
+    <span class="c1">// (1)</span>
+    <span class="nx">$button</span><span class="p">.</span><span class="nx">prop</span><span class="p">(</span><span class="s1">&#39;disabled&#39;</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+
+    <span class="c1">// (2)</span>
+    <span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span>
+      <span class="nx">url</span> <span class="o">:</span> <span class="nx">$form</span><span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;action&#39;</span><span class="p">),</span>
+      <span class="nx">type</span> <span class="o">:</span> <span class="nx">$form</span><span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;method&#39;</span><span class="p">),</span>
+      <span class="nx">data</span> <span class="o">:</span> <span class="nx">$form</span><span class="p">.</span><span class="nx">serialize</span><span class="p">()</span>
+
+    <span class="c1">// (3)</span>
+    <span class="p">}).</span><span class="nx">always</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+      <span class="nx">setTimeout</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+
+        <span class="c1">// (4)</span>
+        <span class="nx">$button</span><span class="p">.</span><span class="nx">prop</span><span class="p">(</span><span class="s1">&#39;disabled&#39;</span><span class="p">,</span> <span class="kc">false</span><span class="p">);</span>
+      <span class="p">},</span> <span class="mi">2000</span><span class="p">);</span>
+    <span class="p">});</span>
+  <span class="p">});</span>
+<span class="p">});</span>
+</pre></div>
+</div>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="11%" />
+<col width="89%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">項番</th>
+<th class="head">説明</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><div class="first last line-block">
+<div class="line">(1)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">送信ボタンを非活性化する。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><div class="first last line-block">
+<div class="line">(2)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">非同期通信を開始する。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><div class="first last line-block">
+<div class="line">(3)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">通信処理完了後に実行する関数を指定する。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><div class="first last line-block">
+<div class="line">(4)</div>
+</div>
+</td>
+<td><div class="first line-block">
+<div class="line">送信ボタンを再度活性化する。</div>
+</div>
+<div class="last admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">本サンプルでは、ボタンの活性状態の変化が分かり易いように、Ajax通信のレスポンスを得てから2秒後にボタンを再活性化している。実際の開発では<code class="docutils literal"><span class="pre">setTimeout</span></code>関数は不要である。</p>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<p>これにより、送信ボタンがクリックされたら直ちに非活性化し、通信処理が完了後に活性状態に戻す動作が実現され、
+二度押し無効化が実現できる。</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>本サンプルでは、通信失敗時や通信中にブラウザの停止ボタンを押下した場合などを考慮していない。</p>
+<p>通信の成功(<code class="docutils literal"><span class="pre">done</span></code>)、失敗(<code class="docutils literal"><span class="pre">fail</span></code>)にかかわらず、常にボタンが再活性化する。(<code class="docutils literal"><span class="pre">always</span></code>)</p>
+<p>実際のシステムでは業務要件に合わせて、通信成功／通信失敗、通信終了時それぞれで、活性化する／常に活性化しないなど処理を実装すること。</p>
+<p class="last"><code class="docutils literal"><span class="pre">done</span></code>、<code class="docutils literal"><span class="pre">fail</span></code>、<code class="docutils literal"><span class="pre">always</span></code>の扱いなど、Ajax通信については<a class="reference internal" href="../async/index.html#asynchronous-processing"><span class="std std-ref">非同期処理</span></a>と<a class="reference internal" href="../appendix.html#ajaxgearingserver"><span class="std std-ref">Ajaxを利用した連携</span></a>も参照すること。</p>
+</div>
+</div>
+<div class="section" id="prevent-continuous-click-howtoextend">
+<span id="id22"></span><h3>5.4.3. 応用方法<a class="headerlink" href="#prevent-continuous-click-howtoextend" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="prevent-continuous-click-howtoextend-multiplebuttons">
+<span id="id23"></span><h4>5.4.3.1. 同一フォーム内に複数のボタンを設置する場合<a class="headerlink" href="#prevent-continuous-click-howtoextend-multiplebuttons" title="Permalink to this headline">¶</a></h4>
+<p>同一フォーム内に複数のボタンを設置する場合、遷移先情報をHTTPパラメータに設定し実現することが多い。
+jQueryの<cite>submit</cite>イベントハンドラ内では、本来HTTPパラメータにセットされるはずだった情報が設定されないため、実装を追加する必要がある。</p>
+<p>なお、以下のサンプルはMacchinettaオンライン版と連携することを前提としている。</p>
+<ul class="simple">
+<li>HTML</li>
+</ul>
+<div class="highlight-html"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">form:form</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;form1&quot;</span> <span class="na">action</span><span class="o">=</span><span class="s">&quot;${pageContext.request.contextPath}/Doubleclick1/click&quot;</span> <span class="na">modelAttribute</span><span class="o">=</span><span class="s">&quot;sampleForm&quot;</span> <span class="na">method</span><span class="o">=</span><span class="s">&quot;POST&quot;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">form:button</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;button-aaa&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;aaa&quot;</span><span class="p">&gt;</span>aaa<span class="p">&lt;/</span><span class="nt">form:button</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">form:button</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;button-bbb&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;bbb&quot;</span><span class="p">&gt;</span>bbb<span class="p">&lt;/</span><span class="nt">form:button</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">form:form</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>JavaScript</li>
+</ul>
+<div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="c1">// (1)</span>
+<span class="kd">var</span> <span class="nx">clickedName</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">;</span>
+
+<span class="nx">$</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+
+  <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#form1&#39;</span><span class="p">).</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;submit&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+
+    <span class="kd">var</span> <span class="nx">$form</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">),</span>
+        <span class="nx">$button</span> <span class="o">=</span> <span class="nx">$form</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="s1">&#39;[type=submit]&#39;</span><span class="p">);</span>
+
+    <span class="c1">// (2)</span>
+    <span class="kd">var</span> <span class="nx">input</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s2">&quot;&lt;input&gt;&quot;</span><span class="p">).</span><span class="nx">attr</span><span class="p">(</span><span class="s2">&quot;type&quot;</span><span class="p">,</span> <span class="s2">&quot;hidden&quot;</span><span class="p">)</span>
+                            <span class="p">.</span><span class="nx">attr</span><span class="p">(</span><span class="s2">&quot;name&quot;</span><span class="p">,</span> <span class="nx">clickedName</span><span class="p">);</span>
+    <span class="nx">$form</span><span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="nx">$</span><span class="p">(</span><span class="nx">input</span><span class="p">));</span>
+
+    <span class="c1">// (3)</span>
+    <span class="nx">$button</span><span class="p">.</span><span class="nx">prop</span><span class="p">(</span><span class="s1">&#39;disabled&#39;</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+
+  <span class="p">});</span>
+
+  <span class="c1">// (4)</span>
+  <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;:button&#39;</span><span class="p">).</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="nx">clickedName</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">attr</span><span class="p">(</span><span class="s1">&#39;name&#39;</span><span class="p">);</span>
+  <span class="p">});</span>
+
+<span class="p">});</span>
+</pre></div>
+</div>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="11%" />
+<col width="89%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">項番</th>
+<th class="head">説明</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><div class="first last line-block">
+<div class="line">(1)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">押下されたボタンのname属性を格納する。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><div class="first last line-block">
+<div class="line">(2)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">複数ボタンを設置した場合、サーバ側のControllerクラスで<code class="docutils literal"><span class="pre">&#64;RequestMapping</span></code>のparam属性による振り分けを設定しているため、本来HTTPパラメータで送信されるはずだったButtonのname属性を手動で設定する必要がある。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><div class="first last line-block">
+<div class="line">(3)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">送信ボタンを非活性化する。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><div class="first last line-block">
+<div class="line">(4)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">押下されたボタンのname属性を取得する関数を定義する。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">サーバサイドの複数ボタンの設置についてはMacchinettaオンライン版 開発ガイドライン ( <a class="reference external" href="http://macchinetta.github.io/server/guideline/">http://macchinetta.github.io/server/guideline/</a>の Macchinetta Server Framework (1.x) Development Guideline ) を参照すること。</p>
+</div>
+<p>また、非同期通信用のボタン等で個別に１ボタンずつ二度押しを無効化したい場合はjQueryの<cite>click</cite>イベントハンドラ内でボタン毎に制御を実装する。
+例えば以下のようなHTMLの場合、</p>
+<div class="highlight-html"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">form</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;form1&quot;</span> <span class="na">action</span><span class="o">=</span><span class="s">&quot;/server-sampleapp-basic/Doubleclick2/click&quot;</span> <span class="na">method</span><span class="o">=</span><span class="s">&quot;POST&quot;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;button&quot;</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;executeService1&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;Execute Function 1&quot;</span> <span class="p">/&gt;</span>
+    <span class="p">&lt;</span><span class="nt">br</span> <span class="p">/&gt;</span>
+    <span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;button&quot;</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;executeService2&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;Execute Function 2&quot;</span> <span class="p">/&gt;</span>
+    <span class="p">&lt;</span><span class="nt">br</span> <span class="p">/&gt;</span>
+    <span class="p">&lt;</span><span class="nt">button</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;submit&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;submit&quot;</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;submit&quot;</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;Submit&quot;</span><span class="p">&gt;</span>submit<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">form</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<p>非同期通信を実行するボタンに対してはそれぞれ以下のようなJavaScriptを実装する。</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="c1">// (1)</span>
+<span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#executeService1&#39;</span><span class="p">).</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+  <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#executeService1&#39;</span><span class="p">).</span><span class="nx">prop</span><span class="p">(</span><span class="s1">&#39;disabled&#39;</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+  <span class="nx">$</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span>
+      <span class="nx">url</span><span class="o">:</span> <span class="nx">contextPath</span> <span class="o">+</span> <span class="s1">&#39;/api/v1/dummyServiceForLoading&#39;</span><span class="p">,</span>
+      <span class="nx">type</span><span class="o">:</span> <span class="s1">&#39;POST&#39;</span><span class="p">,</span>
+      <span class="nx">dataType</span><span class="o">:</span> <span class="s1">&#39;json&#39;</span><span class="p">,</span>
+    <span class="p">}).</span><span class="nx">always</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+      <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#executeService1&#39;</span><span class="p">).</span><span class="nx">prop</span><span class="p">(</span><span class="s1">&#39;disabled&#39;</span><span class="p">,</span> <span class="kc">false</span><span class="p">);</span>
+    <span class="p">});</span>
+  <span class="p">});</span>
+<span class="p">});</span>
+
+<span class="c1">// (2)</span>
+<span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#executeService2&#39;</span><span class="p">).</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+  <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#executeService2&#39;</span><span class="p">).</span><span class="nx">prop</span><span class="p">(</span><span class="s1">&#39;disabled&#39;</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+  <span class="nx">$</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span>
+      <span class="nx">url</span><span class="o">:</span> <span class="nx">contextPath</span> <span class="o">+</span> <span class="s1">&#39;/api/v1/dummyServiceForLoading&#39;</span><span class="p">,</span>
+      <span class="nx">type</span><span class="o">:</span> <span class="s1">&#39;POST&#39;</span><span class="p">,</span>
+      <span class="nx">dataType</span><span class="o">:</span> <span class="s1">&#39;json&#39;</span><span class="p">,</span>
+    <span class="p">}).</span><span class="nx">always</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+      <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#executeService2&#39;</span><span class="p">).</span><span class="nx">prop</span><span class="p">(</span><span class="s1">&#39;disabled&#39;</span><span class="p">,</span> <span class="kc">false</span><span class="p">);</span>
+    <span class="p">});</span>
+  <span class="p">});</span>
+<span class="p">});</span>
+</pre></div>
+</div>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="11%" />
+<col width="89%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">項番</th>
+<th class="head">説明</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><div class="first last line-block">
+<div class="line">(1)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">&#8220;Execute Function 1&#8221;ボタンを押下した場合に実行する処理を定義する。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><div class="first last line-block">
+<div class="line">(2)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">&#8220;Execute Function 2&#8221;ボタンを押下した場合に実行する処理を定義する。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="prevent-continuous-click-howtoextend-loading">
+<span id="id24"></span><h4>5.4.3.2. 非同期通信中を表示する場合<a class="headerlink" href="#prevent-continuous-click-howtoextend-loading" title="Permalink to this headline">¶</a></h4>
+<div class="line-block">
+<div class="line">ここではAjax処理によって非同期通信処理を実行している間に、画面に通信中である旨を表示するための仕組みを紹介する。</div>
+<div class="line">なお、以下のサンプルはサーバサイドと連携することを前提としている。</div>
+</div>
+<div class="line-block">
+<div class="line">HTMLは、Ajaxを実行する契機となるボタンと、通信中に表示する文言を設置する。</div>
+</div>
+<div class="highlight-html"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">button</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;executeService&quot;</span><span class="p">&gt;</span>EXECUTE<span class="p">&lt;/</span><span class="nt">button</span><span class="p">&gt;</span><span class="ni">&amp;nbsp;</span><span class="p">&lt;</span><span class="nt">label</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;loadingLabel&quot;</span> <span class="na">style</span><span class="o">=</span><span class="s">&quot;display: none;&quot;</span><span class="p">&gt;</span>Loading...<span class="p">&lt;/</span><span class="nt">label</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">&#8220;Loading...&#8221;はAjax実行中にのみ表示させるため、デフォルトのCSSスタイルに<cite>display: none;</cite>を指定している。</div>
+<div class="line">Javascriptは以下のように実装する。</div>
+</div>
+<div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="nx">$</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+
+  <span class="c1">// (1)</span>
+  <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#executeService&#39;</span><span class="p">).</span><span class="nx">click</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+
+    <span class="c1">// (2)</span>
+    <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#executeService&#39;</span><span class="p">).</span><span class="nx">prop</span><span class="p">(</span><span class="s1">&#39;disabled&#39;</span><span class="p">,</span> <span class="kc">true</span><span class="p">);</span>
+
+    <span class="c1">// (3)</span>
+    <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#loadingLabel&#39;</span><span class="p">).</span><span class="nx">fadeIn</span><span class="p">();</span>
+
+    <span class="c1">// (4)</span>
+    <span class="nx">$</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+      <span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span>
+        <span class="nx">url</span><span class="o">:</span> <span class="nx">contextPath</span> <span class="o">+</span> <span class="s1">&#39;/api/v1/dummyServiceForLoading&#39;</span><span class="p">,</span>
+        <span class="nx">type</span><span class="o">:</span> <span class="s1">&#39;POST&#39;</span><span class="p">,</span>
+        <span class="nx">dataType</span><span class="o">:</span> <span class="s1">&#39;json&#39;</span><span class="p">,</span>
+      <span class="p">}).</span><span class="nx">always</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+
+        <span class="c1">// (5)</span>
+        <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#executeService&#39;</span><span class="p">).</span><span class="nx">prop</span><span class="p">(</span><span class="s1">&#39;disabled&#39;</span><span class="p">,</span> <span class="kc">false</span><span class="p">);</span>
+
+        <span class="c1">// (6)</span>
+        <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#loadingLabel&#39;</span><span class="p">).</span><span class="nx">fadeOut</span><span class="p">();</span>
+      <span class="p">});</span>
+    <span class="p">});</span>
+  <span class="p">});</span>
+<span class="p">});</span>
+</pre></div>
+</div>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="11%" />
+<col width="89%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">項番</th>
+<th class="head">説明</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><div class="first last line-block">
+<div class="line">(1)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">ボタン押下を契機に処理を開始する。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><div class="first last line-block">
+<div class="line">(2)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">ボタンを非活性に変更する。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><div class="first last line-block">
+<div class="line">(3)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">処理中に表示させる文言をフェードインさせる。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><div class="first last line-block">
+<div class="line">(4)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">非同期通信処理を実行する。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><div class="first last line-block">
+<div class="line">(5)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">処理完了後にボタンを再度活性化する。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><div class="first last line-block">
+<div class="line">(6)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">処理中に表示していた文言をフェードアウトさせる。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="line-block">
+<div class="line">このサンプルではボタン押下のタイミングでAjax処理を実行する。</div>
+<div class="line">Ajax処理実行の直前でボタンを非活性にしている。これは２度押しによる不具合を回避するために設定する。</div>
+<div class="line">CSSスタイルに<cite>display: none;</cite>を指定し非表示にしていた領域をjQueryの<cite>fadeIn</cite>メソッドを使用することで表示させる。</div>
+<div class="line">Ajax処理完了後は<cite>always</cite>メソッドを使用することで、処理結果が<cite>done</cite>・<cite>fail</cite>のどちらの場合でも実行されるように実装する。</div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Ajaxを用いたサーバとの非同期通信の詳細についてはMacchinettaオンライン版 開発ガイドライン ( <a class="reference external" href="http://macchinetta.github.io/guideline/">http://macchinetta.github.io/guideline/</a>の Macchinetta Server Framework (1.x) Development Guideline ) を参照すること。</p>
+</div>
+</div>
+<div class="section" id="a">
+<span id="prevent-continuous-click-howtoextend-alinktag"></span><h4>5.4.3.3. a要素によるリンクに対して二度押しを無効化する場合<a class="headerlink" href="#a" title="Permalink to this headline">¶</a></h4>
+<p>a要素を使用したリンクに対して二度押しを無効化する場合、ボタンのように<cite>disable</cite>属性は使用できない。
+このため、二度押しを無効化するためのJavaScriptを独自に実装する必要がある。
+以下にサンプルを示す。</p>
+<ul class="simple">
+<li>HTML</li>
+</ul>
+<div class="highlight-html"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">a</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;sample&quot;</span> <span class="na">href</span><span class="o">=</span><span class="s">&quot;#&quot;</span><span class="p">&gt;</span>sample<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>JavaScript</li>
+</ul>
+<div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="c1">// (1)</span>
+<span class="kd">var</span> <span class="nx">clicked</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+
+<span class="nx">$</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+
+  <span class="c1">// (2)</span>
+  <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">).</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;click&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+
+    <span class="c1">// (3)</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">clicked</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
+    <span class="p">};</span>
+
+    <span class="c1">// (4)</span>
+    <span class="nx">clicked</span> <span class="o">=</span> <span class="kc">true</span><span class="p">;</span>
+
+    <span class="c1">// (5)</span>
+    <span class="nx">$</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+      <span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span>
+        <span class="nx">url</span><span class="o">:</span> <span class="nx">contextPath</span> <span class="o">+</span> <span class="s1">&#39;/api/v1/dummyServiceForLoading&#39;</span><span class="p">,</span>
+        <span class="nx">type</span><span class="o">:</span> <span class="s1">&#39;POST&#39;</span><span class="p">,</span>
+        <span class="nx">dataType</span><span class="o">:</span> <span class="s1">&#39;json&#39;</span><span class="p">,</span>
+      <span class="p">}).</span><span class="nx">always</span><span class="p">(</span><span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+          <span class="nx">clicked</span> <span class="o">=</span> <span class="kc">false</span><span class="p">;</span>
+      <span class="p">});</span>
+    <span class="p">});</span>
+  <span class="p">});</span>
+<span class="p">});</span>
+</pre></div>
+</div>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="11%" />
+<col width="89%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">項番</th>
+<th class="head">説明</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><div class="first last line-block">
+<div class="line">(1)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">対象のリンクについて押下の未済を判定するための変数を定義する。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><div class="first last line-block">
+<div class="line">(2)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">a要素が押下された際のイベントハンドラを定義する。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><div class="first last line-block">
+<div class="line">(3)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">押下済みの場合はfalseを返却しリンクを無効化する。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><div class="first last line-block">
+<div class="line">(4)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">押下済みでない場合はフラグを立て押下済みとする。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><div class="first last line-block">
+<div class="line">(5)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">リンク押下時の動作を実装する。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="section" id="disable-right-click">
+<span id="id25"></span><h2>5.5. 右クリック無効<a class="headerlink" href="#disable-right-click" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="disable-right-click-outline">
+<span id="id26"></span><h3>5.5.1. 概要<a class="headerlink" href="#disable-right-click-outline" title="Permalink to this headline">¶</a></h3>
+<p>ここでは、jQueryを用いて、右クリックを無効化する方法を説明する。</p>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="20%" />
+<col width="40%" />
+<col width="40%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">利用ライブラリ</th>
+<th class="head">サンプル</th>
+<th class="head">参考ページ</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>jQuery</td>
+<td><a class="reference external" href="../samples/jquery/disable-right-click.html">右クリック無効化</a></td>
+<td>-</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="disable-right-click-howtouse">
+<span id="id28"></span><h3>5.5.2. 利用方法<a class="headerlink" href="#disable-right-click-howtouse" title="Permalink to this headline">¶</a></h3>
+<p>HTMLでは、jQueryと、右クリックを無効化するために実装したJavaScript(disable-right-click.js)を読み込む。</p>
+<div class="highlight-html"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;../lib/vendor/jquery/1.11.1/jquery-1.11.1.min.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;js/disable-right-click.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<p>JavaScript(disable-right-click.js)では、<code class="docutils literal"><span class="pre">contextmenu</span></code>イベントハンドラ内で、<code class="docutils literal"><span class="pre">event.preventDefault</span></code>を実行することで、ウェブブラウザの標準動作（この例ではコンテキストメニューの表示）を停止している。</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="c1">// disable-right-click.js</span>
+
+<span class="s1">&#39;use strict&#39;</span><span class="p">;</span>
+
+<span class="nx">$</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+
+  <span class="nx">$</span><span class="p">(</span><span class="nb">document</span><span class="p">).</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;contextmenu&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">event</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">event</span><span class="p">.</span><span class="nx">preventDefault</span><span class="p">();</span>
+  <span class="p">});</span>
+
+<span class="p">});</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="work-with-element">
+<span id="id29"></span><h2>5.6. 画面要素間の連動<a class="headerlink" href="#work-with-element" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="work-with-element-outline">
+<span id="id30"></span><h3>5.6.1. 概要<a class="headerlink" href="#work-with-element-outline" title="Permalink to this headline">¶</a></h3>
+<p>画面要素間の連動とは、ある画面要素において、指定されたイベントを検知し、別の画面要素を変更することである。</p>
+<p>ここでは、jQueryを用いた画面要素の連動の方法について説明する。</p>
+<p>例として、地域区分のドロップダウンリストと都道府県のドロップダウンリストが連動するサンプルを用いる。</p>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="20%" />
+<col width="40%" />
+<col width="40%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">利用ライブラリ</th>
+<th class="head">サンプル</th>
+<th class="head">参考ページ</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>jQuery</td>
+<td><ul class="first last simple">
+<li><a class="reference external" href="../samples/jquery/work-with-element.html">ドロップダウンリストの連動</a></li>
+<li><a class="reference external" href="../samples/jquery/work-with-element-ajax.html">非同期通信を使用したドロップダウンリストの連動</a></li>
+</ul>
+</td>
+<td>-</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="work-with-element-howtouse">
+<span id="id33"></span><h3>5.6.2. 利用方法<a class="headerlink" href="#work-with-element-howtouse" title="Permalink to this headline">¶</a></h3>
+<p>HTMLでは、jQueryと、画面要素間の連動を制御するために実装したJavaScript(work-with-element.js)を読み込む。</p>
+<p>連動させる要素である地域区分と都道府県のドロップダウンリストには<code class="docutils literal"><span class="pre">id</span></code>を設定する。</p>
+<div class="highlight-html"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">h3</span><span class="p">&gt;</span>地域区分：<span class="p">&lt;/</span><span class="nt">h3</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">select</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;region&quot;</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">option</span><span class="p">&gt;</span>-- 地域区分 --<span class="p">&lt;/</span><span class="nt">option</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">option</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;hokkaido&quot;</span><span class="p">&gt;</span>北海道<span class="p">&lt;/</span><span class="nt">option</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">option</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;tohoku&quot;</span><span class="p">&gt;</span>東北<span class="p">&lt;/</span><span class="nt">option</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">option</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;kanto&quot;</span><span class="p">&gt;</span>関東<span class="p">&lt;/</span><span class="nt">option</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">option</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;chubu&quot;</span><span class="p">&gt;</span>中部<span class="p">&lt;/</span><span class="nt">option</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">option</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;kinki&quot;</span><span class="p">&gt;</span>近畿<span class="p">&lt;/</span><span class="nt">option</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">option</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;chugoku&quot;</span><span class="p">&gt;</span>中国<span class="p">&lt;/</span><span class="nt">option</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">option</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;shikoku&quot;</span><span class="p">&gt;</span>四国<span class="p">&lt;/</span><span class="nt">option</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">option</span> <span class="na">value</span><span class="o">=</span><span class="s">&quot;kyushu&quot;</span><span class="p">&gt;</span>九州・沖縄<span class="p">&lt;/</span><span class="nt">option</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">select</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">br</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">h3</span><span class="p">&gt;</span>都道府県：<span class="p">&lt;/</span><span class="nt">h3</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">select</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;prefecture&quot;</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">option</span><span class="p">&gt;</span>-- 都道府県 --<span class="p">&lt;/</span><span class="nt">option</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">select</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;../lib/vendor/jquery/1.11.1/jquery-1.11.1.min.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;js/work-with-element.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<p>JavaScript(work-with-element.js)では、<code class="docutils literal"><span class="pre">on</span></code>メソッドを使って地域区分ドロップダウンリストに<code class="docutils literal"><span class="pre">change</span></code>イベントが発生した際に実行する関数を設定する。</p>
+<p>設定した関数の中で、選択された地域区分の情報をキーに都道府県リストを取得し、そのリストを都道府県ドロップダウンリストに追加する。</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="c1">// work-with-element.js</span>
+
+<span class="s1">&#39;use strict&#39;</span><span class="p">;</span>
+
+<span class="nx">$</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+
+  <span class="c1">// (1)</span>
+  <span class="kd">var</span> <span class="nx">regions</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#region&#39;</span><span class="p">);</span>
+  <span class="kd">var</span> <span class="nx">prefectures</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#prefecture&#39;</span><span class="p">);</span>
+
+  <span class="c1">// (2)</span>
+  <span class="nx">regions</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;change&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+
+    <span class="c1">// (3)</span>
+    <span class="kd">var</span> <span class="nx">prefecture</span> <span class="o">=</span> <span class="nx">prop</span><span class="p">.</span><span class="nx">data</span><span class="p">[</span><span class="nx">regions</span><span class="p">.</span><span class="nx">val</span><span class="p">()];</span>
+
+    <span class="c1">// (4)</span>
+    <span class="nx">prefectures</span><span class="p">.</span><span class="nx">empty</span><span class="p">();</span>
+
+    <span class="c1">// (5)</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">prefecture</span> <span class="k">instanceof</span> <span class="nb">Array</span><span class="p">)</span> <span class="p">{</span>
+      <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">len</span> <span class="o">=</span> <span class="nx">prefecture</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">len</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="kd">var</span> <span class="nx">option</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;&lt;option&gt;&#39;</span><span class="p">).</span><span class="nx">text</span><span class="p">(</span><span class="nx">prefecture</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">text</span><span class="p">)</span>
+                      <span class="p">.</span><span class="nx">val</span><span class="p">(</span><span class="nx">prefecture</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">value</span><span class="p">);</span>
+        <span class="nx">prefectures</span><span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="nx">option</span><span class="p">);</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+  <span class="p">});</span>
+<span class="p">});</span>
+
+<span class="c1">// (6)</span>
+<span class="kd">var</span> <span class="nx">prop</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s1">&#39;data&#39;</span> <span class="o">:</span> <span class="p">{</span>
+    <span class="s1">&#39;hokkaido&#39;</span> <span class="o">:</span> <span class="p">[</span>
+      <span class="p">{</span><span class="s1">&#39;text&#39;</span><span class="o">:</span> <span class="s1">&#39;道央&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="o">:</span> <span class="s1">&#39;douou&#39;</span><span class="p">},</span>
+      <span class="p">{</span><span class="s1">&#39;text&#39;</span><span class="o">:</span> <span class="s1">&#39;道北&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="o">:</span> <span class="s1">&#39;douhoku&#39;</span><span class="p">},</span>
+      <span class="p">{</span><span class="s1">&#39;text&#39;</span><span class="o">:</span> <span class="s1">&#39;道東&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="o">:</span> <span class="s1">&#39;doutou&#39;</span><span class="p">},</span>
+      <span class="p">{</span><span class="s1">&#39;text&#39;</span><span class="o">:</span> <span class="s1">&#39;道南&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="o">:</span> <span class="s1">&#39;dounan&#39;</span><span class="p">}</span>
+    <span class="p">],</span>
+
+    <span class="c1">// 省略</span>
+
+    <span class="s1">&#39;kyushu&#39;</span> <span class="o">:</span> <span class="p">[</span>
+      <span class="p">{</span><span class="s1">&#39;text&#39;</span><span class="o">:</span> <span class="s1">&#39;福岡&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="o">:</span> <span class="s1">&#39;fukuoka&#39;</span><span class="p">},</span>
+      <span class="p">{</span><span class="s1">&#39;text&#39;</span><span class="o">:</span> <span class="s1">&#39;佐賀&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="o">:</span> <span class="s1">&#39;saga&#39;</span><span class="p">},</span>
+      <span class="p">{</span><span class="s1">&#39;text&#39;</span><span class="o">:</span> <span class="s1">&#39;長崎&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="o">:</span> <span class="s1">&#39;nagasaki&#39;</span><span class="p">},</span>
+      <span class="p">{</span><span class="s1">&#39;text&#39;</span><span class="o">:</span> <span class="s1">&#39;熊本&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="o">:</span> <span class="s1">&#39;kumamoto&#39;</span><span class="p">},</span>
+      <span class="p">{</span><span class="s1">&#39;text&#39;</span><span class="o">:</span> <span class="s1">&#39;大分&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="o">:</span> <span class="s1">&#39;oita&#39;</span><span class="p">},</span>
+      <span class="p">{</span><span class="s1">&#39;text&#39;</span><span class="o">:</span> <span class="s1">&#39;宮崎&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="o">:</span> <span class="s1">&#39;miyazaki&#39;</span><span class="p">},</span>
+      <span class="p">{</span><span class="s1">&#39;text&#39;</span><span class="o">:</span> <span class="s1">&#39;鹿児島&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="o">:</span> <span class="s1">&#39;kagoshima&#39;</span><span class="p">},</span>
+      <span class="p">{</span><span class="s1">&#39;text&#39;</span><span class="o">:</span> <span class="s1">&#39;沖縄&#39;</span><span class="p">,</span> <span class="s1">&#39;value&#39;</span><span class="o">:</span> <span class="s1">&#39;okinawa&#39;</span><span class="p">}</span>
+    <span class="p">]</span>
+  <span class="p">}</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="11%" />
+<col width="89%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">項番</th>
+<th class="head">説明</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><div class="first last line-block">
+<div class="line">(1)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">連動させる要素を取得する。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><div class="first last line-block">
+<div class="line">(2)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">地域区分が選択されたときに実行する関数を定義する。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><div class="first last line-block">
+<div class="line">(3)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">選択された地域区分の情報をキーに都道府県リストを取得する。<code class="docutils literal"><span class="pre">prop.data</span></code>には、地域ごとに分けられた都道府県オブジェクトの配列が定義されている。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><div class="first last line-block">
+<div class="line">(4)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">都道府県ドロップダウンリストを一旦空にする。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><div class="first last line-block">
+<div class="line">(5)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">都道府県ドロップダウンリストに取得した都道府県リストを追加する。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><div class="first last line-block">
+<div class="line">(6)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">地域ごとに分けられた都道府県オブジェクトの配列。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="work-with-element-howtoextend-ajax">
+<span id="id34"></span><h3>5.6.3. 応用方法<a class="headerlink" href="#work-with-element-howtoextend-ajax" title="Permalink to this headline">¶</a></h3>
+<p>画面要素間の連動を実現する際は、リストをJavaScriptファイルにハードコーディングするのではなく、サーバもしくは外部ファイルに持たせて取得するケースが考えられる。</p>
+<p>ここでは、非同期通信で取得したリストを画面要素に反映するサンプルを応用方法として紹介する。</p>
+<p>HTMLは同一であるため割愛する。</p>
+<p>JavaScript(work-with-element-ajax.js)では
+都道府県リスト(prefecture-data.json)を<code class="docutils literal"><span class="pre">ajax</span></code>メソッドを使い、非同期通信で取得する。</p>
+<p><code class="docutils literal"><span class="pre">ajax</span></code>メソッドの引数には通信方式(GET)、都道府県リストのURL、データ形式(JSON形式)、非同期通信完了後に実行するcallback関数を設定する。</p>
+<p>callback関数の引数<code class="docutils literal"><span class="pre">data</span></code>にはオブジェクトとして都道府県リストが渡されるため、選択された地域区分の情報をキーに都道府県リストを取得できる。</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="c1">// work-with-element-ajax.js</span>
+
+<span class="s1">&#39;use strict&#39;</span><span class="p">;</span>
+
+<span class="nx">$</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+
+  <span class="kd">var</span> <span class="nx">regions</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#region&#39;</span><span class="p">);</span>
+  <span class="kd">var</span> <span class="nx">prefectures</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#prefecture&#39;</span><span class="p">);</span>
+
+  <span class="nx">regions</span><span class="p">.</span><span class="nx">on</span><span class="p">(</span><span class="s1">&#39;change&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+
+    <span class="c1">// (1)</span>
+    <span class="kd">var</span> <span class="nx">callback</span> <span class="o">=</span>  <span class="kd">function</span> <span class="p">(</span><span class="nx">data</span><span class="p">)</span> <span class="p">{</span>
+
+      <span class="kd">var</span> <span class="nx">prefecture</span> <span class="o">=</span> <span class="nx">data</span><span class="p">[</span><span class="nx">regions</span><span class="p">.</span><span class="nx">val</span><span class="p">()];</span>
+      <span class="nx">prefectures</span><span class="p">.</span><span class="nx">empty</span><span class="p">();</span>
+      <span class="k">if</span> <span class="p">(</span><span class="nx">prefecture</span> <span class="k">instanceof</span> <span class="nb">Array</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">len</span> <span class="o">=</span> <span class="nx">prefecture</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">len</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+          <span class="kd">var</span> <span class="nx">option</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;&lt;option&gt;&#39;</span><span class="p">).</span><span class="nx">text</span><span class="p">(</span><span class="nx">prefecture</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">text</span><span class="p">)</span>
+                        <span class="p">.</span><span class="nx">val</span><span class="p">(</span><span class="nx">prefecture</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">value</span><span class="p">);</span>
+          <span class="nx">prefectures</span><span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="nx">option</span><span class="p">);</span>
+        <span class="p">}</span>
+      <span class="p">}</span>
+    <span class="p">};</span>
+
+    <span class="c1">// (2)</span>
+    <span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span>
+      <span class="s1">&#39;type&#39;</span> <span class="o">:</span> <span class="s1">&#39;GET&#39;</span><span class="p">,</span>
+      <span class="s1">&#39;url&#39;</span> <span class="o">:</span> <span class="s1">&#39;data/prefecture-data.json&#39;</span><span class="p">,</span>
+      <span class="s1">&#39;dataType&#39;</span> <span class="o">:</span> <span class="s1">&#39;json&#39;</span><span class="p">,</span>
+      <span class="s1">&#39;success&#39;</span> <span class="o">:</span> <span class="nx">callback</span>
+    <span class="p">});</span>
+  <span class="p">});</span>
+<span class="p">});</span>
+</pre></div>
+</div>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="11%" />
+<col width="89%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">項番</th>
+<th class="head">説明</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><div class="first last line-block">
+<div class="line">(1)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">非同期通信が完了したときに実行する関数を定義する。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><div class="first last line-block">
+<div class="line">(2)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">非同期通信を実行し、処理後に関数を実行することでドロップダウンリストを変更する。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="section" id="format-conversion">
+<span id="id35"></span><h2>5.7. フォーマット変換・文字種変換<a class="headerlink" href="#format-conversion" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="format-conversion-outline">
+<span id="id36"></span><h3>5.7.1. 概要<a class="headerlink" href="#format-conversion-outline" title="Permalink to this headline">¶</a></h3>
+<div class="line-block">
+<div class="line">本節で紹介するフォーマット変換・文字種変換とは、ユーザーが入力した入力値のフォーマットや文字種を自動的に変換することを指す。</div>
+<div class="line">ここでは、フォーマット変換・文字種変換について、日付を操作するMoment.jsと独自に実装したJavaScriptを用いて実現する方法を紹介する。</div>
+</div>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="20%" />
+<col width="40%" />
+<col width="40%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">利用ライブラリ</th>
+<th class="head">サンプル</th>
+<th class="head">参考ページ</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Moment.js</td>
+<td><ul class="first last simple">
+<li><a class="reference external" href="../samples/moment/convert-date.html">日付のフォーマット変換</a></li>
+<li><a class="reference external" href="../samples/moment/check-date.html">日付妥当性チェック</a></li>
+<li><a class="reference external" href="../samples/moment/convert-time.html">時刻のフォーマット変換</a></li>
+</ul>
+</td>
+<td><ul class="first last simple">
+<li><a class="reference external" href="http://momentjs.com/docs/#/parsing/string-format/">String + Format | Moment.js</a></li>
+<li><a class="reference external" href="http://momentjs.com/docs/#/parsing/is-valid/">Validation | Moment.js</a></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td>-</td>
+<td><a class="reference external" href="../samples/moment/convert-zenkaku-hankaku.html">特定文字の全角半角変換</a></td>
+<td>-</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="format-conversion-houtouse">
+<span id="id41"></span><h3>5.7.2. 利用方法<a class="headerlink" href="#format-conversion-houtouse" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="format-conversion-convert-date">
+<span id="id42"></span><h4>5.7.2.1. 日付フォーマット変換<a class="headerlink" href="#format-conversion-convert-date" title="Permalink to this headline">¶</a></h4>
+<div class="line-block">
+<div class="line">ここではMoment.jsを使用して日付フォーマットを変換する方法を紹介する。</div>
+<div class="line">サンプルは、日付入力欄のフォーカス時に「YYYYMMDD」形式に変換し、フォーカスアウト時に「YYYY/MM/DD」形式に変換する。</div>
+</div>
+<div class="line-block">
+<div class="line">HTMLでは、jQuery、Moment.jsと独自に実装したJavaScript(convert-date.js)を読み込む。</div>
+</div>
+<div class="highlight-html"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;../lib/vendor/jquery/1.11.1/jquery-1.11.1.min.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;../lib/vendor/moment/2.8.3/moment.min.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;js/convert-date.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">JavaScript(convert-date.js)では、以下のように処理を実装する。</div>
+</div>
+<div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="c1">// convert-date.js</span>
+
+<span class="s1">&#39;use strict&#39;</span><span class="p">;</span>
+
+<span class="nx">$</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+  <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#date&#39;</span><span class="p">).</span><span class="nx">on</span><span class="p">({</span>
+
+    <span class="c1">// (1)</span>
+    <span class="s1">&#39;focus&#39;</span> <span class="o">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+      <span class="kd">var</span> <span class="nx">date</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#date&#39;</span><span class="p">).</span><span class="nx">val</span><span class="p">();</span>
+      <span class="k">if</span> <span class="p">(</span><span class="nx">date</span> <span class="o">===</span> <span class="s1">&#39;&#39;</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span><span class="p">;</span>
+      <span class="p">}</span>
+
+      <span class="c1">// (2)</span>
+      <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#date&#39;</span><span class="p">).</span><span class="nx">val</span><span class="p">(</span><span class="nx">moment</span><span class="p">(</span><span class="nx">date</span><span class="p">,</span> <span class="s1">&#39;YYYY/MM/DD&#39;</span><span class="p">,</span> <span class="kc">true</span><span class="p">).</span><span class="nx">format</span><span class="p">(</span><span class="s1">&#39;YYYYMMDD&#39;</span><span class="p">));</span>
+    <span class="p">},</span>
+
+    <span class="c1">// (3)</span>
+    <span class="s1">&#39;blur&#39;</span> <span class="o">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+      <span class="kd">var</span> <span class="nx">date</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#date&#39;</span><span class="p">).</span><span class="nx">val</span><span class="p">();</span>
+      <span class="k">if</span> <span class="p">(</span><span class="nx">date</span> <span class="o">===</span> <span class="s1">&#39;&#39;</span> <span class="o">||</span> <span class="nx">moment</span><span class="p">(</span><span class="nx">date</span><span class="p">,</span> <span class="s1">&#39;YYYY/MM/DD&#39;</span><span class="p">,</span> <span class="kc">true</span><span class="p">).</span><span class="nx">isValid</span><span class="p">())</span> <span class="p">{</span>
+        <span class="k">return</span><span class="p">;</span>
+      <span class="p">}</span>
+
+      <span class="c1">// (4)</span>
+      <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#date&#39;</span><span class="p">).</span><span class="nx">val</span><span class="p">(</span><span class="nx">moment</span><span class="p">(</span><span class="nx">date</span><span class="p">,</span> <span class="s1">&#39;YYYYMMDD&#39;</span><span class="p">,</span> <span class="kc">true</span><span class="p">).</span><span class="nx">format</span><span class="p">(</span><span class="s1">&#39;YYYY/MM/DD&#39;</span><span class="p">));</span>
+    <span class="p">}</span>
+  <span class="p">});</span>
+<span class="p">});</span>
+</pre></div>
+</div>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="11%" />
+<col width="89%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">項番</th>
+<th class="head">説明</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><div class="first last line-block">
+<div class="line">(1)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">フォーカス時に発生するイベントを定義する。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><div class="first last line-block">
+<div class="line">(2)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">スラッシュなしのフォーマットに変換する。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><div class="first last line-block">
+<div class="line">(3)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">フォーカスアウト時に発生するイベントを定義する。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><div class="first last line-block">
+<div class="line">(4)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">スラッシュありのフォーマットに変換する。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="line-block">
+<div class="line"><code class="docutils literal"><span class="pre">moment</span></code>メソッドの第1引数に日付（文字列）、第2引数にフォーマットを設定すると、フォーマットに従ってパースする。<code class="docutils literal"><span class="pre">format</span></code>メソッドにフォーマットを設定すると、指定したフォーマットに変換した日付を取得できる。</div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p><code class="docutils literal"><span class="pre">moment</span></code>の第3引数に<code class="docutils literal"><span class="pre">true</span></code>を設定すると、Strictモードで動作する。Strictモードは、入力値がフォーマットと一致していることを厳密にチェックし、一致する場合のみ有効な日付としてパースする。</p>
+<p>第3引数を省略、または<code class="docutils literal"><span class="pre">false</span></code>を設定した場合、Forgivingモードで動作する。Forgivingモードは、入力値がフォーマットとある程度異なっても有効な日付としてパースする。</p>
+<p>各モードの挙動の差異について、以下に例を示す。</p>
+<blockquote>
+<div><div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="c1">// (1)</span>
+<span class="c1">// (1-a)</span>
+<span class="nx">moment</span><span class="p">(</span><span class="s1">&#39;2015-01-01&#39;</span><span class="p">,</span> <span class="s1">&#39;YYYY/MM/DD&#39;</span><span class="p">,</span> <span class="kc">false</span><span class="p">).</span><span class="nx">format</span><span class="p">(</span><span class="s1">&#39;YYYYMMDD&#39;</span><span class="p">);</span>
+
+<span class="c1">// (1-b)</span>
+<span class="nx">moment</span><span class="p">(</span><span class="s1">&#39;2015-01-01&#39;</span><span class="p">,</span> <span class="s1">&#39;YYYY/MM/DD&#39;</span><span class="p">,</span> <span class="kc">true</span><span class="p">).</span><span class="nx">format</span><span class="p">(</span><span class="s1">&#39;YYYYMMDD&#39;</span><span class="p">);</span>
+
+<span class="c1">// (2)</span>
+<span class="c1">// (2-a)</span>
+<span class="nx">moment</span><span class="p">(</span><span class="s1">&#39;2015/01/31 is Date&#39;</span><span class="p">,</span> <span class="s1">&#39;YYYY/MM/DD&#39;</span><span class="p">,</span> <span class="kc">false</span><span class="p">).</span><span class="nx">format</span><span class="p">(</span><span class="s1">&#39;YYYYMMDD&#39;</span><span class="p">);</span>
+
+<span class="c1">// (2-b)</span>
+<span class="nx">moment</span><span class="p">(</span><span class="s1">&#39;2015/01/31 is Date&#39;</span><span class="p">,</span> <span class="s1">&#39;YYYY/MM/DD&#39;</span><span class="p">,</span> <span class="kc">true</span><span class="p">).</span><span class="nx">format</span><span class="p">(</span><span class="s1">&#39;YYYYMMDD&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="11%" />
+<col width="89%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">項番</th>
+<th class="head">説明</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><div class="first last line-block">
+<div class="line">(1)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">入力値(2015-01-01)とフォーマット(YYYY/MM/DD)が異なる場合。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><div class="first last line-block">
+<div class="line">(1-a)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">Forgivingモードの場合では返却値が<code class="docutils literal"><span class="pre">20150101</span></code>となる。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><div class="first last line-block">
+<div class="line">(1-b)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">Strictモードでは<code class="docutils literal"><span class="pre">Invalid</span> <span class="pre">date</span></code>となる。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><div class="first last line-block">
+<div class="line">(2)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">入力値(2015/01/31 is Date)に日付以外が含まれる場合。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><div class="first last line-block">
+<div class="line">(2-a)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">Forgivingモードの場合では返却値が<code class="docutils literal"><span class="pre">20150131</span></code>となる。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><div class="first last line-block">
+<div class="line">(2-b)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">Strictモードでは<code class="docutils literal"><span class="pre">Invalid</span> <span class="pre">date</span></code>となる。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<p>また、Forgivingモードはフォーマットを厳密にチェックしないため、入力値が誤って変換される可能性がある。</p>
+<blockquote>
+<div><div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="c1">// (1)</span>
+<span class="nx">moment</span><span class="p">(</span><span class="s1">&#39;01/12/2016&#39;</span><span class="p">,</span> <span class="s1">&#39;YYYY/MM/DD&#39;</span><span class="p">,</span> <span class="kc">false</span><span class="p">).</span><span class="nx">format</span><span class="p">(</span><span class="s1">&#39;YYYYMMDD&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="11%" />
+<col width="89%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">項番</th>
+<th class="head">説明</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><div class="first last line-block">
+<div class="line">(1)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">入力値(01/12/2016)とフォーマット(YYYY/MM/DD)が異なるが、Forgivingモードでは<code class="docutils literal"><span class="pre">20011220</span></code>として解釈される。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<p class="last">このように、Forgivingモードは故障に繋がる可能性があるため、Strictモードを利用することを推奨する。</p>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">入力値に誤りがある場合、入力欄に「Invalid date」が出力される。メッセージの文言や出力位置は変更できないため、入力値の妥当性を事前にチェックし、エラーの場合はメッセージを出力するよう実装すること。チェック方法は<a class="reference internal" href="#format-conversion-check-date"><span class="std std-ref">日付妥当性チェック</span></a>に記述する。</p>
+</div>
+</div>
+<div class="section" id="format-conversion-check-date">
+<span id="id43"></span><h4>5.7.2.2. 日付妥当性チェック<a class="headerlink" href="#format-conversion-check-date" title="Permalink to this headline">¶</a></h4>
+<div class="line-block">
+<div class="line">ここでは、Moment.jsを使用して日付の妥当性をチェックする方法を紹介する。</div>
+<div class="line">本節の妥当性チェックは、入力値のフォーマットが正しいこと、日付が実在することを判定する。許容するフォーマットは指定できる。</div>
+</div>
+<div class="line-block">
+<div class="line">HTMLでは、jQuery、Moment.jsと独自に実装したJavaScript(check-date.js)を読み込む。</div>
+</div>
+<div class="highlight-html"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;../lib/vendor/jquery/1.11.1/jquery-1.11.1.min.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;../lib/vendor/moment/2.8.3/moment.min.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;js/check-date.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">JavaScript(check-date.js)では、日付の入力欄に<code class="docutils literal"><span class="pre">blur</span></code>イベントが発生した際、入力値の妥当性をチェックする。</div>
+<div class="line"><code class="docutils literal"><span class="pre">moment</span></code>メソッドの引数に、入力値、フォーマットとStrictモードで実行するための<code class="docutils literal"><span class="pre">true</span></code>を設定し、<code class="docutils literal"><span class="pre">isValid</span></code>メソッドを実行する。</div>
+</div>
+<div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="c1">// check-date.js</span>
+
+<span class="s1">&#39;use strict&#39;</span><span class="p">;</span>
+
+<span class="nx">$</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+  <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#date&#39;</span><span class="p">).</span><span class="nx">on</span><span class="p">({</span>
+
+    <span class="c1">// (1)</span>
+    <span class="s1">&#39;blur&#39;</span> <span class="o">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+      <span class="kd">var</span> <span class="nx">date</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#date&#39;</span><span class="p">).</span><span class="nx">val</span><span class="p">();</span>
+
+      <span class="c1">// (2)</span>
+      <span class="kd">var</span> <span class="nx">result</span> <span class="o">=</span> <span class="nx">moment</span><span class="p">(</span><span class="nx">date</span><span class="p">,</span> <span class="s1">&#39;YYYY/MM/DD&#39;</span><span class="p">,</span> <span class="kc">true</span><span class="p">).</span><span class="nx">isValid</span><span class="p">();</span>
+
+      <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#date-area &gt; span&#39;</span><span class="p">).</span><span class="nx">remove</span><span class="p">();</span>
+      <span class="k">if</span> <span class="p">(</span><span class="nx">result</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#date-area&#39;</span><span class="p">).</span><span class="nx">append</span><span class="p">(</span><span class="s1">&#39;&lt;span&gt;入力値は正常です。&lt;/span&gt;&#39;</span><span class="p">);</span>
+      <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#date-area&#39;</span><span class="p">).</span><span class="nx">append</span><span class="p">(</span><span class="s1">&#39;&lt;span&gt;入力値に誤りがあります。&lt;/span&gt;&#39;</span><span class="p">);</span>
+      <span class="p">}</span>
+    <span class="p">}</span>
+  <span class="p">});</span>
+<span class="p">});</span>
+</pre></div>
+</div>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="11%" />
+<col width="89%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">項番</th>
+<th class="head">説明</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><div class="first last line-block">
+<div class="line">(1)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">フォーカスアウト時に発生するイベントを定義する。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><div class="first last line-block">
+<div class="line">(2)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">入力値の妥当性をチェックする。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="line-block">
+<div class="line"><code class="docutils literal"><span class="pre">moment</span></code>メソッドは、日付をパースする際、フォーマットに合致していること、日付が実在することをチェックする。<code class="docutils literal"><span class="pre">isValid</span></code>メソッドを実行すると、チェック結果を確認できる。パースに成功した場合は<code class="docutils literal"><span class="pre">true</span></code>、失敗した場合は<code class="docutils literal"><span class="pre">false</span></code>が返却される。</div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>複数のフォーマットを許容する場合、以下のように配列を設定すればよい。</p>
+<blockquote class="last">
+<div><div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="kd">var</span> <span class="nx">result</span> <span class="o">=</span> <span class="nx">moment</span><span class="p">(</span><span class="nx">date</span><span class="p">,</span> <span class="p">[</span><span class="s1">&#39;YYYY/MM/DD&#39;</span><span class="p">,</span><span class="s1">&#39;YYYYMMDD&#39;</span><span class="p">],</span> <span class="kc">true</span><span class="p">).</span><span class="nx">isValid</span><span class="p">();</span>
+</pre></div>
+</div>
+</div></blockquote>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p><a class="reference internal" href="#format-conversion-convert-date"><span class="std std-ref">日付フォーマット変換</span></a>のサンプルに本節の妥当性チェックを組み合わせた実装例を以下に示す。</p>
+<blockquote class="last">
+<div><div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="c1">// (1)</span>
+<span class="s1">&#39;blur&#39;</span> <span class="o">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">date</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#date&#39;</span><span class="p">).</span><span class="nx">val</span><span class="p">();</span>
+
+  <span class="c1">// (2)</span>
+  <span class="kd">var</span> <span class="nx">result</span> <span class="o">=</span> <span class="nx">moment</span><span class="p">(</span><span class="nx">date</span><span class="p">,</span> <span class="s1">&#39;YYYYMMDD&#39;</span><span class="p">,</span> <span class="kc">true</span><span class="p">).</span><span class="nx">isValid</span><span class="p">();</span>
+
+  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="nx">result</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#form-area&#39;</span><span class="p">).</span><span class="nx">append</span><span class="p">(</span><span class="s1">&#39;&lt;span&gt;入力値に誤りがあります。&lt;/span&gt;&#39;</span><span class="p">);</span>
+    <span class="k">return</span> <span class="kc">false</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="c1">// (3)</span>
+  <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#date&#39;</span><span class="p">).</span><span class="nx">val</span><span class="p">(</span><span class="nx">moment</span><span class="p">(</span><span class="nx">date</span><span class="p">,</span> <span class="s1">&#39;YYYYMMDD&#39;</span><span class="p">,</span> <span class="kc">true</span><span class="p">).</span><span class="nx">format</span><span class="p">(</span><span class="s1">&#39;YYYY/MM/DD&#39;</span><span class="p">));</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="11%" />
+<col width="89%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">項番</th>
+<th class="head">説明</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><div class="first last line-block">
+<div class="line">(1)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">フォーカスアウト時に発生するイベントを定義する。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><div class="first last line-block">
+<div class="line">(2)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">入力値の妥当性をチェックする。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><div class="first last line-block">
+<div class="line">(3)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">スラッシュありのフォーマットに変換する。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="format-conversion-convert-time">
+<span id="id44"></span><h4>5.7.2.3. 時刻フォーマット変換<a class="headerlink" href="#format-conversion-convert-time" title="Permalink to this headline">¶</a></h4>
+<div class="line-block">
+<div class="line">ここではMoment.jsを使用して時刻フォーマットを変換する方法を紹介する。</div>
+<div class="line">サンプルは、時刻入力欄のフォーカス時に「HHmmss」形式に変換し、フォーカスアウト時に「HH:mm:ss」形式に変換する。</div>
+</div>
+<div class="line-block">
+<div class="line">HTMLでは、jQuery、Moment.jsと独自に実装したJavaScript(convert-time.js)を読み込む。</div>
+</div>
+<div class="highlight-html"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;../lib/vendor/jquery/1.11.1/jquery-1.11.1.min.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;../lib/vendor/moment/2.8.3/moment.min.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;js/convert-time.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">JavaScript(convert-time.js)では、以下のように実装する。</div>
+</div>
+<div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="c1">// convert-time.js</span>
+
+<span class="s1">&#39;use strict&#39;</span><span class="p">;</span>
+
+<span class="nx">$</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+  <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#time&#39;</span><span class="p">).</span><span class="nx">on</span><span class="p">({</span>
+
+    <span class="c1">// (1)</span>
+    <span class="s1">&#39;focus&#39;</span> <span class="o">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+      <span class="kd">var</span> <span class="nx">time</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#time&#39;</span><span class="p">).</span><span class="nx">val</span><span class="p">();</span>
+      <span class="k">if</span> <span class="p">(</span><span class="nx">time</span> <span class="o">===</span> <span class="s1">&#39;&#39;</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span><span class="p">;</span>
+      <span class="p">}</span>
+
+      <span class="c1">// (2)</span>
+      <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#time&#39;</span><span class="p">).</span><span class="nx">val</span><span class="p">(</span><span class="nx">moment</span><span class="p">(</span><span class="nx">time</span><span class="p">,</span> <span class="s1">&#39;HH:mm:ss&#39;</span><span class="p">,</span> <span class="kc">true</span><span class="p">).</span><span class="nx">format</span><span class="p">(</span><span class="s1">&#39;HHmmss&#39;</span><span class="p">));</span>
+    <span class="p">},</span>
+
+    <span class="c1">// (3)</span>
+    <span class="s1">&#39;blur&#39;</span> <span class="o">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+      <span class="kd">var</span> <span class="nx">time</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#time&#39;</span><span class="p">).</span><span class="nx">val</span><span class="p">();</span>
+      <span class="k">if</span> <span class="p">(</span><span class="nx">time</span> <span class="o">===</span> <span class="s1">&#39;&#39;</span> <span class="o">||</span> <span class="nx">moment</span><span class="p">(</span><span class="nx">time</span><span class="p">,</span> <span class="s1">&#39;HH:mm:ss&#39;</span><span class="p">,</span> <span class="kc">true</span><span class="p">).</span><span class="nx">isValid</span><span class="p">())</span> <span class="p">{</span>
+        <span class="k">return</span><span class="p">;</span>
+      <span class="p">}</span>
+
+      <span class="c1">// (4)</span>
+      <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#time&#39;</span><span class="p">).</span><span class="nx">val</span><span class="p">(</span><span class="nx">moment</span><span class="p">(</span><span class="nx">time</span><span class="p">,</span> <span class="s1">&#39;HHmmss&#39;</span><span class="p">,</span> <span class="kc">true</span><span class="p">).</span><span class="nx">format</span><span class="p">(</span><span class="s1">&#39;HH:mm:ss&#39;</span><span class="p">));</span>
+    <span class="p">}</span>
+  <span class="p">});</span>
+<span class="p">});</span>
+</pre></div>
+</div>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="11%" />
+<col width="89%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">項番</th>
+<th class="head">説明</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><div class="first last line-block">
+<div class="line">(1)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">フォーカス時に発生するイベントを定義する。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><div class="first last line-block">
+<div class="line">(2)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">コロンなしのフォーマットに変換する。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><div class="first last line-block">
+<div class="line">(3)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">フォーカスアウト時に発生するイベントを定義する。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><div class="first last line-block">
+<div class="line">(4)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">コロンありのフォーマットに変換する。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="line-block">
+<div class="line"><code class="docutils literal"><span class="pre">moment</span></code>メソッドの第1引数に時刻（文字列）、第2引数にフォーマットを設定すると、フォーマットに従ってパースする。<code class="docutils literal"><span class="pre">format</span></code>メソッドにフォーマットを設定すると、指定したフォーマットに変換した時刻を取得できる。</div>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last"><code class="docutils literal"><span class="pre">moment</span></code>のパラメーターに不正な値を設定した場合、入力欄に「Invalid date」や想定外の値が出力される。入力値の妥当性を事前にチェックし、エラーの場合はメッセージを出力するよう実装すること。<a class="reference internal" href="#format-conversion-check-date"><span class="std std-ref">日付妥当性チェック</span></a>と同様の方法でチェックできる。</p>
+</div>
+</div>
+<div class="section" id="format-conversion-convert-zenkaku-hankaku">
+<span id="id45"></span><h4>5.7.2.4. 特定文字の全角半角変換<a class="headerlink" href="#format-conversion-convert-zenkaku-hankaku" title="Permalink to this headline">¶</a></h4>
+<div class="line-block">
+<div class="line">ここでは、JavaScriptを使用して、特定文字（「英字」、「数字」や一部の「記号」）を全角文字・半角文字に相互変換する実装例を紹介する。</div>
+</div>
+<div class="line-block">
+<div class="line">HTMLでは、jQueryと独自に実装したJavaScript(convert-zenkaku-hankaku.js)を読み込む。</div>
+</div>
+<div class="highlight-html"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;../lib/vendor/jquery/1.11.1/jquery-1.11.1.min.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;js/convert-zenkaku-hankaku.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">JavaScript(convert-zenkaku-hankaku.js)では、入力欄に<code class="docutils literal"><span class="pre">blur</span></code>イベントが発生した際、独自に実装した<code class="docutils literal"><span class="pre">convertStyle</span></code>関数を実行する。コードを区切って説明する。</div>
+</div>
+<div class="line-block">
+<div class="line">まず<code class="docutils literal"><span class="pre">style</span></code>オブジェクトに変換対象の全角文字・半角文字を定義する。</div>
+</div>
+<div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="kd">var</span> <span class="nx">style</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s1">&#39;zenkaku&#39;</span> <span class="o">:</span> <span class="s1">&#39;ＡＢＣＤＥＦＧＨＩＪＫＬＭＮＯＰＱＲＳＴＵＶＷＸＹＺａｂｃｄｅｆｇｈｉｊｋｌｍｎｏｐｑｒｓｔｕｖｗｘｙｚ１２３４５６７８９０　（）｛｝［］＜＞＝＋‐－＊／｜＿？，．￥＠＾；：！＃＄％＆&#39;</span><span class="p">,</span>
+  <span class="s1">&#39;hankaku&#39;</span> <span class="o">:</span> <span class="s1">&#39;ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890 (){}[]&lt;&gt;=+--*/|_?,.\\@^;:!#$%&amp;&#39;</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line"><code class="docutils literal"><span class="pre">convertStyle</span></code>関数は、<code class="docutils literal"><span class="pre">input</span></code>の文字数分ループする。</div>
+<div class="line">入力値の文字が<code class="docutils literal"><span class="pre">fromStyle</span></code>に格納された文字に該当する場合、<code class="docutils literal"><span class="pre">toStyle</span></code>の文字に置換する。</div>
+</div>
+<div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="c1">// (1)</span>
+<span class="kd">var</span> <span class="nx">convertStyle</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">input</span><span class="p">,</span> <span class="nx">type</span><span class="p">)</span> <span class="p">{</span>
+  <span class="kd">var</span> <span class="nx">fromStyle</span><span class="p">;</span>
+  <span class="kd">var</span> <span class="nx">toStyle</span><span class="p">;</span>
+  <span class="kd">var</span> <span class="nx">output</span> <span class="o">=</span> <span class="p">[];</span>
+
+  <span class="k">switch</span> <span class="p">(</span><span class="nx">type</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">case</span> <span class="s1">&#39;zenkaku&#39;</span><span class="o">:</span>
+
+      <span class="c1">// (2)</span>
+      <span class="nx">fromStyle</span> <span class="o">=</span> <span class="nx">style</span><span class="p">[</span><span class="s1">&#39;hankaku&#39;</span><span class="p">];</span>
+
+      <span class="c1">// (3)</span>
+      <span class="nx">toStyle</span> <span class="o">=</span> <span class="nx">style</span><span class="p">[</span><span class="s1">&#39;zenkaku&#39;</span><span class="p">];</span>
+      <span class="k">break</span><span class="p">;</span>
+    <span class="k">default</span><span class="o">:</span>
+
+      <span class="c1">// (4)</span>
+      <span class="nx">fromStyle</span> <span class="o">=</span> <span class="nx">style</span><span class="p">[</span><span class="s1">&#39;zenkaku&#39;</span><span class="p">];</span>
+
+      <span class="c1">// (5)</span>
+      <span class="nx">toStyle</span> <span class="o">=</span> <span class="nx">style</span><span class="p">[</span><span class="s1">&#39;hankaku&#39;</span><span class="p">];</span>
+      <span class="k">break</span><span class="p">;</span>
+  <span class="p">}</span>
+
+  <span class="kd">var</span> <span class="nx">pos</span><span class="p">;</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kd">var</span> <span class="nx">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="nx">len</span> <span class="o">=</span> <span class="nx">input</span><span class="p">.</span><span class="nx">length</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">len</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+
+    <span class="c1">// (6)</span>
+    <span class="nx">pos</span> <span class="o">=</span> <span class="nx">fromStyle</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="nx">input</span><span class="p">.</span><span class="nx">charAt</span><span class="p">(</span><span class="nx">i</span><span class="p">));</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">pos</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+
+      <span class="c1">// (7)</span>
+      <span class="nx">output</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">=</span> <span class="nx">input</span><span class="p">.</span><span class="nx">charAt</span><span class="p">(</span><span class="nx">i</span><span class="p">);</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+
+      <span class="c1">// (8)</span>
+      <span class="nx">output</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">=</span> <span class="nx">toStyle</span><span class="p">.</span><span class="nx">charAt</span><span class="p">(</span><span class="nx">pos</span><span class="p">);</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="nx">output</span><span class="p">.</span><span class="nx">join</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">);</span>
+<span class="p">};</span>
+</pre></div>
+</div>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="11%" />
+<col width="89%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">項番</th>
+<th class="head">説明</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><div class="first last line-block">
+<div class="line">(1)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">特定文字の全角半角変換用の関数を定義する。</div>
+<div class="line">第1引数に変換対象の文字列を指定し、第2引数に変換形式(半角から全角に変換する場合は「zenkaku」、全角から半角に変換する場合は「hankaku」)を指定する。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><div class="first last line-block">
+<div class="line">(2)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">typeが「zenkaku」の場合、変換前の文字列に半角文字列を格納する。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><div class="first last line-block">
+<div class="line">(3)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">変換後の文字列に全角文字列を格納する。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><div class="first last line-block">
+<div class="line">(4)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">typeが「hankaku」の場合、変換前の文字列に全角文字列を格納する。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><div class="first last line-block">
+<div class="line">(5)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">変換後の文字列に半角文字列を格納する。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><div class="first last line-block">
+<div class="line">(6)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">入力値の位置を取得する。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><div class="first last line-block">
+<div class="line">(7)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">該当しない場合、入力値を格納する。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><div class="first last line-block">
+<div class="line">(8)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">該当する場合、&#8217;toStyle&#8217;の文字を格納する。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="line-block">
+<div class="line">入力欄にblurイベントが発生した際、<code class="docutils literal"><span class="pre">convertStyle</span></code>関数を呼び出す。第2引数に変換後の文字種（「zenkaku」・「hankaku」）を指定する。</div>
+</div>
+<div class="highlight-javascript"><div class="highlight"><pre><span></span>  <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#zenkaku-string&#39;</span><span class="p">).</span><span class="nx">on</span><span class="p">({</span>
+
+    <span class="c1">// (9)</span>
+    <span class="s1">&#39;blur&#39;</span> <span class="o">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+
+      <span class="kd">var</span> <span class="nx">st</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#zenkaku-string&#39;</span><span class="p">).</span><span class="nx">val</span><span class="p">();</span>
+
+      <span class="c1">// (10)</span>
+      <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#zenkaku-string&#39;</span><span class="p">).</span><span class="nx">val</span><span class="p">(</span><span class="nx">convertStyle</span><span class="p">(</span><span class="nx">st</span><span class="p">,</span> <span class="s1">&#39;zenkaku&#39;</span><span class="p">));</span>
+    <span class="p">}</span>
+  <span class="p">});</span>
+
+  <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#hankaku-string&#39;</span><span class="p">).</span><span class="nx">on</span><span class="p">({</span>
+    <span class="s1">&#39;blur&#39;</span> <span class="o">:</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+
+      <span class="kd">var</span> <span class="nx">st</span> <span class="o">=</span> <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#hankaku-string&#39;</span><span class="p">).</span><span class="nx">val</span><span class="p">();</span>
+
+      <span class="c1">// (11)</span>
+      <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#hankaku-string&#39;</span><span class="p">).</span><span class="nx">val</span><span class="p">(</span><span class="nx">convertStyle</span><span class="p">(</span><span class="nx">st</span><span class="p">,</span> <span class="s1">&#39;hankaku&#39;</span><span class="p">));</span>
+    <span class="p">}</span>
+  <span class="p">});</span>
+<span class="p">});</span>
+</pre></div>
+</div>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="11%" />
+<col width="89%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">項番</th>
+<th class="head">説明</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><div class="first last line-block">
+<div class="line">(9)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">フォーカスアウト時に発生するイベントを定義する。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><div class="first last line-block">
+<div class="line">(10)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">半角文字を全角に変換する。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><div class="first last line-block">
+<div class="line">(11)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">全角文字を半角に変換する。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>本実装例は、styleオブジェクトのzenkakuとhankakuに、変換対象の文字が対になるように定義する。変換時は対象文字の定義位置を取得し、相対する文字種から同じ位置に定義されている文字を取得することで変換処理を実現している。</p>
+<p class="last">実装例のstyleオブジェクトにない文字を変換したい場合、styleオブジェクトの定義内容を変更すればよいが、定義する文字や順序に誤りが無いよう注意すること。</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">「英字」を大文字、または小文字のみに変換する場合、JavaScriptの<code class="docutils literal"><span class="pre">toUpperCase</span></code>・<code class="docutils literal"><span class="pre">toLowerCase</span></code>で入力値を変換すればよい。</p>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="validation">
+<span id="id46"></span><h2>5.8. 入力値チェック<a class="headerlink" href="#validation" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id47">
+<h3>5.8.1. 概要<a class="headerlink" href="#id47" title="Permalink to this headline">¶</a></h3>
+<div class="line-block">
+<div class="line">ここでは、Parsleyを用いた入力値チェックの実装方法を説明する。</div>
+<div class="line">Parsleyはクライアントサイドでの入力値チェックを容易に実現するためのライブラリである。</div>
+</div>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="20%" />
+<col width="40%" />
+<col width="40%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">利用ライブラリ</th>
+<th class="head">サンプル</th>
+<th class="head">参考ページ</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Parsley</td>
+<td><a class="reference external" href="../samples/parsleyjs/validation.html">入力値チェック</a></td>
+<td><a class="reference external" href="http://parsleyjs.org/doc/index.html">Parsley - The ultimate documentation</a></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>クライアントサイドでの入力値チェックは、入力値が受け付けられるかどうかをサーバにリクエストすることなく即座に確認できるため、ユーザビリティの向上に寄与する。</p>
+<p class="last">ただし、クライアントから送信されるパラメータは容易に改ざんできるため、サーバサイドでの入力値チェックの代替にはならない。業務上のデータ不整合を防ぐためには必ずサーバサイドでのチェックを実施すること。</p>
+</div>
+</div>
+<div class="section" id="id49">
+<h3>5.8.2. 利用方法<a class="headerlink" href="#id49" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="parsley-basic-usage">
+<span id="id50"></span><h4>5.8.2.1. 基本的な使用方法<a class="headerlink" href="#parsley-basic-usage" title="Permalink to this headline">¶</a></h4>
+<p>HTMLでは、次の順番でJavaScriptを読み込む。</p>
+<ol class="arabic simple">
+<li>jQuery</li>
+<li>Parsley拡張プラグイン (日付形式検証などの、拡張プラグインとして提供されている機能を使用する場合のみ)</li>
+<li>Parsley本体</li>
+<li>Parsleyメッセージ定義ファイル (指定しない場合メッセージは英語で出力される。サンプルでは未設定。)</li>
+<li>独自実装したJavaScript</li>
+</ol>
+<div class="highlight-html"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;../lib/vendor/jquery/1.11.1/jquery-1.11.1.min.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;../lib/vendor/parsleyjs/2.0.6/extra/validator/dateiso.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;../lib/vendor/parsleyjs/2.0.6/parsley.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;js/validation.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<p>検証ルールを適用するためには、対象の<code class="docutils literal"><span class="pre">input</span></code>に対して<code class="docutils literal"><span class="pre">data-parsley-検証ルール名</span></code>という属性を指定する。次の例は、年齢フィールドが「入力必須」「正の整数値」「20以上」であることを検証する例である。</p>
+<div class="highlight-html"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">label</span> <span class="na">for</span><span class="o">=</span><span class="s">&quot;age&quot;</span><span class="p">&gt;</span>年齢<span class="p">&lt;/</span><span class="nt">label</span><span class="p">&gt;&lt;</span><span class="nt">br</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">input</span> <span class="na">id</span><span class="o">=</span><span class="s">&quot;age&quot;</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;age&quot;</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text&quot;</span>
+       <span class="na">data-parsley-type</span><span class="o">=</span><span class="s">&quot;digits&quot;</span>
+       <span class="na">data-parsley-min</span><span class="o">=</span><span class="s">&quot;20&quot;</span> <span class="na">data-parsley-min-message</span><span class="o">=</span><span class="s">&quot;未成年は登録できません。&quot;</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<p>検証エラー時のメッセージは、エラーとなった検証ルールのデフォルトメッセージが表示される ( 設定方法は <a class="reference internal" href="#parsley-setting-default-messages"><span class="std std-ref">デフォルトエラーメッセージ定義と国際化対応</span></a> を参照) 。ただし、上の例にある<code class="docutils literal"><span class="pre">data-parsley-min-message=&quot;can</span> <span class="pre">not</span> <span class="pre">register</span> <span class="pre">age</span> <span class="pre">under</span> <span class="pre">20&quot;</span></code>のように、<code class="docutils literal"><span class="pre">検証ルール属性-message</span></code>属性を用いることで、特定の検証ルールのみメッセージを変更できる。</p>
+<p>その他の検証ルールを適用する属性として、以下が使用できる。</p>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="40%" />
+<col width="60%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">属性</th>
+<th class="head">用途</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">data-parsley-required=&quot;true&quot;</span></code></td>
+<td>入力必須であることを検証する。</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">data-parsley-type=&quot;digits&quot;</span></code></td>
+<td>正の整数値であることを検証する。</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">data-parsley-type=&quot;email&quot;</span></code></td>
+<td>Eメール形式であることを検証する。</td>
+</tr>
+<tr class="row-odd"><td><div class="first last line-block">
+<div class="line"><code class="docutils literal"><span class="pre">data-parsley-min=&quot;n&quot;</span></code></div>
+<div class="line">(n は正の整数)</div>
+</div>
+</td>
+<td>n 以上の数値であることを検証する。</td>
+</tr>
+<tr class="row-even"><td><div class="first last line-block">
+<div class="line"><code class="docutils literal"><span class="pre">data-parsley-max=&quot;n&quot;</span></code></div>
+<div class="line">(n は正の整数)</div>
+</div>
+</td>
+<td>n 以下の数値であることを検証する。</td>
+</tr>
+<tr class="row-odd"><td><div class="first last line-block">
+<div class="line"><code class="docutils literal"><span class="pre">data-parsley-length=&quot;[m,</span> <span class="pre">n]&quot;</span></code></div>
+<div class="line">(m, n は正の整数)</div>
+</div>
+</td>
+<td>m 文字以上 n 文字以下であることを検証する。</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">data-parsley-equalto=&quot;セレクタ文字列&quot;</span></code></td>
+<td>セレクタで指定した要素の値と同じ値であることを検証する。</td>
+</tr>
+</tbody>
+</table>
+<p>検証ルールの完全な一覧は <a class="reference external" href="http://parsleyjs.org/doc/index.html#psly-validators-list">Validators list</a> を参照すること。</p>
+<p>JavaScript(validation.js)では、 入力値チェック対象となるフォーム要素をjQueryでセレクトし、<code class="docutils literal"><span class="pre">parsley</span></code>メソッドを実行する。</p>
+<p><code class="docutils literal"><span class="pre">parsley</span></code>メソッドの引数には、次のようにオプションを指定するためのオブジェクトを指定できる。</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="c1">// validation.js</span>
+
+<span class="s1">&#39;use strict&#39;</span><span class="p">;</span>
+
+<span class="nx">$</span><span class="p">(</span><span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+
+  <span class="c1">// (1)</span>
+  <span class="nx">$</span><span class="p">(</span><span class="s1">&#39;#form&#39;</span><span class="p">).</span><span class="nx">parsley</span><span class="p">({</span>
+
+    <span class="c1">// (2)</span>
+    <span class="nx">inputs</span><span class="o">:</span> <span class="s1">&#39;input, textarea, select&#39;</span><span class="p">,</span>
+
+    <span class="c1">// (3)</span>
+    <span class="nx">excluded</span><span class="o">:</span> <span class="s1">&#39;input[type=button], input[type=submit], input[type=reset], input[type=hidden]&#39;</span><span class="p">,</span>
+
+    <span class="c1">// (4)</span>
+    <span class="nx">errorClass</span><span class="o">:</span> <span class="s1">&#39;has-error&#39;</span><span class="p">,</span>
+
+    <span class="c1">// (5)</span>
+    <span class="nx">successClass</span><span class="o">:</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
+
+    <span class="c1">// (6)</span>
+    <span class="nx">classHandler</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">ParsleyField</span><span class="p">)</span> <span class="p">{</span>
+
+      <span class="c1">// (7)</span>
+      <span class="k">return</span> <span class="nx">ParsleyField</span><span class="p">.</span><span class="nx">$element</span><span class="p">.</span><span class="nx">parent</span><span class="p">();</span>
+    <span class="p">},</span>
+
+    <span class="c1">// (8)</span>
+    <span class="nx">errorsContainer</span><span class="o">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">ParsleyField</span><span class="p">)</span> <span class="p">{</span>
+
+      <span class="c1">// (9)</span>
+    <span class="p">},</span>
+
+    <span class="c1">// (10)</span>
+    <span class="nx">errorsWrapper</span><span class="o">:</span> <span class="s1">&#39;&lt;ul class=&quot;parsley-errors-list&quot;&gt;&lt;/ul&gt;&#39;</span><span class="p">,</span>
+
+    <span class="c1">// (11)</span>
+    <span class="nx">errorTemplate</span><span class="o">:</span> <span class="s1">&#39;&lt;li&gt;&lt;/li&gt;&#39;</span>
+  <span class="p">});</span>
+
+<span class="p">});</span>
+</pre></div>
+</div>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="11%" />
+<col width="89%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">項番</th>
+<th class="head">説明</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><div class="first last line-block">
+<div class="line">(1)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">バリデーションを有効化する。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><div class="first last line-block">
+<div class="line">(2)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">検証対象の要素を指定する。(セレクタ文字列、またはjQueryオブジェクト)</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><div class="first last line-block">
+<div class="line">(3)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">検証対象から除外する要素を指定する。(セレクタ文字列、またはjQueryオブジェクト)</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><div class="first last line-block">
+<div class="line">(4)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">検証エラー時に付与するクラス名を指定する。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><div class="first last line-block">
+<div class="line">(5)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">検証成功時に付与するクラス名を指定する。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><div class="first last line-block">
+<div class="line">(6)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">検証結果に応じてクラスを付与する要素を指定する。(セレクタ文字列、jQueryオブジェクト、またはそれらを返す関数)</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><div class="first last line-block">
+<div class="line">(7)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">検証エラーが起きた input要素の親要素に<code class="docutils literal"><span class="pre">has-error</span></code>クラスを付与する。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><div class="first last line-block">
+<div class="line">(8)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">エラーメッセージを追加する要素を指定する。(文字列、jQueryオブジェクト、またはそれらを返す関数)</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><div class="first last line-block">
+<div class="line">(9)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">実装しない場合(オプション未指定時)や<code class="docutils literal"><span class="pre">undefined</span></code>を返すと、input要素の次に作られる。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><div class="first last line-block">
+<div class="line">(10)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">エラーメッセージの親要素に用いるHTML文字列を指定する。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><div class="first last line-block">
+<div class="line">(11)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">エラーメッセージ表示に用いるHTML文字列を指定する。</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<p>これらのオプションを使用することで、エラー時のメッセージ表示位置やスタイルの変更などを柔軟にカスタマイズすることができる。</p>
+</div>
+<div class="section" id="parsley-setting-default-messages">
+<span id="id51"></span><h4>5.8.2.2. デフォルトエラーメッセージ定義と国際化対応<a class="headerlink" href="#parsley-setting-default-messages" title="Permalink to this headline">¶</a></h4>
+<p>Parsleyの出力するデフォルトのエラーメッセージは英語であるが、他の各言語についてもデフォルトのエラーメッセージ定義が提供されている (i18nディレクトリ配下)。また、それらのファイル内のメッセージ定義を任意の内容に書き換えることができる。日本語のメッセージを変更する場合は、i18n/ja.js に定義されているメッセージ部分を直接書き換えればよい。</p>
+<p>デフォルトのエラーメッセージを変更したい場合は、次のように Parsley 本体の後に読み込む。</p>
+<div class="highlight-html"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;jquery.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;parsley.min.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;i18n/ja.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<p>複数のロケールに対応する場合には、次のように複数の言語のメッセージ定義を読み込んだ後、<code class="docutils literal"><span class="pre">ParsleyValidator.setLocale</span></code>メソッドを用いて適用するロケールを指定する。</p>
+<div class="highlight-html"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;jquery.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;parsley.min.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;i18n/fr.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">src</span><span class="o">=</span><span class="s">&quot;i18n/ja.js&quot;</span><span class="p">&gt;&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">script</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text/javascript&quot;</span><span class="p">&gt;</span>
+  <span class="kd">var</span> <span class="nx">locale</span> <span class="o">=</span> <span class="p">(</span><span class="nx">navigator</span><span class="p">.</span><span class="nx">language</span> <span class="o">||</span> <span class="nx">navigator</span><span class="p">.</span><span class="nx">userLanguage</span><span class="p">).</span><span class="nx">substring</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">);</span>
+  <span class="k">try</span> <span class="p">{</span>
+    <span class="nb">window</span><span class="p">.</span><span class="nx">ParsleyValidator</span><span class="p">.</span><span class="nx">setLocale</span><span class="p">(</span><span class="nx">locale</span><span class="p">);</span>
+  <span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nb">window</span><span class="p">.</span><span class="nx">ParsleyValidator</span><span class="p">.</span><span class="nx">setLocale</span><span class="p">(</span><span class="s1">&#39;en&#39;</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">&lt;/</span><span class="nt">script</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<p>この例は、<code class="docutils literal"><span class="pre">ParsleyValidator.setLocale</span></code>メソッドで指定するロケールをウェブブラウザの設定言語から取得して適用する例である。
+この例では &#8216;en&#8217;, &#8216;fr&#8217;, &#8216;ja&#8217; が有効となり、ウェブブラウザから取得したロケールから選択される。</p>
+</div>
+<div class="section" id="parsley-custom-validator">
+<span id="id52"></span><h4>5.8.2.3. カスタムバリデータの実装方法<a class="headerlink" href="#parsley-custom-validator" title="Permalink to this headline">¶</a></h4>
+<p>独自の検証ルールとメッセージを追加するためには、Parsley本体の読み込み後に、<code class="docutils literal"><span class="pre">ParsleyValidator.addValidator</span></code>メソッドおよび<code class="docutils literal"><span class="pre">ParsleyValidator.addMessage</span></code>メソッドを使用する。</p>
+<p>次の例は、指定した数値の倍数であることを検証する独自の検証ルール <code class="docutils literal"><span class="pre">multipleof</span></code> の実装および使用例である。</p>
+<p>Javascriptでは以下のように実装する。</p>
+<div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="nb">window</span><span class="p">.</span><span class="nx">ParsleyValidator</span>
+  <span class="p">.</span><span class="nx">addValidator</span><span class="p">(</span><span class="s1">&#39;multipleof&#39;</span><span class="p">,</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">value</span><span class="p">,</span> <span class="nx">requirement</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="mi">0</span> <span class="o">===</span> <span class="nx">value</span> <span class="o">%</span> <span class="nx">requirement</span><span class="p">;</span>
+  <span class="p">},</span> <span class="mi">32</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">addMessage</span><span class="p">(</span><span class="s1">&#39;en&#39;</span><span class="p">,</span> <span class="s1">&#39;multipleof&#39;</span><span class="p">,</span> <span class="s1">&#39;This value should be a multiple of %s&#39;</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">addMessage</span><span class="p">(</span><span class="s1">&#39;ja&#39;</span><span class="p">,</span> <span class="s1">&#39;multipleof&#39;</span><span class="p">,</span> <span class="s1">&#39;%s の倍数である必要があります。&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>HTMLは以下のようなinput要素を設置する。</p>
+<div class="highlight-html"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">input</span> <span class="na">type</span><span class="o">=</span><span class="s">&quot;text&quot;</span> <span class="na">data-parsley-multipleof</span><span class="o">=</span><span class="s">&quot;3&quot;</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">ParsleyValidator.addValidator</span></code>および<code class="docutils literal"><span class="pre">ParsleyValidator.addMessage</span></code>メソッドのシグネチャは次のとおり。</p>
+<dl class="function">
+<dt>
+<code class="descclassname">ParsleyValidator.</code><code class="descname">addValidator</code><span class="sig-paren">(</span><em>name</em>, <em>fn</em>, <em>priority</em><span class="sig-paren">)</span></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Arguments:</th><td class="field-body"><ul class="first last simple">
+<li><strong>name</strong> (<em>String</em>) &#8211; 検証ルール名</li>
+<li><strong>fn</strong> (<em>Function</em>) &#8211; 検証を実行する関数。2つの引数として、対象の<code class="docutils literal"><span class="pre">input</span></code>要素の値と、オプション (<code class="docutils literal"><span class="pre">data-parsley-multipleof=&quot;3&quot;</span></code>のように使用した場合は<code class="docutils literal"><span class="pre">3</span></code>) を受け取る。成功時は<code class="docutils literal"><span class="pre">true</span></code>、失敗時は<code class="docutils literal"><span class="pre">false</span></code>を返すように実装する。</li>
+<li><strong>priority</strong> (<em>Number</em>) &#8211; 優先順位。値が大きいほど優先的に検証される。</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt>
+<code class="descclassname">ParsleyValidator.</code><code class="descname">addMessage</code><span class="sig-paren">(</span><em>locale</em>, <em>name</em>, <em>message</em><span class="sig-paren">)</span></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Arguments:</th><td class="field-body"><ul class="first last simple">
+<li><strong>locale</strong> (<em>String</em>) &#8211; ロケール</li>
+<li><strong>name</strong> (<em>String</em>) &#8211; メッセージに対応させる検証ルール名</li>
+<li><strong>message</strong> (<em>String</em>) &#8211; メッセージ本文。<code class="docutils literal"><span class="pre">%s</span></code>プレースホルダを用いることでオプション値を埋め込むことができる。</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>より高度な入力チェックの例として、サーバ通信を伴う入力値チェックがある。具体例の一つとして、ユーザ登録フォームの「ユーザID」が利用可能かどうかを検証するためサーバに問い合わせるといったケースが考えられる。</p>
+<p>このような機能も、カスタムバリデータを実装することで実現できる。</p>
+<blockquote>
+<div><div class="highlight-javascript"><div class="highlight"><pre><span></span><span class="nb">window</span><span class="p">.</span><span class="nx">ParsleyValidator</span>
+  <span class="p">.</span><span class="nx">addValidator</span><span class="p">(</span><span class="s1">&#39;registerable&#39;</span><span class="p">,</span>
+
+               <span class="c1">// (1)</span>
+               <span class="kd">function</span> <span class="p">(</span><span class="nx">value</span><span class="p">)</span> <span class="p">{</span>
+                 <span class="kd">var</span> <span class="nx">status</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span><span class="p">({</span>
+                   <span class="nx">url</span><span class="o">:</span> <span class="s1">&#39;/userid_available&#39;</span><span class="p">,</span>
+
+                   <span class="c1">// (2)</span>
+                   <span class="nx">data</span><span class="o">:</span> <span class="s1">&#39;id=&#39;</span> <span class="o">+</span> <span class="nx">value</span><span class="p">,</span>
+
+                   <span class="c1">// (3)</span>
+                   <span class="nx">async</span><span class="o">:</span> <span class="kc">false</span>
+                 <span class="p">}).</span><span class="nx">status</span><span class="p">;</span>
+
+                 <span class="c1">// (4)</span>
+                 <span class="k">return</span> <span class="nx">status</span> <span class="o">!==</span> <span class="mi">409</span><span class="p">;</span>
+               <span class="p">},</span> <span class="mi">1</span><span class="p">)</span>
+  <span class="p">.</span><span class="nx">addMessage</span><span class="p">(</span><span class="s1">&#39;en&#39;</span><span class="p">,</span> <span class="s1">&#39;registerable&#39;</span><span class="p">,</span> <span class="s1">&#39;this USER ID is already used&#39;</span><span class="p">);</span>
+</pre></div>
+</div>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="11%" />
+<col width="89%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">項番</th>
+<th class="head">説明</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><div class="first last line-block">
+<div class="line">(1)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">登録可能なユーザIDかどうかを検証する関数を定義する。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><div class="first last line-block">
+<div class="line">(2)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">パラメータ名を<code class="docutils literal"><span class="pre">id</span></code>とし、入力値を設定する。</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><div class="first last line-block">
+<div class="line">(3)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line"><code class="docutils literal"><span class="pre">async</span></code>オプションに<code class="docutils literal"><span class="pre">false</span></code>を設定し同期処理とする。</div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><div class="first last line-block">
+<div class="line">(4)</div>
+</div>
+</td>
+<td><div class="first last line-block">
+<div class="line">ステータスコード 409 (Conflict) の場合は登録不可</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<p>検証を実行する関数内で結果を返却するため、<code class="docutils literal"><span class="pre">$.ajax</span></code>の<code class="docutils literal"><span class="pre">async</span></code>オプションを<code class="docutils literal"><span class="pre">false</span></code>にすることで同期的に処理する必要がある。</p>
+<p>なお、非同期で検証を行えるカスタムバリデータを作成する専用APIとして、parsley.remote.js を読み込むことで利用可能になる<code class="docutils literal"><span class="pre">Parsley.addAsyncValidator</span></code>メソッドがある (<a class="reference external" href="http://parsleyjs.org/doc/index.html#remote">参考</a>)。ただし、これを用いると、検証時に送信されるパラメータが <code class="docutils literal"><span class="pre">name属性値=value</span></code> で固定化され、変形することができない (上のサンプルコード中の <code class="docutils literal"><span class="pre">data:</span> <span class="pre">'id='</span> <span class="pre">+</span> <span class="pre">value</span></code> のように、パラメータ名を&#8221;id&#8221;に固定するといったことができない)。</p>
+<p class="last">よって、サーバのAPI仕様に合わせてパラメータを変形する必要がある場合は<code class="docutils literal"><span class="pre">Parsley.addValidator</span></code>メソッドを、必要ない場合は<code class="docutils literal"><span class="pre">Parsley.addAsyncValidator</span></code>メソッドを用いるとよい。</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../async/index.html" title="6. 非同期処理"
+             >next</a></li>
+        <li class="right" >
+          <a href="../grid/index.html" title="4. テーブル"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">Macchinetta Client (1.x) Development Guideline 1.1.0.RELEASE documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2017 NTT Corporation.
+    </div>
+  </body>
+</html>

@@ -1,0 +1,19 @@
+.drag {
+    width: 100px;
+    height: 100px;
+    margin: 30px;
+    border: solid 1px #333;
+    float:left;
+}
+
+.drop {
+    width: 480px;
+    height: 200px;
+    margin: 40px;
+    border: solid 1px #333;
+    background-color:#cf6;
+}
+
+hr {
+    clear: both;
+}

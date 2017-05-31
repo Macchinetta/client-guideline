@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>カレンダー</title>
+
+    <!-- jQuery UIのスタイルシートの読み込み -->
+    <link rel="stylesheet" href="../lib/vendor/jquery-ui/1.11.1/jquery-ui.min.css">
+  </head>
+  <body>
+
+    <h1>カレンダー</h1>
+    <h2>カレンダー表示のローカライズ</h2>
+    <!-- フォーカスを契機にカレンダーが表示されるテキストフィールド -->
+    <label>Date(en-GB): <input type="text" id="jquery-ui-datepicker-localize-en-GB"></label><br><br>
+    <label>日付(ja): <input type="text" id="jquery-ui-datepicker-localize-ja"></label>
+
+    <!-- jQueryとjQuery UIのJavaScript、カレンダーの日本語対応のJavaScript、
+         独自に実装したJavaScriptの読み込み -->
+    <script src="../lib/vendor/jquery/1.11.1/jquery-1.11.1.min.js"></script>
+    <script src="../lib/vendor/jquery-ui/1.11.1/jquery-ui.min.js"></script>
+    <!-- JQuery UI本体読み込み後にローカライズファイルを読み込む -->
+    <script src="../lib/vendor/jquery-ui/1.11.1/i18n/datepicker-en-GB.js"></script>
+    <script src="../lib/vendor/jquery-ui/1.11.1/i18n/datepicker-ja.js"></script>
+    <script src="js/datepicker-locale.js"></script>
+  </body>
+</html>

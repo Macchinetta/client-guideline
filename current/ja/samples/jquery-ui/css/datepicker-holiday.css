@@ -1,0 +1,27 @@
+.class-holiday .ui-state-default {
+  color:red;
+  background: pink;
+}
+.class-sunday .ui-state-default {
+  color:red;
+}
+.class-saturday .ui-state-default {
+  color:blue;
+}
+
+#holidayInfo {
+  border: solid 1px #999999;
+  border-collapse: collapse;
+}
+#holidayInfo tr th {
+  border: solid 1px #999999;
+  padding: 10px;
+  margin: 1px;
+  color: red;
+  background-color: pink;
+}
+#holidayInfo tr td {
+  border: solid 1px #999999;
+  padding: 5px;
+  margin: 1px;
+}

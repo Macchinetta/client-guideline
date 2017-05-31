@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>コピー・ペースト無効化サンプル</title>
+    <link rel="stylesheet" href="css/disable-copy-paste.css">
+  </head>
+  <body>
+
+    <textarea id="area1">すべてのキー操作を制御していないテキストエリア</textarea>
+
+    <!-- キー制御を有効化するため class属性に "mousetrap" を指定 -->
+    <textarea id="area2" class="mousetrap">コピーアンドペーストのキー操作 (Ctrl + c、Ctrl + v) を無効化しているテキストエリア</textarea>
+
+    <!-- キー制御を有効化するため class属性に "mousetrap" を指定 -->
+    <textarea id="area3" class="mousetrap">コピーアンドペーストの無効化に加え、ページ保存のキー操作 (Ctrl + s) で別の処理が起動するよう変更しているテキストエリア</textarea>
+
+    <!-- Mousetrapと、独自に実装したJavaScriptを読み込む。 -->
+    <script src="../lib/vendor/mousetrap/1.4.6/mousetrap.js"></script>
+    <script src="js/disable-copy-paste.js"></script>
+  </body>
+</html>

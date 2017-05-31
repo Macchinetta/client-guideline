@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta charset="UTF-8">
+    <title>カルーセル</title>
+
+    <!-- slickのスタイルシートの読み込み -->
+    <link rel="stylesheet" href="../lib/vendor/slick/1.6.0/slick.css" />
+    <link rel="stylesheet" href="../lib/vendor/slick/1.6.0/slick-theme.css" />
+    <!-- 独自に実装したスタイルシートの読み込み -->
+    <link rel="stylesheet" href="./css/carousel-custom.css" />
+
+  </head>
+
+  <body>
+    <h1>カルーセル</h1>
+    <h2>ナビゲーションを駆使したカルーセル</h2>
+    <div class="content">
+
+      <div class="sliderP">
+        <div class="slider sliderFor carousel-for">
+          <div><h3>1</h3></div>
+          <div><h3>2</h3></div>
+          <div><h3>3</h3></div>
+          <div><h3>4</h3></div>
+          <div><h3>5</h3></div>
+          <div><h3>6</h3></div>
+        </div>
+      </div>
+      <div class="sliderP">
+        <div class="slider carousel-nav">
+          <div><h3>1</h3></div>
+          <div><h3>2</h3></div>
+          <div><h3>3</h3></div>
+          <div><h3>4</h3></div>
+          <div><h3>5</h3></div>
+          <div><h3>6</h3></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- jQuery、slickと独自に実装したJavaScriptの読み込み -->
+    <script src="../lib/vendor/jquery/1.11.1/jquery-1.11.1.min.js"></script>
+    <script src="../lib/vendor/slick/1.6.0/slick.js"></script>
+    <script src="./js/carousel-navigation.js"></script>
+  </body>
+
+</html>

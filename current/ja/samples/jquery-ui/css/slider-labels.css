@@ -1,0 +1,12 @@
+#slider-labels {
+  width: 380px;
+  margin-left: 20px;
+}
+
+#slider-labels label {
+  position: absolute;
+  width: 20px;
+  margin-top: 20px;
+  margin-left: -10px;
+  text-align: center;
+}

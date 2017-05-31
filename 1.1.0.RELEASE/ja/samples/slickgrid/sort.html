@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>SlickGridによるソートサンプル</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- SlickGrid用のスタイルシートの読み込み -->
+    <link rel="stylesheet" href="../lib/vendor/slickgrid/2.1.0/slick.grid.css">
+
+    <link rel="stylesheet" href="css/main.css">
+  </head>
+  <body>
+
+    <h1>SlickGridによるソートサンプル</h1>
+    <p>
+      ヘッダをクリックすることでデータのソートができます。
+    </p>
+
+    <!-- SlickGridテーブルの表示領域となる要素 -->
+    <div id="myGrid" class="grid" style="grid"></div>
+
+    <!-- 依存ライブラリの読み込み -->
+    <script src="../lib/vendor/jquery/1.11.1/jquery-1.11.1.min.js"></script>
+    <script src="../lib/vendor/jquery.event.drag-drop/2.2/jquery.event.drag.js"></script>
+    <script src="../lib/vendor/jquery-ui/1.11.1/jquery-ui.min.js"></script>
+
+    <!-- SlickGridモジュールの読み込み -->
+    <script src="../lib/vendor/slickgrid/2.1.0/slick.core.js"></script>
+    <script src="../lib/vendor/slickgrid/2.1.0/slick.grid.js"></script>
+
+    <!-- 実装したJavaScriptファイルの読み込み -->
+    <script src="js/sort.js"></script>
+  </body>
+</html>

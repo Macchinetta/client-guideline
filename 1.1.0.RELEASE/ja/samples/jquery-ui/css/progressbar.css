@@ -1,0 +1,26 @@
+.progress-label {
+  float: left;
+  margin-left: 50%;
+  margin-top: 5px;
+}
+#buttons {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+#execute-progressbar {
+  margin-right: 5px;
+  width: 200px;
+  height: 40px;
+}
+#reset-progressbar {
+  width: 200px;
+  height: 40px;
+}
+#progressbar-area {
+  width: 100%;
+  position: relative;
+}
+#progressbar {
+  width: 70%;
+  margin: auto;
+}

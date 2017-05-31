@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>アコーディオン</title>
+
+    <!-- Bootstrapのスタイルシートの読み込み -->
+    <link rel="stylesheet" href="../lib/vendor/bootstrap/3.2.0/css/bootstrap.min.css">
+  </head>
+  <body>
+    <div class="container">
+      <h1>アコーディオン</h1>
+
+      <div class="panel panel-default" role="tablist">
+
+        <div class="panel-heading" role="tab">
+          <!-- ヘッダー部品 1 -->
+          <a data-toggle="collapse" href="#collapse1">ヘッダー#1</a>
+        </div>
+
+        <!-- コンテンツ部品 1 -->
+        <div id="collapse1" class="collapse" role="tabpanel">
+          <div class="panel-body">
+            コンテンツ#1
+          </div>
+        </div>
+
+        <div class="panel-heading" role="tab">
+          <!-- ヘッダー部品 2 -->
+          <a data-toggle="collapse" href="#collapse2">ヘッダー#2</a>
+        </div>
+
+        <!-- コンテンツ部品 2 -->
+        <div id="collapse2" class="collapse" role="tabpanel">
+          <div class="panel-body">
+            コンテンツ#2
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- jQueryとBootstrapのJavaScriptの読み込み -->
+    <script src="../lib/vendor/jquery/1.11.1/jquery-1.11.1.min.js"></script>
+    <script src="../lib/vendor/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+  </body>
+</html>

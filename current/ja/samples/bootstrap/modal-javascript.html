@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>JavaScript形式のモーダルダイアログ</title>
+
+    <!-- Bootstrapのスタイルシートの読み込み -->
+    <link rel="stylesheet" href="../lib/vendor/bootstrap/3.2.0/css/bootstrap.min.css">
+  </head>
+  <body>
+    <div class="container">
+      <h1>JavaScript形式のモーダルダイアログ</h1>
+      <p>JavaScript形式のモーダルダイアログです。</p>
+
+      <!-- 時間のかかる処理を行うダミーのフォーム -->
+      <form id="dummy-form">
+        <input type="text">
+        <input type="submit">
+      </form>
+
+      <!-- モーダルダイアログ -->
+      <!-- tabindexを-1に指定することでtabキー押下時にモーダルダイアログの外にフォーカスが移らないように制御する -->
+      <div class="modal" id="myModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-body">
+              <p>
+                処理中... (処理完了後に自動的に閉じます)
+              </p>
+              <button id="cancel-btn">キャンセル</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- jQueryとBootstrapのJavaScript、独自に実装したJavaScriptの読み込み -->
+    <script src="../lib/vendor/jquery/1.11.1/jquery-1.11.1.min.js"></script>
+    <script src="../lib/vendor/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="js/modal-javascript.js"></script>
+  </body>
+</html>

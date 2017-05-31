@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>tablesorterサンプル</title>
+
+    <link rel="stylesheet" href="../lib/vendor/jquery.tablesorter/2.17.7/css/theme.default.css">
+    <link rel="stylesheet" href="../lib/vendor/jquery.tablesorter/2.17.7/addons/pager/jquery.tablesorter.pager.css">
+
+    <link rel="stylesheet" href="css/main.css">
+  </head>
+  <body>
+    <div>
+      <h1>ページネーションサンプル</h1>
+      <p>
+        グリッドの下部にあるページネーション用のパネルを操作して任意の位置のデータを表示できます。また一度に表示するデータ件数も指定できます。
+      </p>
+    </div>
+
+    <!-- ページネーションコントロール -->
+    <div id="pager" class="pager">
+      <form>
+
+        <label>表示件数 :
+
+          <!-- 表示件数部品 -->
+          <select class="pagesize">
+            <option selected="selected" value="10">10</option>
+            <option value="20">20</option>
+            <option value="30">30</option>
+            <option value="40">40</option>
+          </select>
+        </label>
+        <label>ページ数 :
+
+          <!-- ページ選択部品 -->
+          <select class="gotoPage">
+          </select>
+        </label>
+        <br/>
+        <br/>
+
+        <!-- ページ移動部品 -->
+        <img src="../lib/vendor/jquery.tablesorter/2.17.7/addons/pager/icons/first.png" class="first" alt="first"/>
+        <img src="../lib/vendor/jquery.tablesorter/2.17.7/addons/pager/icons/prev.png" class="prev" alt="prev"/>
+        <span class="pagedisplay"></span>
+        <img src="../lib/vendor/jquery.tablesorter/2.17.7/addons/pager/icons/next.png" class="next" alt="next"/>
+        <img src="../lib/vendor/jquery.tablesorter/2.17.7/addons/pager/icons/last.png" class="last" alt="last"/>
+      </form>
+    </div>
+
+    <!-- tablesorterを使用するテーブル -->
+    <table id="tablesorter">
+      <thead>
+        <tr><th>姓</th><th>名</th><th>年齢</th></tr>
+      </thead>
+      <tbody>
+
+        <!-- ソースコードを見やすくするため、tr要素、td要素を1行で記述 -->
+        <tr><td>毛利</td><td>正雄</td><td>28</td></tr>
+        <tr><td>安田</td><td>さとみ</td><td>28</td></tr>
+        <tr><td>坂</td><td>文夫</td><td>45</td></tr>
+        <tr><td>小本</td><td>里香</td><td>18</td></tr>
+        <tr><td>中居</td><td>大輔</td><td>23</td></tr>
+        <tr><td>木久</td><td>なみ</td><td>28</td></tr>
+        <tr><td>大西</td><td>昌子</td><td>31</td></tr>
+        <tr><td>岩佐</td><td>純子</td><td>45</td></tr>
+        <tr><td>清水</td><td>一久</td><td>19</td></tr>
+        <tr><td>山峰</td><td>行紀</td><td>63</td></tr>
+        <tr><td>西本</td><td>雄一郎</td><td>89</td></tr>
+        <tr><td>大野</td><td>保行</td><td>90</td></tr>
+        <tr><td>黒田</td><td>恭造</td><td>87</td></tr>
+        <tr><td>横山</td><td>耕介</td><td>51</td></tr>
+        <tr><td>土田</td><td>真紀子</td><td>76</td></tr>
+        <tr><td>石崎</td><td>健児</td><td>85</td></tr>
+        <tr><td>平岡</td><td>武俊</td><td>80</td></tr>
+        <tr><td>島崎</td><td>厚史</td><td>21</td></tr>
+        <tr><td>岡田</td><td>亮子</td><td>25</td></tr>
+        <tr><td>望月</td><td>裕行</td><td>93</td></tr>
+        <tr><td>内海</td><td>洵子</td><td>87</td></tr>
+        <tr><td>甲斐</td><td>宗司</td><td>22</td></tr>
+        <tr><td>池上</td><td>鎮雄</td><td>96</td></tr>
+        <tr><td>浜崎</td><td>明博</td><td>46</td></tr>
+        <tr><td>千葉</td><td>智治</td><td>15</td></tr>
+        <tr><td>平田</td><td>とみ子</td><td>27</td></tr>
+        <tr><td>三上</td><td>鉄次</td><td>79</td></tr>
+        <tr><td>高木</td><td>正次</td><td>44</td></tr>
+        <tr><td>入江</td><td>世弥</td><td>47</td></tr>
+        <tr><td>相沢</td><td>春実</td><td>74</td></tr>
+        <tr><td>八木</td><td>敬史</td><td>27</td></tr>
+        <tr><td>荒木</td><td>銀之助</td><td>89</td></tr>
+        <tr><td>森本</td><td>吉治</td><td>50</td></tr>
+        <tr><td>萩原</td><td>和茂</td><td>15</td></tr>
+        <tr><td>前川</td><td>亜衣</td><td>29</td></tr>
+        <tr><td>菊池</td><td>良秋</td><td>21</td></tr>
+        <tr><td>篠田</td><td>堅次</td><td>47</td></tr>
+        <tr><td>前田</td><td>元臣</td><td>45</td></tr>
+        <tr><td>小池</td><td>美津江</td><td>85</td></tr>
+        <tr><td>下田</td><td>みき</td><td>15</td></tr>
+        <tr><td>小柳</td><td>勝夫</td><td>14</td></tr>
+        <tr><td>星野</td><td>秋代</td><td>2</td></tr>
+        <tr><td>大川</td><td>理恵</td><td>88</td></tr>
+        <tr><td>藤岡</td><td>静市</td><td>85</td></tr>
+        <tr><td>黒木</td><td>美津江</td><td>75</td></tr>
+        <tr><td>宮崎</td><td>憲志</td><td>20</td></tr>
+        <tr><td>中尾</td><td>俊康</td><td>8</td></tr>
+        <tr><td>熊谷</td><td>真由美</td><td>99</td></tr>
+        <tr><td>大塚</td><td>ナツ子</td><td>85</td></tr>
+        <tr><td>伊藤</td><td>勝弘</td><td>75</td></tr>
+        <tr><td>上村</td><td>洵子</td><td>36</td></tr>
+        <tr><td>阿部</td><td>昭良</td><td>64</td></tr>
+        <tr><td>平川</td><td>勇</td><td>34</td></tr>
+        <tr><td>永野</td><td>明寛</td><td>11</td></tr>
+        <tr><td>松下</td><td>希美</td><td>22</td></tr>
+        <tr><td>奥村</td><td>知美</td><td>46</td></tr>
+        <tr><td>山村</td><td>悠里</td><td>43</td></tr>
+        <tr><td>坂井</td><td>梨華</td><td>34</td></tr>
+        <tr><td>中島</td><td>辰己</td><td>32</td></tr>
+      </tbody>
+    </table>
+
+    <!-- jQuery、tablesorter、ページネーション用独自に作製したJavaScriptの読み込み -->
+    <script src="../lib/vendor/jquery/1.11.1/jquery-1.11.1.min.js"></script>
+    <script src="../lib/vendor/jquery.tablesorter/2.17.7/js/jquery.tablesorter.min.js"></script>
+    <script src="../lib/vendor/jquery.tablesorter/2.17.7/addons/pager/jquery.tablesorter.pager.min.js"></script>
+    <script src="js/pagination.js"></script>
+  </body>
+</html>

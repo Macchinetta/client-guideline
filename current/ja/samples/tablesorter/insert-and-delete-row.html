@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>tablesorterによる行追加・削除・編集サンプル</title>
+
+    <!-- tablesorterのスタイルシートの読み込み -->
+    <link rel="stylesheet" href="../lib/vendor/jquery.tablesorter/2.17.7/css/theme.default.css">
+
+    <link rel="stylesheet" href="css/main.css">
+  </head>
+  <body>
+
+    <h1>tablesorterによる行追加・削除・編集サンプル</h1>
+
+    <button id="add-btn">行の追加</button>
+
+    <!-- tablesorterを使用するテーブル -->
+    <table id="tablesorter">
+      <thead>
+        <tr><th>姓</th><th>名</th><th>年齢</th><th>削除</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><div>毛利</div></td><td><div>正雄</div></td><td><div>28</div></td><td><button class="remove-btn">x</button></td></tr>
+        <tr><td><div>安田</div></td><td><div>さとみ</div></td><td><div>28</div></td><td><button class="remove-btn">x</button></td></tr>
+        <tr><td><div>坂</div></td><td><div>文夫</div></td><td><div>45</div></td><td><button class="remove-btn">x</button></td></tr>
+        <tr><td><div>小本</div></td><td><div>里香</div></td><td><div>18</div></td><td><button class="remove-btn">x</button></td></tr>
+        <tr><td><div>中居</div></td><td><div>大輔</div></td><td><div>23</div></td><td><button class="remove-btn">x</button></td></tr>
+        <tr><td><div>木久</div></td><td><div>なみ</div></td><td><div>28</div></td><td><button class="remove-btn">x</button></td></tr>
+        <tr><td><div>大西</div></td><td><div>昌子</div></td><td><div>31</div></td><td><button class="remove-btn">x</button></td></tr>
+        <tr><td><div>岩佐</div></td><td><div>純子</div></td><td><div>45</div></td><td><button class="remove-btn">x</button></td></tr>
+        <tr><td><div>清水</div></td><td><div>一久</div></td><td><div>19</div></td><td><button class="remove-btn">x</button></td></tr>
+        <tr><td><div>山峰</div></td><td><div>行紀</div></td><td><div>63</div></td><td><button class="remove-btn">x</button></td></tr>
+      </tbody>
+    </table>
+
+    <!-- jQuery、tablesorter、独自に作製したJavaScriptの読み込み -->
+    <script src="../lib/vendor/jquery/1.11.1/jquery-1.11.1.min.js"></script>
+    <script src="../lib/vendor/jquery.tablesorter/2.17.7/js/jquery.tablesorter.min.js"></script>
+    <script src="../lib/vendor/jquery.tablesorter/2.17.7/js/widgets/widget-editable.js"></script>
+    <script src="js/insert-and-delete-row.js"></script>
+  </body>
+</html>

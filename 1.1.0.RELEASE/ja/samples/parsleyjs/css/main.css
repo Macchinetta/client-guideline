@@ -1,0 +1,14 @@
+div {
+  margin-bottom: 12px;
+}
+
+.has-error {
+  color: red;
+}
+
+.parsley-errors-list {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  color: red;
+}

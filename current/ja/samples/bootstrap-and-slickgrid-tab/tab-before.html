@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>不具合事象発生サンプル</title>
+
+    <!-- SlickGridとBootstrapのスタイルシートの読み込み -->
+    <link rel="stylesheet" href="../lib/vendor/bootstrap/3.2.0/css/bootstrap.css">
+    <link rel="stylesheet" href="../lib/vendor/slickgrid/2.1.0/slick.grid.css">
+
+    <link rel="stylesheet" href="css/main.css">
+  </head>
+  <body>
+
+    <h1>不具合事象発生サンプル</h1>
+    <p>
+      タブ2をクリックしてテーブルを表示した際に、セルデータが出力されない。
+    </p>
+
+    <ul class="nav nav-tabs">
+      <li class="active"><a href="#tab1" data-toggle="tab">タブ1</a></li>
+      <li><a href="#tab2" data-toggle="tab">タブ2</a></li>
+      <li><a href="#tab3" data-toggle="tab">タブ3</a></li>
+    </ul>
+
+    <div class="tab-content">
+
+      <div class="tab-pane active" id="tab1">
+        <p>
+          コンテンツ1
+        </p>
+      </div>
+      <div class="tab-pane" id="tab2">
+        <p>
+          コンテンツ2
+        </p>
+        <div>
+          <!-- SlickGridテーブルの表示領域となる要素 -->
+          <div id="myGrid" class="grid"></div>
+        </div>
+      </div>
+      <div class="tab-pane" id="tab3">
+        <p>
+          コンテンツ3
+        </p>
+      </div>
+    </div>
+
+    <!-- 依存ライブラリの読み込み -->
+    <script src="../lib/vendor/jquery/1.11.1/jquery-1.11.1.min.js"></script>
+    <script src="../lib/vendor/jquery.event.drag-drop/2.2/jquery.event.drag.js"></script>
+    <script src="../lib/vendor/jquery-ui/1.11.1/jquery-ui.min.js"></script>
+
+    <!-- SlickGridモジュールの読み込み -->
+    <script src="../lib/vendor/slickgrid/2.1.0/slick.core.js"></script>
+    <script src="../lib/vendor/slickgrid/2.1.0/slick.grid.js"></script>
+
+    <script src="../lib/vendor/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
+    <script src="js/tab-before.js"></script>
+  </body>
+</html>

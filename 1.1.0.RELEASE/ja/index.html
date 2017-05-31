@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Macchinetta Client (1.x) Development Guideline &#8212; Macchinetta Client (1.x) Development Guideline 1.1.0.RELEASE documentation</title>
+    
+    <link rel="stylesheet" href="_static/solar.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.1.0.RELEASE',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="1. はじめに" href="introduction/index.html" /><link href='http://fonts.googleapis.com/css?family=Source+Code+Pro|Open+Sans:300italic,400italic,700italic,400,300,700' rel='stylesheet' type='text/css'>
+<link href="_static/solarized-dark.css" rel="stylesheet">
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="introduction/index.html" title="1. はじめに"
+             accesskey="N">next</a></li>
+        <li class="nav-item nav-item-0"><a href="#">Macchinetta Client (1.x) Development Guideline 1.1.0.RELEASE documentation</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Next topic</h4>
+  <p class="topless"><a href="introduction/index.html"
+                        title="next chapter">1. はじめに</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="framework-name-development-guideline">
+<h1>Macchinetta Client (1.x) Development Guideline<a class="headerlink" href="#framework-name-development-guideline" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="introduction/index.html">1. はじめに</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="introduction/include/termofuse.html">1.1. 利用規約</a></li>
+<li class="toctree-l2"><a class="reference internal" href="introduction/include/introduction.html">1.2. 目的</a></li>
+<li class="toctree-l2"><a class="reference internal" href="introduction/include/introduction.html#introduction-attention">1.3. 留意事項</a></li>
+<li class="toctree-l2"><a class="reference internal" href="introduction/include/introduction.html#introduction-user">1.4. 対象読者</a></li>
+<li class="toctree-l2"><a class="reference internal" href="introduction/include/introduction.html#introduction-constitution">1.5. 構成</a></li>
+<li class="toctree-l2"><a class="reference internal" href="introduction/include/introduction.html#browser-env">1.6. 動作確認環境</a></li>
+<li class="toctree-l2"><a class="reference internal" href="introduction/include/introduction.html#introduction-change-log">1.7. 更新履歴</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="libraries-overview.html">2. 構成ライブラリ</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="libraries-overview.html#libraries-overview">2.1. 構成ライブラリ概要</a></li>
+<li class="toctree-l2"><a class="reference internal" href="libraries-overview.html#libraries-relation">2.2. 機能と構成ライブラリの対応</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="uicomponent/index.html">3. UIコンポーネント</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="uicomponent/index.html#uicomponent-basic-usages">3.1. ライブラリの基本的な使用方法</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uicomponent/index.html#button">3.2. ボタン</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uicomponent/index.html#modal-dialog">3.3. モーダルダイアログ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uicomponent/index.html#modeless-dialog">3.4. モードレスダイアログ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uicomponent/index.html#breadcrumb">3.5. パンくずリスト表示</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uicomponent/index.html#dropdown">3.6. ドロップダウンリスト</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uicomponent/index.html#accordion">3.7. アコーディオン</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uicomponent/index.html#tab">3.8. タブ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uicomponent/index.html#slider">3.9. スライダー</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uicomponent/index.html#carousel">3.10. カルーセル</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uicomponent/index.html#calendar">3.11. 日付入力時のカレンダー表示</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uicomponent/index.html#autocomplete">3.12. オートコンプリート</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uicomponent/index.html#progress-bar">3.13. プログレスバーによる進捗度表示</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uicomponent/index.html#drag-and-drop">3.14. ドラッグアンドドロップ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uicomponent/index.html#responsive-web-design">3.15. レスポンシブウェブデザイン</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="grid/index.html">4. テーブル</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="grid/index.html#grid-basic-usages">4.1. ライブラリの基本的な使用方法</a></li>
+<li class="toctree-l2"><a class="reference internal" href="grid/index.html#insert-and-delete-row">4.2. 行追加・削除・編集</a></li>
+<li class="toctree-l2"><a class="reference internal" href="grid/index.html#move-row">4.3. 行の並び替え</a></li>
+<li class="toctree-l2"><a class="reference internal" href="grid/index.html#fixed-header">4.4. ヘッダを固定したデータ行のスクロール</a></li>
+<li class="toctree-l2"><a class="reference internal" href="grid/index.html#pagination">4.5. ページネーション</a></li>
+<li class="toctree-l2"><a class="reference internal" href="grid/index.html#sort">4.6. ソート</a></li>
+<li class="toctree-l2"><a class="reference internal" href="grid/index.html#swap-columns">4.7. カラムの並び替え</a></li>
+<li class="toctree-l2"><a class="reference internal" href="grid/index.html#copy-and-paste">4.8. コピーアンドペースト編集</a></li>
+<li class="toctree-l2"><a class="reference internal" href="grid/index.html#slickgrid-with-ajax">4.9. テーブルのスクロールによる非同期データ取得</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="manipulation/index.html">5. 操作性向上・制御</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="manipulation/index.html#control-shortcut-key">5.1. ショートカットキー制御</a></li>
+<li class="toctree-l2"><a class="reference internal" href="manipulation/index.html#prevent-range-selection">5.2. 範囲選択防止</a></li>
+<li class="toctree-l2"><a class="reference internal" href="manipulation/index.html#enable-and-disable-button">5.3. ボタンの活性状態の変更</a></li>
+<li class="toctree-l2"><a class="reference internal" href="manipulation/index.html#prevent-continuous-click">5.4. 二度押し無効化（二重送信防止）</a></li>
+<li class="toctree-l2"><a class="reference internal" href="manipulation/index.html#disable-right-click">5.5. 右クリック無効</a></li>
+<li class="toctree-l2"><a class="reference internal" href="manipulation/index.html#work-with-element">5.6. 画面要素間の連動</a></li>
+<li class="toctree-l2"><a class="reference internal" href="manipulation/index.html#format-conversion">5.7. フォーマット変換・文字種変換</a></li>
+<li class="toctree-l2"><a class="reference internal" href="manipulation/index.html#validation">5.8. 入力値チェック</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="async/index.html">6. 非同期処理</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="async/index.html#deferred">6.1. Deferredによる非同期処理制御</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="development-javascript.html">7. JavaScriptの開発方法</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="development-javascript.html#javascript-perfomance">7.1. JavaScriptの性能チューニング</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="appendix.html">8. 付録</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="appendix.html#tips">8.1. 構成ライブラリを使用する際のTips</a></li>
+<li class="toctree-l2"><a class="reference internal" href="appendix.html#id5">8.2. 構成ライブラリ以外の便利なライブラリ</a></li>
+<li class="toctree-l2"><a class="reference internal" href="appendix.html#macchinetta-server-framework-1-x">8.3. Macchinetta Server Framework (1.x)との連携</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="introduction/index.html" title="1. はじめに"
+             >next</a></li>
+        <li class="nav-item nav-item-0"><a href="#">Macchinetta Client (1.x) Development Guideline 1.1.0.RELEASE documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2017 NTT Corporation.
+    </div>
+  </body>
+</html>

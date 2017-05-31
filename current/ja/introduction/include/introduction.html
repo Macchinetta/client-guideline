@@ -1,0 +1,684 @@
+<!DOCTYPE html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>1.2. 目的 &#8212; Macchinetta Client (1.x) Development Guideline 1.1.0.RELEASE documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/solar.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1.1.0.RELEASE',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  false,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="2. 構成ライブラリ" href="../../libraries-overview.html" />
+    <link rel="prev" title="1.1. 利用規約" href="termofuse.html" /><link href='http://fonts.googleapis.com/css?family=Source+Code+Pro|Open+Sans:300italic,400italic,700italic,400,300,700' rel='stylesheet' type='text/css'>
+<link href="../../_static/solarized-dark.css" rel="stylesheet">
+  </head>
+  <body role="document">
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../libraries-overview.html" title="2. 構成ライブラリ"
+             accesskey="N">next</a></li>
+        <li class="right" >
+          <a href="termofuse.html" title="1.1. 利用規約"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Macchinetta Client (1.x) Development Guideline 1.1.0.RELEASE documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">1. はじめに</a> &#187;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="../../index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">1.2. 目的</a></li>
+<li><a class="reference internal" href="#introduction-attention">1.3. 留意事項</a></li>
+<li><a class="reference internal" href="#introduction-user">1.4. 対象読者</a></li>
+<li><a class="reference internal" href="#introduction-constitution">1.5. 構成</a></li>
+<li><a class="reference internal" href="#browser-env">1.6. 動作確認環境</a></li>
+<li><a class="reference internal" href="#introduction-change-log">1.7. 更新履歴</a></li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="termofuse.html"
+                        title="previous chapter">1.1. 利用規約</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="../../libraries-overview.html"
+                        title="next chapter">2. 構成ライブラリ</a></p>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="introduction">
+<span id="id1"></span><h1>1.2. 目的<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
+<p>本ガイドラインは、画面遷移を基本とするウェブアプリケーション開発のフレームワークMacchinetta Client (1.x)を構成するJavaScriptやCSSのライブラリ・フレームワーク(以降、構成ライブラリ)の主な利用方法を説明する。</p>
+<p>本ガイドラインを読むことで、次の2点を達成することを目的としている。</p>
+<ul class="simple">
+<li>Macchinetta Client (1.x)を利用したウェブアプリケーション開発、特に多くのウェブアプリケーションで頻繁に求められる機能のコーディングが円滑に進むこと。</li>
+<li>構成ライブラリへの理解を深めることにより、最終的にライブラリの公式リファレンスを基に本ガイドラインで記載している機能以外のコーディングも円滑に行えるようになること。</li>
+</ul>
+</div>
+<div class="section" id="introduction-attention">
+<span id="id2"></span><h1>1.3. 留意事項<a class="headerlink" href="#introduction-attention" title="Permalink to this headline">¶</a></h1>
+<p>以下の点に留意すること。</p>
+<ul class="simple">
+<li>Macchinetta Client (1.x)の構成ライブラリは、多くのウェブアプリケーションで頻繁に求められる機能を基に選定されている。</li>
+<li>構成ライブラリは必ずしもすべてを利用する必要はないため、必要なライブラリを選択し、利用すること。</li>
+<li>個別の要件によっては構成ライブラリ以外にも有用なライブラリ・フレームワークがあるため、それらの利用も検討すること。</li>
+<li>実際のアプリケーション開発では、サーバとの連携が必要となる。サーバサイドについては、Macchinettaオンライン版 開発ガイドライン ( <a class="reference external" href="http://macchinetta.github.io/server/guideline/">http://macchinetta.github.io/server/guideline/</a>の Macchinetta Server Framework (1.x) Development Guideline ) を参照すること。</li>
+</ul>
+</div>
+<div class="section" id="introduction-user">
+<span id="id3"></span><h1>1.4. 対象読者<a class="headerlink" href="#introduction-user" title="Permalink to this headline">¶</a></h1>
+<p>本ガイドラインはウェブプリケーション開発経験のあるアーキテクトやプログラマ向けであり、 以下を前提としている。</p>
+<ul class="simple">
+<li>HTML・CSS・JavaScriptに関する基礎的な知識がある</li>
+<li>jQueryに関する基礎的な知識がある</li>
+</ul>
+</div>
+<div class="section" id="introduction-constitution">
+<span id="id4"></span><h1>1.5. 構成<a class="headerlink" href="#introduction-constitution" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><dl class="first docutils">
+<dt>2章 <a class="reference internal" href="../../libraries-overview.html"><span class="doc">構成ライブラリ</span></a></dt>
+<dd>構成ライブラリのバージョン、主な機能、公式サイト、依存ライブラリなどを説明する。</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>3章 <a class="reference internal" href="../../uicomponent/index.html"><span class="doc">UIコンポーネント</span></a></dt>
+<dd>UIコンポーネントに関する構成ライブラリの利用方法を、サンプルとソースコードを用いて説明する。</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>4章 <a class="reference internal" href="../../grid/index.html"><span class="doc">テーブル</span></a></dt>
+<dd>テーブルに関する構成ライブラリの利用方法を、サンプルとソースコードを用いて説明する。</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>5章 <a class="reference internal" href="../../manipulation/index.html"><span class="doc">操作性向上・制御</span></a></dt>
+<dd>ユーザー操作の制御や補助に関する構成ライブラリの利用方法を、サンプルとソースコードを用いて説明する。</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>6章 <a class="reference internal" href="../../async/index.html"><span class="doc">非同期処理</span></a></dt>
+<dd>非同期処理に関する問題点と改善方法を、サンプルとソースコードを用いて説明する。</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>7章 <a class="reference internal" href="../../development-javascript.html"><span class="doc">JavaScriptの開発方法</span></a></dt>
+<dd>JavaScriptの開発に関する問題点や改善方法などを説明する。</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>8章 <a class="reference internal" href="../../appendix.html"><span class="doc">付録</span></a></dt>
+<dd>構成ライブラリを使用する際のTipsや構成ライブラリ以外の便利なライブラリの使用方法を説明する。</dd>
+</dl>
+</li>
+</ul>
+</div>
+<div class="section" id="browser-env">
+<span id="id5"></span><h1>1.6. 動作確認環境<a class="headerlink" href="#browser-env" title="Permalink to this headline">¶</a></h1>
+<p>本ガイドラインにて紹介するサンプルコードについては以下の環境で動作確認を実施している。</p>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">ブラウザ</th>
+<th class="head">バージョン</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Internet Explorer</td>
+<td>11.576.14393.0</td>
+</tr>
+<tr class="row-odd"><td>Mozilla Firefox</td>
+<td>ESR 45.5.1</td>
+</tr>
+<tr class="row-even"><td>Google Chrome</td>
+<td>55.0.2883.75 m</td>
+</tr>
+</tbody>
+</table>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p>Google Chrome を使用する場合、以下のサンプル（Ajax通信箇所）はWebサーバ上に配置する必要がある。ローカルに配置した場合はブラウザ仕様により動作しないため注意すること。</p>
+<blockquote class="last">
+<div><table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">機能</th>
+<th class="head">サンプル名</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><a class="reference internal" href="../../grid/index.html#slickgrid-with-ajax"><span class="std std-ref">テーブルのスクロールによる非同期データ取得</span></a></td>
+<td>SlickGridによる非同期データ取得サンプル</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="../../manipulation/index.html#work-with-element"><span class="std std-ref">画面要素間の連動</span></a></td>
+<td>非同期通信を使用したドロップダウンリストの連動</td>
+</tr>
+<tr class="row-even"><td><a class="reference internal" href="../../async/index.html#event-serialization"><span class="std std-ref">Deferredによる非同期処理制御</span></a></td>
+<td>Ajaxの再利用</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="introduction-change-log">
+<span id="id6"></span><h1>1.7. 更新履歴<a class="headerlink" href="#introduction-change-log" title="Permalink to this headline">¶</a></h1>
+<table border="1" class="colwidths-given docutils">
+<colgroup>
+<col width="15%" />
+<col width="15%" />
+<col width="70%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">更新日付</th>
+<th class="head">改訂箇所</th>
+<th class="head">改訂内容</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>2017-5-31</td>
+<td><div class="first last line-block">
+<div class="line">-</div>
+</div>
+</td>
+<td>1.1.0.RELEASE公開</td>
+</tr>
+<tr class="row-odd"><td>&#160;</td>
+<td><div class="first last line-block">
+<div class="line">全般</div>
+</div>
+</td>
+<td><div class="first line-block">
+<div class="line">ガイドラインの全般的な修正</div>
+</div>
+<ul class="simple">
+<li>章立ての見直し</li>
+<li>記載内容の一部を表形式に修正</li>
+<li>ガイドライン内のコードスニペットに記載していたコメントを、本文内に表形式で記載するよう修正</li>
+<li>利用方法に影響しない誤記や表現の修正</li>
+</ul>
+<div class="line-block">
+<div class="line">ガイドラインに付随するサンプルコードの全般的な修正</div>
+</div>
+<ul class="last simple">
+<li>OSSライブラリの格納先を集約</li>
+<li>HTMLに実装されているstyleをCSSファイルに切り出すよう修正</li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td>&#160;</td>
+<td><div class="first last line-block">
+<div class="line"><a class="reference internal" href="#introduction-attention"><span class="std std-ref">留意事項</span></a></div>
+</div>
+</td>
+<td><div class="first line-block">
+<div class="line">記載内容の変更</div>
+</div>
+<ul class="last simple">
+<li>クライアントSPA版に関する記載を削除</li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td>&#160;</td>
+<td><div class="first last line-block">
+<div class="line"><a class="reference internal" href="#introduction-constitution"><span class="std std-ref">構成</span></a></div>
+</div>
+</td>
+<td><div class="first line-block">
+<div class="line">記載内容の変更</div>
+</div>
+<ul class="last simple">
+<li>ガイドラインの拡充に伴う構成追加を反映</li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td>&#160;</td>
+<td><div class="first last line-block">
+<div class="line"><a class="reference internal" href="#browser-env"><span class="std std-ref">動作確認環境</span></a></div>
+</div>
+</td>
+<td><div class="first line-block">
+<div class="line">記載内容の変更</div>
+</div>
+<ul class="last simple">
+<li>動作確認した各ブラウザのバージョン情報を修正</li>
+<li>Google Chromeで動作させることができないサンプルの一覧および注意事項を追加</li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td>&#160;</td>
+<td><div class="first last line-block">
+<div class="line"><a class="reference internal" href="../../libraries-overview.html#libraries"><span class="std std-ref">構成ライブラリ</span></a></div>
+</div>
+</td>
+<td><div class="first line-block">
+<div class="line">記載内容の変更</div>
+</div>
+<ul class="last simple">
+<li>章立ての変更に伴い、一部の記載内容を <a class="reference internal" href="../../libraries-overview.html#libraries-overview"><span class="std std-ref">構成ライブラリ概要</span></a> に移動</li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td>&#160;</td>
+<td><div class="first last line-block">
+<div class="line"><a class="reference internal" href="../../libraries-overview.html#libraries-overview"><span class="std std-ref">構成ライブラリ概要</span></a></div>
+</div>
+</td>
+<td><div class="first line-block">
+<div class="line">記載内容の変更</div>
+</div>
+<ul class="last simple">
+<li>機能分類の表について、章立てに合わせるよう修正</li>
+<li>機能拡充に伴い、以下のライブラリを追加<ul>
+<li>slick</li>
+<li>bootstrap-datepicker</li>
+<li>Moment.js</li>
+<li>Parsley</li>
+</ul>
+</li>
+<li>tablesorterについて、公式サイトのリンクを修正</li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td>&#160;</td>
+<td><div class="first last line-block">
+<div class="line"><a class="reference internal" href="../../libraries-overview.html#libraries-relation"><span class="std std-ref">機能と構成ライブラリの対応</span></a></div>
+</div>
+</td>
+<td><div class="first line-block">
+<div class="line">記載内容の移動</div>
+</div>
+<ul class="simple">
+<li>章立ての変更に伴い、表「機能を実現するために使用するライブラリ」を本節に移動</li>
+</ul>
+<div class="line-block">
+<div class="line">記載内容の変更</div>
+</div>
+<ul class="last simple">
+<li>機能拡充に伴い、加筆した機能を追加</li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td>&#160;</td>
+<td><div class="first last line-block">
+<div class="line"><a class="reference internal" href="../../uicomponent/index.html#ui-component"><span class="std std-ref">UIコンポーネント</span></a></div>
+</div>
+</td>
+<td><div class="first line-block">
+<div class="line"><a class="reference internal" href="../../uicomponent/index.html#ui-component"><span class="std std-ref">UIコンポーネント</span></a> の全般的な変更</div>
+</div>
+<ul class="simple">
+<li>各コンポーネントの概要にイメージ図を追加</li>
+<li>jQueryとBootstrapの両方の使用方法を紹介しているコンポーネントについて、紹介順序を整理</li>
+</ul>
+<div class="line-block">
+<div class="line">記載内容の変更</div>
+</div>
+<ul class="last simple">
+<li>BootStrapを推奨する記載を見直し</li>
+<li>bootstrap-datepickerの追加に伴い、注釈を追加</li>
+<li>jQueryとBootstrapを併用する場合の注意点を追加</li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td>&#160;</td>
+<td><div class="first last line-block">
+<div class="line"><a class="reference internal" href="../../uicomponent/index.html#button"><span class="std std-ref">ボタン</span></a></div>
+</div>
+</td>
+<td><div class="first line-block">
+<div class="line">記載内容の追加</div>
+</div>
+<ul class="last simple">
+<li>ガイドラインの記載とサンプルコードの追加</li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td>&#160;</td>
+<td><div class="first last line-block">
+<div class="line"><a class="reference internal" href="../../uicomponent/index.html#modal-dialog"><span class="std std-ref">モーダルダイアログ</span></a></div>
+</div>
+</td>
+<td><div class="first line-block">
+<div class="line">記載内容の変更</div>
+</div>
+<ul class="last simple">
+<li>jQueryUIの記載とサンプルコードを追加</li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td>&#160;</td>
+<td><div class="first last line-block">
+<div class="line"><a class="reference internal" href="../../uicomponent/index.html#accordion"><span class="std std-ref">アコーディオン</span></a></div>
+</div>
+</td>
+<td><div class="first line-block">
+<div class="line">記載内容の追加</div>
+</div>
+<ul class="last simple">
+<li>ガイドラインの記載とサンプルコードの追加</li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td>&#160;</td>
+<td><div class="first last line-block">
+<div class="line"><a class="reference internal" href="../../uicomponent/index.html#tab"><span class="std std-ref">タブ</span></a></div>
+</div>
+</td>
+<td><div class="first line-block">
+<div class="line">記載内容の変更</div>
+</div>
+<ul class="last simple">
+<li>jQueryUIの記載とサンプルコードを追加</li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td>&#160;</td>
+<td><div class="first last line-block">
+<div class="line"><a class="reference internal" href="../../uicomponent/index.html#slider"><span class="std std-ref">スライダー</span></a></div>
+</div>
+</td>
+<td><div class="first line-block">
+<div class="line">記載内容の追加</div>
+</div>
+<ul class="last simple">
+<li>ガイドラインの記載とサンプルコードの追加</li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td>&#160;</td>
+<td><div class="first last line-block">
+<div class="line"><a class="reference internal" href="../../uicomponent/index.html#carousel"><span class="std std-ref">カルーセル</span></a></div>
+</div>
+</td>
+<td><div class="first line-block">
+<div class="line">記載内容の追加</div>
+</div>
+<ul class="last simple">
+<li>ガイドラインの記載とサンプルコードの追加</li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td>&#160;</td>
+<td><div class="first last line-block">
+<div class="line"><a class="reference internal" href="../../uicomponent/index.html#calendar"><span class="std std-ref">日付入力時のカレンダー表示</span></a></div>
+</div>
+</td>
+<td><div class="first line-block">
+<div class="line">記載内容の移動</div>
+</div>
+<ul class="simple">
+<li>「bootstrap-datepickerを用いた日付入力時のカレンダー表示」を付録から移動</li>
+</ul>
+<div class="line-block">
+<div class="line">記載内容の変更</div>
+</div>
+<ul class="last simple">
+<li><a class="reference internal" href="../../uicomponent/index.html#calendarholidaysetting"><span class="std std-ref">休日設定（背景色・休日選択不可・休日定義）</span></a> について、性能を考慮した実装に改善</li>
+<li><a class="reference internal" href="../../uicomponent/index.html#calendarlocalize"><span class="std std-ref">カレンダーのロケール設定</span></a> について、ロケールの誤記を修正（jp⇒ja）</li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td>&#160;</td>
+<td><div class="first last line-block">
+<div class="line"><a class="reference internal" href="../../uicomponent/index.html#autocomplete"><span class="std std-ref">オートコンプリート</span></a></div>
+</div>
+</td>
+<td><div class="first line-block">
+<div class="line">記載内容の変更</div>
+</div>
+<ul class="last simple">
+<li>オートコンプリートの候補を非同期通信で取得する方法について記載を追加</li>
+<li>「jQuery UI AutocompleteでIMEを使用する際の不具合」について、Firefoxのバージョンアップで解消したため、記載とサンプルコードを削除</li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td>&#160;</td>
+<td><div class="first last line-block">
+<div class="line"><a class="reference internal" href="../../uicomponent/index.html#progress-bar"><span class="std std-ref">プログレスバーによる進捗度表示</span></a></div>
+</div>
+</td>
+<td><div class="first line-block">
+<div class="line">記載内容の追加</div>
+</div>
+<ul class="last simple">
+<li>ガイドラインの記載とサンプルコードの追加</li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td>&#160;</td>
+<td><div class="first last line-block">
+<div class="line"><a class="reference internal" href="../../grid/index.html#table-index"><span class="std std-ref">テーブル</span></a></div>
+</div>
+</td>
+<td><div class="first line-block">
+<div class="line">記載内容の変更</div>
+</div>
+<ul class="last simple">
+<li>機能拡充に伴い、ライブラリが実現できる機能に加筆した機能を追加</li>
+<li>テーブルの表示セル数に関する注意点を追加</li>
+<li>SlickGridとBootstrapを併用する場合の注意点を追加</li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td>&#160;</td>
+<td><div class="first last line-block">
+<div class="line"><a class="reference internal" href="../../grid/index.html#slickgrid-with-ajax"><span class="std std-ref">テーブルのスクロールによる非同期データ取得</span></a></div>
+</div>
+</td>
+<td><div class="first line-block">
+<div class="line">記載内容の追加</div>
+</div>
+<ul class="last simple">
+<li>ガイドラインの記載とサンプルコードの追加</li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td>&#160;</td>
+<td><div class="first last line-block">
+<div class="line"><a class="reference internal" href="../../manipulation/index.html#control-shortcut-key"><span class="std std-ref">ショートカットキー制御</span></a></div>
+</div>
+</td>
+<td><div class="first line-block">
+<div class="line">記載内容の変更</div>
+</div>
+<ul class="last simple">
+<li>対応可能なキーの確認方法について記載を追加</li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td>&#160;</td>
+<td><div class="first last line-block">
+<div class="line"><a class="reference internal" href="../../manipulation/index.html#prevent-range-selection"><span class="std std-ref">範囲選択防止</span></a></div>
+</div>
+</td>
+<td><div class="first line-block">
+<div class="line">記載内容の追加</div>
+</div>
+<ul class="last simple">
+<li>ガイドラインの記載とサンプルコードの追加</li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td>&#160;</td>
+<td><div class="first last line-block">
+<div class="line"><a class="reference internal" href="../../manipulation/index.html#prevent-continuous-click"><span class="std std-ref">二度押し無効化（二重送信防止）</span></a></div>
+</div>
+</td>
+<td><div class="first line-block">
+<div class="line">記載内容の変更</div>
+</div>
+<ul class="last simple">
+<li><a class="reference internal" href="../../manipulation/index.html#prevent-continuous-click-howtoextend-multiplebuttons"><span class="std std-ref">同一フォーム内に複数のボタンを設置する場合</span></a> について、ガイドラインの記載とサンプルコードの追加</li>
+<li><a class="reference internal" href="../../manipulation/index.html#prevent-continuous-click-howtoextend-loading"><span class="std std-ref">非同期通信中を表示する場合</span></a> について、ガイドラインの記載とサンプルコードの追加</li>
+<li><a class="reference internal" href="../../manipulation/index.html#prevent-continuous-click-howtoextend-alinktag"><span class="std std-ref">a要素によるリンクに対して二度押しを無効化する場合</span></a> について、ガイドラインの記載とサンプルコードの追加</li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td>&#160;</td>
+<td><div class="first last line-block">
+<div class="line"><a class="reference internal" href="../../manipulation/index.html#work-with-element"><span class="std std-ref">画面要素間の連動</span></a></div>
+</div>
+</td>
+<td><div class="first line-block">
+<div class="line">記載内容の追加</div>
+</div>
+<ul class="last simple">
+<li>ガイドラインの記載とサンプルコードの追加</li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td>&#160;</td>
+<td><div class="first last line-block">
+<div class="line"><a class="reference internal" href="../../manipulation/index.html#format-conversion"><span class="std std-ref">フォーマット変換・文字種変換</span></a></div>
+</div>
+</td>
+<td><div class="first line-block">
+<div class="line">記載内容の追加</div>
+</div>
+<ul class="last simple">
+<li>ガイドラインの記載とサンプルコードの追加</li>
+<li>「Moment.jsによる日付処理」を付録から本節に移動</li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td>&#160;</td>
+<td><div class="first last line-block">
+<div class="line"><a class="reference internal" href="../../manipulation/index.html#validation"><span class="std std-ref">入力値チェック</span></a></div>
+</div>
+</td>
+<td><div class="first line-block">
+<div class="line">記載内容の変更</div>
+</div>
+<ul class="last simple">
+<li>「Parsleyを用いた入力値チェック」を付録から本節に移動</li>
+<li>サンプルコードのバグ（必須チェック誤り、エラーメッセージの文字色誤り）を修正</li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td>&#160;</td>
+<td><div class="first last line-block">
+<div class="line"><a class="reference internal" href="../../async/index.html#asynchronous-processing"><span class="std std-ref">非同期処理</span></a></div>
+</div>
+</td>
+<td><div class="first line-block">
+<div class="line">記載内容の追加</div>
+</div>
+<ul class="last simple">
+<li>ガイドラインの記載とサンプルコードの追加</li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td>&#160;</td>
+<td><div class="first last line-block">
+<div class="line"><a class="reference internal" href="../../development-javascript.html#javascript-howto"><span class="std std-ref">JavaScriptの開発方法</span></a></div>
+</div>
+</td>
+<td><div class="first line-block">
+<div class="line">記載内容の追加</div>
+</div>
+<ul class="last simple">
+<li>ガイドラインの記載の追加</li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td>&#160;</td>
+<td><div class="first last line-block">
+<div class="line"><a class="reference internal" href="../../appendix.html#grid-solution-label"><span class="std std-ref">スタイル競合によるテーブルの表示崩れ</span></a></div>
+</div>
+</td>
+<td><div class="first line-block">
+<div class="line">記載内容の変更</div>
+</div>
+<ul class="last simple">
+<li>GitHubのissueのリンク誤りを修正</li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td>&#160;</td>
+<td><div class="first last line-block">
+<div class="line"><a class="reference internal" href="../../appendix.html#gearing-macchinetta-server-framework"><span class="std std-ref">Macchinetta Server Framework (1.x)との連携</span></a></div>
+</div>
+</td>
+<td><div class="first line-block">
+<div class="line">記載内容の追加</div>
+</div>
+<ul class="last simple">
+<li>ガイドラインの記載とサンプルコードの追加</li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td>2015-2-27</td>
+<td><div class="first last line-block">
+<div class="line">-</div>
+</div>
+</td>
+<td>初版制定</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../libraries-overview.html" title="2. 構成ライブラリ"
+             >next</a></li>
+        <li class="right" >
+          <a href="termofuse.html" title="1.1. 利用規約"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">Macchinetta Client (1.x) Development Guideline 1.1.0.RELEASE documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >1. はじめに</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2017 NTT Corporation.
+    </div>
+  </body>
+</html>
