@@ -1,3 +1,7 @@
+/*
+ *
+ * Copyright(c) 2018 NTT Corporation.
+ */
 /* jshint camelcase: false */
 /* eslint camelcase: 0 */
 // fixed-header.js

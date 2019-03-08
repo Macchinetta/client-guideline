@@ -1,3 +1,7 @@
+/*
+ *
+ * Copyright(c) 2018 NTT Corporation.
+ */
 // datepicker-range.js
 
 'use strict';

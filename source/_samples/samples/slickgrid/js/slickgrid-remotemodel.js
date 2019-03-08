@@ -1,3 +1,7 @@
+/*
+ *
+ * Copyright(c) 2018 NTT Corporation.
+ */
 // slickgrid-remotemodel.js
 
 'use strict';
@@ -91,7 +95,7 @@
           type : 'GET',
           url : url,
           dataType : 'json'
-        }).done(function (data) {
+        }).then(function (data) {
 
           // データ配列を編集する
           onSuccess(data, fromPage);

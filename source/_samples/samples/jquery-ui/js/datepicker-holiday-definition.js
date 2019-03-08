@@ -1,3 +1,7 @@
+/*
+ *
+ * Copyright(c) 2018 NTT Corporation.
+ */
 /* jshint unused: false */
 // datapicker-holiday-definition.js
 

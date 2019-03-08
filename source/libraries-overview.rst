@@ -104,9 +104,9 @@ jQuery
    * - |name|
      - jQuery
    * - |version|
-     - 1.11.1
+     - 3.3.1
    * - |official-website|
-     - http://jquery.com/
+     - https://jquery.com/
    * - |summary|
      - * DOM要素の操作、イベント処理、アニメーション、Ajax通信等のAPIを提供するライブラリ。
        * JavaScriptを使用したウェブアプリケーション開発時のデファクトスタンダードとなっている。
@@ -125,9 +125,9 @@ jQuery UI
    * - |name|
      - jQuery UI
    * - |version|
-     - 1.11.1
+     - 1.12.1
    * - |official-website|
-     - http://jqueryui.com/
+     - https://jqueryui.com/
    * - |summary|
      - * UIコンポーネントなどを提供するライブラリ。
        * ドラッグアンドドロップなどのマウスベースのイベント処理、ダイアログや日付入力用カレンダーなどのウィジェットを提供する。
@@ -147,9 +147,9 @@ Bootstrap
    * - |name|
      - Bootstrap
    * - |version|
-     - 3.2.0
+     - 3.3.7
    * - |official-website|
-     - http://getbootstrap.com/
+     - https://getbootstrap.com/
    * - |summary|
      - * UIコンポーネントなどを提供するライブラリ。
        * パネルやダイアログなどの汎用部品を数多く提供しており、レスポンシブウェブデザインやグリッドレイアウトにも対応している。
@@ -169,9 +169,9 @@ SlickGrid
    * - |name|
      - SlickGrid
    * - |version|
-     - 2.1.0
+     - 2.3.19
    * - |official-website|
-     - https://github.com/mleibman/SlickGrid
+     - https://github.com/6pac/SlickGrid/
    * - |summary|
      - * 高機能なテーブルを提供するライブラリ。
        * 行の追加・削除、列のサイズ変更、列の並び替えや、ソート、ページネーションなどを提供する。
@@ -194,7 +194,7 @@ tablesorter
    * - |name|
      - tablesorter
    * - |version|
-     - 2.17.7
+     - 2.30.7
    * - |official-website|
      - https://mottie.github.io/tablesorter/docs/
    * - |summary|
@@ -224,9 +224,9 @@ Mousetrap
    * - |name|
      - Mousetrap
    * - |version|
-     - 1.4.6
+     - 1.6.2
    * - |official-website|
-     - http://craig.is/killing/mice
+     - https://craig.is/killing/mice
    * - |summary|
      - * JavaScriptでキーボードショートカットを処理するためのライブラリ。
        * 特定のキー操作で任意の処理を実行したり、標準のショートカットキー操作の動作を無効化するコードの作成を支援する。
@@ -243,7 +243,7 @@ slick
    * - |name|
      - slick
    * - |version|
-     - 1.6.0
+     - 1.8.1
    * - |official-website|
      - http://kenwheeler.github.io/slick/
    * - |summary|
@@ -264,9 +264,9 @@ bootstrap-datepicker
    * - |name|
      - bootstrap-datepicker
    * - |version|
-     - 1.3.1
+     - 1.8.0
    * - |official-website|
-     - http://bootstrap-datepicker.readthedocs.io/
+     - https://bootstrap-datepicker.readthedocs.io/en/latest/
    * - |summary|
      - * Bootstrap風のスタイルを持つ日付入力部品を提供するライブラリ。
        * jQuery UIと併用することなく、日付入力部品が使用できる。
@@ -286,9 +286,9 @@ Moment.js
    * - |name|
      - Moment.js
    * - |version|
-     - 2.8.3
+     - 2.22.2
    * - |official-website|
-     - http://momentjs.com/
+     - https://momentjs.com/
    * - |summary|
      - * 日付操作機能を提供するライブラリ。
        * 解析、検証、操作および表示などの機能を提供する。
@@ -307,7 +307,7 @@ Parsley
    * - |name|
      - Parsley
    * - |version|
-     - 2.0.6
+     - 2.8.1
    * - |official-website|
      - http://parsleyjs.org/
    * - |summary|

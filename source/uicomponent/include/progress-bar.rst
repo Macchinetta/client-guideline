@@ -29,7 +29,7 @@
      - `JavaScript - jQuery UI #progressbar <https://jqueryui.com/progressbar/>`__
    * - Bootstrap
      - `プログレスバー(Bootstrap) <../samples/bootstrap/progressbar.html>`__
-     - `JavaScript - Bootstrap #progress <http://getbootstrap.com/components/#progress>`__
+     - `JavaScript - Bootstrap #progress <https://getbootstrap.com/docs/3.3/components/#progress>`__
 
 
 .. _progress-bar-jqueryui:

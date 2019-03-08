@@ -33,7 +33,7 @@
    * - Bootstrap
      - * `マークアップ形式のモーダルダイアログ <../samples/bootstrap/modal-markup.html>`_
        * `JavaScript形式のモーダルダイアログ <../samples/bootstrap/modal-javascript.html>`_
-     - `JavaScript - Bootstrap #Modals <http://getbootstrap.com/javascript/#modals>`_
+     - `JavaScript - Bootstrap #Modals <https://getbootstrap.com/docs/3.3/javascript/#modals>`_
 
 
 .. _modal-dialog-howtouse:
@@ -157,24 +157,6 @@ HTMLではモーダル表示する領域をdiv要素で定義しておく。id�
        });
 
    Ajaxを利用したサーバとの連携については :ref:`ajaxGearingServer` も参照すること。
-
-.. note::
-
-   モーダルダイアログをGoogle Chromeで表示する場合、ダイアログの「×」ボタンをフォーカスした際、以下の表示上の不具合が発生する。
-
-   .. figure:: /images/modal-dialog-bug.png
-      :alt: modal-dialog-bug
-      :align: center
-
-      **図: モーダルダイアログの表示不具合例**
-
-   上記を解消するには、以下の通りスタイルを設定すればよい。
-
-      .. code-block:: css
-
-         .ui-button .ui-button-text {
-           display: none;
-         }
 
 .. _modal-dialog-markup:
 

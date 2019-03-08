@@ -22,10 +22,10 @@
      - - `日付のフォーマット変換 <../samples/moment/convert-date.html>`_
        - `日付妥当性チェック <../samples/moment/check-date.html>`_
        - `時刻のフォーマット変換 <../samples/moment/convert-time.html>`_
-     - - `String + Format | Moment.js <http://momentjs.com/docs/#/parsing/string-format/>`_
-       - `Validation | Moment.js <http://momentjs.com/docs/#/parsing/is-valid/>`_
+     - - `String + Format | Moment.js <https://momentjs.com/docs/#/parsing/string-format/>`_
+       - `Validation | Moment.js <https://momentjs.com/docs/#/parsing/is-valid/>`_
    * - \-
-     - `特定文字の全角半角変換 <../samples/moment/convert-zenkaku-hankaku.html>`_
+     - `特定文字の全角半角変換 <../samples/jquery/convert-zenkaku-hankaku.html>`_
      - \-
 
 .. _format-conversion-houtouse:
@@ -45,9 +45,9 @@
 
 .. code-block:: html
 
-    <script src="../lib/vendor/jquery/1.11.1/jquery-1.11.1.min.js"></script>
-    <script src="../lib/vendor/moment/2.8.3/moment.min.js"></script>
-    <script src="js/convert-date.js"></script>
+    <script src="../lib/vendor/jquery/3.3.1/jquery.min.js"></script>
+    <script src="../lib/vendor/moment/2.22.2/moment.min.js"></script>
+    <script src="js/check-date.js"></script>
 
 | JavaScript(convert-date.js)では、以下のように処理を実装する。
 
@@ -181,8 +181,8 @@
 
 .. code-block:: html
 
-    <script src="../lib/vendor/jquery/1.11.1/jquery-1.11.1.min.js"></script>
-    <script src="../lib/vendor/moment/2.8.3/moment.min.js"></script>
+    <script src="../lib/vendor/jquery/3.3.1/jquery.min.js"></script>
+    <script src="../lib/vendor/moment/2.22.2/moment.min.js"></script>
     <script src="js/check-date.js"></script>
 
 | JavaScript(check-date.js)では、日付の入力欄に\ ``blur``\ イベントが発生した際、入力値の妥当性をチェックする。
@@ -287,8 +287,8 @@
 
 .. code-block:: html
 
-    <script src="../lib/vendor/jquery/1.11.1/jquery-1.11.1.min.js"></script>
-    <script src="../lib/vendor/moment/2.8.3/moment.min.js"></script>
+    <script src="../lib/vendor/jquery/3.3.1/jquery.min.js"></script>
+    <script src="../lib/vendor/moment/2.22.2/moment.min.js"></script>
     <script src="js/convert-time.js"></script>
 
 | JavaScript(convert-time.js)では、以下のように実装する。
@@ -359,7 +359,7 @@
 
 .. code-block:: html
 
-    <script src="../lib/vendor/jquery/1.11.1/jquery-1.11.1.min.js"></script>
+    <script src="../lib/vendor/jquery/3.3.1/jquery.min.js"></script>
     <script src="js/convert-zenkaku-hankaku.js"></script>
 
 | JavaScript(convert-zenkaku-hankaku.js)では、入力欄に\ ``blur``\ イベントが発生した際、独自に実装した\ ``convertStyle``\ 関数を実行する。コードを区切って説明する。

@@ -21,7 +21,7 @@
      - |reference-page|
    * - Mousetrap
      - `コピー・ペースト無効化 <../samples/mousetrap/disable-copy-paste.html>`_
-     - `Mousetrap - Keyboard shortcuts in Javascript <http://craig.is/killing/mice>`_
+     - `Mousetrap - Keyboard shortcuts in Javascript <https://craig.is/killing/mice>`_
 
 .. _control-shortcut-key-howtouse:
 
@@ -44,7 +44,7 @@ HTMLでは、Mousetrapと、ショートカットキーを制御するために�
     <textarea id="area3" class="mousetrap">disable copy(Ctrl + c) and paste(Ctrl + v), and execute original function when key-control for save(Ctrl + s) is used.</textarea>
 
     <!-- (2) -->
-    <script src="../lib/vendor/mousetrap/1.4.6/mousetrap.js"></script>
+    <script src="../lib/vendor/mousetrap/1.6.2/mousetrap.min.js"></script>
     <script src="js/disable-copy-paste.js"></script>
 
 .. tabularcolumns:: |p{0.10\linewidth}|p{0.80\linewidth}|
@@ -116,4 +116,4 @@ JavaScript(disable-copy-paste.js)では、\ ``Mousetrap.bind``\ 関数を用い�
 
 .. note::
 
-   対応可能なキーは `Mousetrapの公式リファレンス <http://craig.is/killing/mice>`_ の「Supported Keys」を参照すること。なお、「F12」など、「Supported Keys」に記載は無いが、制御可能なものもある。Mousetrapのソースコードを参照すること。
+   対応可能なキーは `Mousetrapの公式リファレンス <https://craig.is/killing/mice>`_ の「Supported Keys」を参照すること。なお、「F12」など、「Supported Keys」に記載は無いが、制御可能なものもある。Mousetrapのソースコードを参照すること。

@@ -1,3 +1,7 @@
+/*
+ *
+ * Copyright(c) 2018 NTT Corporation.
+ */
 // carousel-javascript.js
 
 'use strict';

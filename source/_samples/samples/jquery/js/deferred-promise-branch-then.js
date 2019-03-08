@@ -1,3 +1,7 @@
+/*
+ *
+ * Copyright(c) 2018 NTT Corporation.
+ */
 // deferred-promise-branch-then.js
 'use strict';
 
@@ -24,9 +28,9 @@ $(function () {
         var result = random();
         $('#deferred-area').append('<p>ランダム処理の結果は' + result + 'です。</p>');
         if (result) {
-          dfd.resolve();
+          dfd.resolve('resolve');
         } else {
-          dfd.reject();
+          dfd.reject('reject');
         }
       }, 1000);
 
@@ -35,17 +39,19 @@ $(function () {
     };
 
     // 成功メッセージを出力する関数
-    var success = function () {
-      $('#deferred-area').append('<p>成功</p>');
+    var success = function (arg) {
+      $('#deferred-area').append('<p>' + arg + 'が実行されました。成功です。</p>');
     };
 
     // 失敗メッセージを出力する関数
-    var failure = function () {
-      $('#deferred-area').append('<p>失敗</p>');
+    var failure = function (arg) {
+      $('#deferred-area').append('<p>' + arg + 'が実行されました。失敗です。</p>');
     };
 
     // 非同期処理の関数を実行する
     // 成功時・失敗時のコールバックを設定
-    async().then(success, failure);
+    async()
+    .then(success)
+    .catch(failure);
   });
 });

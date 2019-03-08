@@ -1,0 +1,142 @@
+{
+  "env": {
+    "browser": true,
+    "jquery": true
+  },
+  "globals": {
+    "define": false,
+    "require": false,
+    "Backbone": false,
+    "_": false,
+    "Slick": false,
+    "Mousetrap": false,
+    "moment": false,
+    "Parsley": false
+  },
+  "rules": {
+    "no-bitwise": 2,
+    "eqeqeq": [
+      2,
+      "always",
+      {
+        "null": "ignore"
+      }
+    ],
+    "no-use-before-define": 0,
+    "no-caller": 2,
+    "no-undef": 2,
+    "no-unused-vars": [
+      2,
+      {
+        "vars": "local",
+        "args": "none"
+      }
+    ],
+    "strict": [
+      2,
+      "global"
+    ],
+    "curly": [
+      2,
+      "all"
+    ],
+    "new-cap": 2,
+    "operator-linebreak": [
+      2,
+      "after"
+    ],
+    "wrap-iife": 2,
+    "comma-style": [
+      2,
+      "last"
+    ],
+    "camelcase": [
+      2,
+      {
+        "properties": "always"
+      }
+    ],
+    "dot-notation": 0,
+    "max-len": [
+      2,
+      150
+    ],
+    "quotes": [
+      2,
+      "single",
+      {
+        "avoidEscape": true
+      }
+    ],
+    "indent": [
+      2,
+      2,
+      {
+        "SwitchCase": 1,
+        "VariableDeclarator": 2
+      }
+    ],
+    "no-trailing-spaces": 2,
+    "no-mixed-spaces-and-tabs": 2,
+    "no-multi-spaces": 2,
+    "no-multi-str": 2,
+    "comma-dangle": [
+      2,
+      "never"
+    ],
+    "comma-spacing": [
+      2,
+      {
+        "before": false,
+        "after": true
+      }
+    ],
+    "space-before-blocks": [
+      2,
+      "always"
+    ],
+    "keyword-spacing": [
+      2,
+      {}
+    ],
+    "semi": [
+      2,
+      "always"
+    ],
+    "space-infix-ops": 2,
+    "lines-around-comment": [
+      2,
+      {
+        "beforeLineComment": true
+      }
+    ],
+    "linebreak-style": [
+      2,
+      "unix"
+    ],
+    "no-with": 2,
+    "brace-style": [
+      2,
+      "1tbs",
+      {
+        "allowSingleLine": true
+      }
+    ],
+    "space-unary-ops": [
+      2,
+      {
+        "words": false,
+        "nonwords": false
+      }
+    ],
+    "no-multiple-empty-lines": 2,
+    "no-inner-declarations": [
+      2,
+      "functions"
+    ],
+    "no-new-wrappers": 2,
+    "no-delete-var": 2,
+    "no-eval": 2,
+    "no-extend-native": 2
+  }
+}

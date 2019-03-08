@@ -29,10 +29,10 @@
      - - `基本的なタブ <../samples/jquery-ui/tabs.html>`__
        - `下付きタブ <../samples/jquery-ui/tabs-bottom.html>`_
        - `左付きタブ <../samples/jquery-ui/tabs-left.html>`_
-     - `Tabs | jQuery UI <http://jqueryui.com/tabs/>`_
+     - `Tabs | jQuery UI <https://jqueryui.com/tabs/>`_
    * - Bootstrap
      - - `マークアップ形式のタブ <../samples/bootstrap/tab.html>`_
-     - `JavaScript - Bootstrap #tabs <http://getbootstrap.com/javascript/#tabs>`_
+     - `JavaScript - Bootstrap #tabs <https://getbootstrap.com/docs/3.3/javascript/#tabs>`_
 
 | 本ガイドラインおよびサンプルで紹介するプロパティ以外にもプロパティが提供されている。これらの詳細について知りたい場合は、上記のjQuery UIおよびBootstrapの公式サイトを参照すること。
 

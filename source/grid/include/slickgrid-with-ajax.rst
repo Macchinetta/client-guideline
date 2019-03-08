@@ -24,7 +24,7 @@
      - |reference-page|
    * - SlickGrid
      - `SlickGridによる非同期データ取得サンプル <../samples/slickgrid/slickgrid-with-ajax.html>`_
-     - `SlickGrid Wiki <https://github.com/mleibman/SlickGrid/wiki>`_
+     - `SlickGrid Wiki <https://github.com/6pac/SlickGrid/wiki>`_
 
 
 サンプルの動作イメージを示す。
@@ -321,7 +321,7 @@ slickgrid-with-ajax.jsには3つのイベントを実装する。各イベント
             type : 'GET',
             url : url,
             dataType : 'json'
-          }).done(function (data) {
+          }).then(function (data) {
 
             // データ配列を編集する
             onSuccess(data, fromPage);
