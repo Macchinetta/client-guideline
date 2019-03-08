@@ -1,0 +1,43 @@
+{
+    "node": false,
+    "globalstrict": true,
+    "devel": true,
+    "browser": true,
+    "esnext": true,
+    "bitwise": true,
+    "camelcase": true,
+    "curly": false,
+    "eqeqeq": true,
+    "immed": true,
+    "indent": 2,
+    "latedef": false,
+    "newcap": true,
+    "noarg": true,
+    "quotmark": "single",
+    "regexp": true,
+    "undef": true,
+    "unused": "vars",
+    "strict": true,
+    "trailing": true,
+    "smarttabs": true,
+    "jquery": true,
+    "white": true,
+    "sub": true,
+    "globals": {
+        // RequireJS
+        "define": false,
+        "require": false,
+        // Backbone.js
+        "Backbone": false,
+        // Underscore.js
+        "_": false,
+        // SlickGrid
+        "Slick": false,
+        // Mousetrap
+        "Mousetrap": false,
+        // Momentjs
+        "moment": false,
+        // Parsley
+        "Parsley": false
+    }
+}

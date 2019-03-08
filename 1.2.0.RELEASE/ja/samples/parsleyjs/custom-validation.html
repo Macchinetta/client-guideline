@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<!-- Copyright(c) 2018 NTT Corporation. -->
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>カスタムバリデータサンプル</title>
+    <link href="css/main.css" rel="stylesheet" type="text/css">
+  </head>
+  <body>
+
+    <form id="form" method="get" action="custom-validation.html">
+      <div>
+        <label for="numberCheck1">倍数チェック(3)</label><br>
+        <input id="numberCheck1" name="numberCheck1" type="text"
+            data-parsley-type="number"
+            data-parsley-multipleof="3">
+      </div>
+      <div>
+        <label for="numberCheck2">倍数チェック(5)</label><br>
+        <input id="numberCheck2" name="numberCheck2" type="text"
+            data-parsley-type="number"
+            data-parsley-multipleof="5">
+      </div>
+      <div>
+        <input type="submit" value="送信">
+      </div>
+    </form>
+
+    <!-- jQueryとParsley、独自に実装したJavaScriptを読み込む。 -->
+    <script src="../lib/vendor/jquery/3.3.1/jquery.min.js"></script>
+    <script src="../lib/vendor/parsleyjs/2.8.1/parsley.min.js"></script>
+    <script src="../lib/vendor/parsleyjs/2.8.1/extra/validator/dateiso.js"></script>
+    <script src="../lib/vendor/parsleyjs/2.8.1/i18n/ja.js"></script>
+    <script src="js/custom-validation.js"></script>
+  </body>
+</html>

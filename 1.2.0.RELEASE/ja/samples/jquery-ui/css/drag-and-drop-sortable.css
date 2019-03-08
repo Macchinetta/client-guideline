@@ -1,0 +1,31 @@
+ ul.jquery-ui-sortable {
+     list-style-type: none;
+     margin: 0 2px;
+     padding: 2px;
+     width: 25%;
+     float: left;
+     min-height: 1.5em;
+     background-color: beige;
+     border: solid 1px #606060;
+ }
+
+ul.jquery-ui-sortable li {
+    margin: 3px;
+    padding: 0.3em;
+    padding-left: 1em;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: move;
+}
+
+li.border-color-red {
+    border-color: red;
+}
+
+li.border-color-blue {
+    border-color: blue;
+}
+
+li.border-color-green {
+    border-color: green;
+}

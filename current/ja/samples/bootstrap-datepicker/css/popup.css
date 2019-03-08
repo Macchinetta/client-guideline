@@ -1,0 +1,4 @@
+/* カレンダーの表示位置がずれるバグに対する対応 */
+.datepicker-dropdown {
+  margin-top: 20px;
+}

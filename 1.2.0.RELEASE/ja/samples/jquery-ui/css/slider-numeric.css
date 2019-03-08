@@ -1,0 +1,14 @@
+#value {
+  width:20px;
+  margin-left:100px;
+  margin-bottom:10px;
+}
+#slider-numeric {
+  margin-left:100px;
+  margin-top:10px;
+  margin-bottom:10px;
+  height:200px;
+}
+#max, #min {
+  margin-left:100px;
+}
