@@ -29,11 +29,11 @@
        - `休日設定（背景色・休日選択不可・休日定義） <../samples/jquery-ui/datepicker-holiday.html>`_
        - `選択可能な日付の範囲制御 <../samples/jquery-ui/datepicker-range.html>`_
        - `カレンダーのロケール設定 <../samples/jquery-ui/datepicker-locale.html>`_
-     - `Datepicker | jQuery UI <http://jqueryui.com/datepicker/>`_
-   * - Bootstrap-datepicker
+     - `Datepicker | jQuery UI <https://jqueryui.com/datepicker/>`_
+   * - bootstrap-datepicker
      - * `マークアップ形式のカレンダー表示 <../samples/bootstrap-datepicker/bootstrap-datepicker-markup.html>`_
        * `JavaScript形式のカレンダー表示 <../samples/bootstrap-datepicker/bootstrap-datepicker-javascript.html>`_
-     - `bootstrap-datepicker documentation <http://bootstrap-datepicker.readthedocs.io/>`_
+     - `bootstrap-datepicker documentation <https://bootstrap-datepicker.readthedocs.io/en/latest/>`_
 
 .. _calendarHowToUse:
 
@@ -41,7 +41,7 @@
 ------------------------------------------------
 
 | ここでは、jQuery UIを用いて、日付入力のテキストフィールドへのフォーカス時にカレンダーを表示する方法を説明する。
-| 本ガイドラインおよびサンプルで紹介するプロパティ以外にもプロパティが提供されている。これらの詳細について知りたい場合は、\ `jQuery UI 公式ウェブサイトのリファレンス\ <http://api.jqueryui.com/datepicker/>`_\ を参照すること。
+| 本ガイドラインおよびサンプルで紹介するプロパティ以外にもプロパティが提供されている。これらの詳細について知りたい場合は、\ `jQuery UI 公式ウェブサイトのリファレンス\ <https://api.jqueryui.com/datepicker/>`_\ を参照すること。
 
 .. _calendarBasic:
 
@@ -242,6 +242,9 @@
 | ラベル名はカレンダー上で日付がマウスオーバーされた際に表示する情報を設定する。祝日名や休日名を設定する場合に活用する。指定しない場合は空文字を設定する。
 
 .. note::
+   ラベル名は選択可能な日付のみ表示される。選択不可の休日の場合にも表示させたい場合は、独自にスタイルシートを作成し、 \ `.ui-state-disabled {pointer-events: auto;}`\ を追加すること。
+
+.. note::
 
    CSSクラスを定義する際は
 
@@ -326,11 +329,11 @@
    <label>日付(ja): <input type="text" id="jquery-ui-datepicker-localize-ja"></label>
 
    <!-- (2) -->
-   <script src="../lib/vendor/jquery/1.11.1/jquery-1.11.1.min.js"></script>
-   <script src="../lib/vendor/jquery-ui/1.11.1/jquery-ui.min.js"></script>
+   <script src="../lib/vendor/jquery/3.3.1/jquery.min.js"></script>
+   <script src="../lib/vendor/jquery-ui/1.12.1/jquery-ui.min.js"></script>
    <!-- (3) -->
-   <script src="../lib/vendor/jquery-ui/1.11.1/i18n/datepicker-en-GB.js"></script>
-   <script src="../lib/vendor/jquery-ui/1.11.1/i18n/datepicker-ja.js"></script>
+   <script src="../lib/vendor/jquery-ui/1.12.1/i18n/datepicker-en-GB.js"></script>
+   <script src="../lib/vendor/jquery-ui/1.12.1/i18n/datepicker-ja.js"></script>
 
 
 .. tabularcolumns:: |p{0.10\linewidth}|p{0.80\linewidth}|
@@ -427,8 +430,8 @@ HTMLでは、Bootstrapのスタイルシート、jQuery、Bootstrap及びbootstr
     <title>マークアップ形式のカレンダー</title>
 
     <!-- (1) -->
-    <link rel="stylesheet" href="../lib/vendor/bootstrap/3.2.0/css/bootstrap.css">
-    <link rel="stylesheet" href="../lib/vendor/bootstrap/3.2.0/css/bootstrap-theme.css">
+    <link rel="stylesheet" href="../lib/vendor/bootstrap/3.3.7/css/bootstrap.css">
+    <link rel="stylesheet" href="../lib/vendor/bootstrap/3.3.7/css/bootstrap-theme.css">
     <link rel="stylesheet" href="../lib/vendor/bootstrap-datepicker/datepicker3.css">
   </head>
   <body>
@@ -436,14 +439,18 @@ HTMLでは、Bootstrapのスタイルシート、jQuery、Bootstrap及びbootstr
     <h1>マークアップ形式のカレンダー</h1>
 
     <!-- (2) -->
-    <label>日付: <input value="2014/09/09" data-provide="datepicker"
-                        data-date-format="yyyy/mm/dd" data-date-language="ja" data-date-orientation="top auto" data-date-autoclose="true"></label>
+    <label>日付: <input value="2014/09/09"
+                        data-provide="datepicker"
+                        data-date-format="yyyy/mm/dd"
+                        data-date-language="ja"
+                        data-date-orientation="buttom auto"
+                        data-date-autoclose="true"></label>
 
     <!-- (3) -->
-    <script src="../lib/vendor/jquery/1.11.1/jquery-1.11.1.min.js"></script>
-    <script src="../lib/vendor/bootstrap/3.2.0/js/bootstrap.js"></script>
+    <script src="../lib/vendor/jquery/3.3.1/jquery.min.js"></script>
+    <script src="../lib/vendor/bootstrap/3.3.7/js/bootstrap.js"></script>
     <script src="../lib/vendor/bootstrap-datepicker/bootstrap-datepicker.js"></script>
-    <script src="../lib/vendor/bootstrap-datepicker/bootstrap-datepicker.ja.js"></script>
+    <script src="../lib/vendor/bootstrap-datepicker/bootstrap-datepicker.ja.min.js"></script>
   </body>
 
 .. tabularcolumns:: |p{0.10\linewidth}|p{0.80\linewidth}|
@@ -457,17 +464,31 @@ HTMLでは、Bootstrapのスタイルシート、jQuery、Bootstrap及びbootstr
       - | Bootstrapのスタイルシートを読み込む。
     * - | (2)
       - | フォーカスを契機にカレンダーが表示されるテキストフィールドを設置する。
-    * - | (3)
-      - | jQuery、Bootstrap、Bootstrap-datepicker及びカレンダーの日本語対応のJavaScriptを読み込む。
+        | 各オプションは以下の通り。
 
-日付フォーマットや表示言語を変更する場合には、\ ``data-date-format``\ や\ ``data-date-language``\ などの属性を指定することができる。その他のオプションについて知りたい場合は、`Bootstrap-datepicker公式ウェブサイトのリファレンス <http://bootstrap-datepicker.readthedocs.io/en/1.3.1/options.html>`_ を参照すること。
+        .. table::
+
+           ===============================  ===================================================================================
+           オプション                         説明
+           ===============================  ===================================================================================
+           \ ``data-provide``\              マークアップ形式で利用するための設定。
+           \ ``data-date-format``\          日付フォーマットを設定する。
+           \ ``data-date-language``\        表示言語を設定する。
+           \ ``data-date-orientation``\     カレンダーの表示位置を設定する。
+           \ ``data-date-autoclose``\       日付選択後にカレンダーを自動で閉じるかを\ ``true``\ /\ ``false``\ で設定する。
+           ===============================  ===================================================================================
+
+    * - | (3)
+      - | jQuery、Bootstrap、bootstrap-datepicker及びカレンダーの日本語対応のJavaScriptを読み込む。
+
+日付フォーマットや表示言語などの形式や、その他のオプションについて知りたい場合は、`bootstrap-datepicker公式ウェブサイトのリファレンス <https://bootstrap-datepicker.readthedocs.io/en/latest/options.html>`_ を参照すること。
 
 .. _bootstrapDatepickerJavaScript:
 
 基本的な使い方(JavaScript形式)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-HTMLでは、Bootstrapのスタイルシート、jQuery、Bootstrap及びBootstrap-datepickerのJavaScriptを読み込み、独自に実装したJavaScriptを読み込む。
+HTMLでは、Bootstrapのスタイルシート、jQuery、Bootstrap及びbootstrap-datepickerのJavaScriptを読み込み、独自に実装したJavaScriptを読み込む。
 
 .. code-block:: html
 
@@ -476,8 +497,8 @@ HTMLでは、Bootstrapのスタイルシート、jQuery、Bootstrap及びBootstr
     <title>JavaScript形式のカレンダー</title>
 
     <!-- (1) -->
-    <link rel="stylesheet" href="../lib/vendor/bootstrap/3.2.0/css/bootstrap.css">
-    <link rel="stylesheet" href="../lib/vendor/bootstrap/3.2.0/css/bootstrap-theme.css">
+    <link rel="stylesheet" href="../lib/vendor/bootstrap/3.3.7/css/bootstrap.css">
+    <link rel="stylesheet" href="../lib/vendor/bootstrap/3.3.7/css/bootstrap-theme.css">
     <link rel="stylesheet" href="../lib/vendor/bootstrap-datepicker/datepicker3.css">
   </head>
   <body>
@@ -488,10 +509,10 @@ HTMLでは、Bootstrapのスタイルシート、jQuery、Bootstrap及びBootstr
     <label>日付: <input id="datepicker" type="text" value="2014/09/09" ></label>
 
     <!-- (3) -->
-    <script src="../lib/vendor/jquery/1.11.1/jquery-1.11.1.min.js"></script>
-    <script src="../lib/vendor/bootstrap/3.2.0/js/bootstrap.js"></script>
+    <script src="../lib/vendor/jquery/3.3.1/jquery.min.js"></script>
+    <script src="../lib/vendor/bootstrap/3.3.7/js/bootstrap.js"></script>
     <script src="../lib/vendor/bootstrap-datepicker/bootstrap-datepicker.js"></script>
-    <script src="../lib/vendor/bootstrap-datepicker/bootstrap-datepicker.ja.js"></script>
+    <script src="../lib/vendor/bootstrap-datepicker/bootstrap-datepicker.ja.min.js"></script>
 
     <!-- (4) -->
     <script src="js/bootstrap-datepicker-javascript.js"></script>
@@ -509,7 +530,7 @@ HTMLでは、Bootstrapのスタイルシート、jQuery、Bootstrap及びBootstr
     * - | (2)
       - | フォーカスを契機にカレンダーが表示されるテキストフィールドを設置する。
     * - | (3)
-      - | jQuery、Bootstrap、Bootstrap-datepicker及びカレンダーの日本語対応のJavaScriptを読み込む。
+      - | jQuery、Bootstrap、bootstrap-datepicker及びカレンダーの日本語対応のJavaScriptを読み込む。
     * - | (4)
       - | 独自に実装したJavaScriptを読み込む。
 
@@ -525,9 +546,17 @@ JavaScript(bootstrap-datepicker-javascript.js)では、フォーカスを契機�
 
     // (1)
     $('#datepicker').datepicker({
+
+      // (2)
       format: 'yyyy/mm/dd',
+
+      // (3)
       language: 'ja',
-      orientation: 'top auto',
+
+      // (4)
+      orientation: 'bottom auto',
+
+      // (5)
       autoclose: true
     });
   });
@@ -541,6 +570,14 @@ JavaScript(bootstrap-datepicker-javascript.js)では、フォーカスを契機�
       - 説明
     * - | (1)
       - | カレンダー表示を設定する。
+    * - | (2)
+      - | 日付フォーマットを設定する。
+    * - | (3)
+      - | 表示言語を設定する。
+    * - | (4)
+      - | カレンダーの表示位置を設定する。
+    * - | (5)
+      - | 日付選択後にカレンダーを自動で閉じるかを\ ``true``\ /\ ``false``\ で設定する。
 
 .. note::
 
@@ -564,4 +601,27 @@ JavaScript(bootstrap-datepicker-javascript.js)では、フォーカスを契機�
           - 「4月 2014」のように月年の順で表示される。
         * - 日本語化時のカレンダーのヘッダ部の年月表示をクリック
           - 何も起こらない。
-          - 1年単位でのページ送り、さらにもう一度クリックすると10年単位でのページ送りが可能になる。
+          - クリック回数に応じてページ送りの単位を切り替えられ、1年単位、10年単位、100年単位、1000年単位でのページ送りが可能になる。
+
+.. warning::
+
+   bootstrap-datepickerを適用した要素の手前で、マージンを取っている要素がある場合、以下の問題が発生する。
+
+   * カレンダーが、テキストフィールドに重なって表示される。(カレンダーの表示位置が下の場合)
+
+   * カレンダーが、テキストフィールドから少し離れて表示される。(カレンダーの表示位置が上の場合)
+
+   .. figure:: /images/calendar-bootstrap-datepicker-popup-bug.png
+      :alt: calendar-bootstrap-datepicker-popup-bug
+      :align: center
+      :scale: 75%
+
+      **図: カレンダーの表示バグ（カレンダーの表示位置が下の場合）**
+
+   これはbootstrap-datepicker1.4以降の不具合であるため、対処が必要な場合は、独自にスタイルシートを作成し、カレンダーの表示位置を調整すること。紹介しているサンプルでは以下のCSSを適用して解消しているので参考にしてほしい。
+
+     .. code-block:: css
+
+       .datepicker-dropdown {
+         margin-top: 20px;
+       }

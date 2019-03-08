@@ -50,7 +50,7 @@
 
 .. code-block:: html
 
-    <script src="../lib/vendor/jquery/1.11.1/jquery-1.11.1.min.js"></script>
+    <script src="../lib/vendor/jquery/3.3.1/jquery.min.js"></script>
     <script src="js/prevent-range-selection-all-elements.js"></script>
 
 | JavaScript(prevent-range-selection-all-elements.js)では、\ ``html``\ 要素に\ ``css``\ 関数を用いて\ ``user-select``\ プロパティを指定する。
@@ -104,7 +104,7 @@
 
 .. code-block:: html
 
-    <script src="../lib/vendor/jquery/1.11.1/jquery-1.11.1.min.js"></script>
+    <script src="../lib/vendor/jquery/3.3.1/jquery.min.js"></script>
     <script src="js/prevent-range-selection-target-elements.js"></script>
 
 | JavaScriptでは、クラス属性に\ ``disable``\ を設定した要素に\ ``css``\ 関数を用いて\ ``user-select``\ プロパティを指定する。

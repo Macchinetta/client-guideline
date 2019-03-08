@@ -23,7 +23,7 @@
      - |reference-page|
    * - Bootstrap
      - `レスポンシブウェブデザイン <../samples/bootstrap/responsive-web-design.html>`__
-     - `CSS - Bootstrap #grid <http://getbootstrap.com/css/#grid>`__
+     - `CSS - Bootstrap #grid <https://getbootstrap.com/docs/3.3/css/#grid>`__
 
 
 .. _responsive-web-design-howtouse:
@@ -95,4 +95,4 @@ Bootstrapには、幅を12分割したグリッドに見立ててレイアウト
 
    案2はレイアウト崩れは防止できるものの、画面表示される情報量が減るというデメリットがある。案3は、Bootstrapのグリッドレイアウトと共存させることができないため、実装のコストが高くなるというデメリットがある。
 
-詳細について知りたい場合は、 `Bootstrap 公式ウェブサイトのリファレンス\ <http://getbootstrap.com/css/#grid>`__\ を参照すること。
+詳細について知りたい場合は、 `Bootstrap 公式ウェブサイトのリファレンス\ <https://getbootstrap.com/docs/3.3/css/#grid>`__\ を参照すること。

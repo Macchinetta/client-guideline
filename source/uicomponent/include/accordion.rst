@@ -29,10 +29,10 @@
      - - `基本的なアコーディオン <../samples/jquery-ui/accordion-basic.html>`_
        - `全てのパネルを閉じることができるアコーディオン <../samples/jquery-ui/accordion-collapsible.html>`_
        - `全てのパネルを開くことができるアコーディオン <../samples/jquery-ui/accordion-multiple.html>`_
-     - `Accordion | jQuery UI <http://jqueryui.com/accordion/>`_
+     - `Accordion | jQuery UI <https://jqueryui.com/accordion/>`_
    * - Bootstrap
      - `アコーディオン <../samples/bootstrap/accordion.html>`_
-     - `JavaScript - Bootstrap #collapse <http://getbootstrap.com/javascript/#collapse>`_
+     - `JavaScript - Bootstrap #collapse <https://getbootstrap.com/docs/3.3/javascript/#collapse>`_
 
 .. _accordionHowToUse:
 
@@ -40,7 +40,7 @@
 ------------------------------------------------
 
 | ここでは、jQuery UI を用いてアコーディオンを表示する方法を説明する。
-| なお、本ガイドラインおよびサンプルで紹介するオプション以外に、オプションやメソッドが提供されている。これらの詳細について知りたい場合は、\ `jQuery UI 公式ウェブサイトのリファレンス\ <http://jqueryui.com/accordion/>`__\ を参照すること。
+| なお、本ガイドラインおよびサンプルで紹介するオプション以外に、オプションやメソッドが提供されている。これらの詳細について知りたい場合は、\ `jQuery UI 公式ウェブサイトのリファレンス\ <https://jqueryui.com/accordion/>`__\ を参照すること。
 
 .. _accordionBasic:
 
@@ -118,7 +118,7 @@
 
     \ ``accordion``\ メソッドを実行する要素の子要素がli要素の場合のみ、li要素の最初の子要素がヘッダとなり、li要素の2つ目の子要素がパネルの内容となる。
     このため、li要素一つ一つでヘッダとパネルのセットが作成できる。
-    詳細は、\ `jQuery UI公式ウェブサイトのリファレンス <http://api.jqueryui.com/accordion/#option-header>`__\を参照すること。
+    詳細は、\ `jQuery UI公式ウェブサイトのリファレンス <https://api.jqueryui.com/accordion/#option-header>`__\を参照すること。
 
 .. _accordionCollapsible:
 
@@ -373,4 +373,4 @@
 
 .. note::
 
-   このサンプルでは同時に複数のコンテンツ領域を展開することができるが、同時に複数のコンテンツ領域を展開できないようにすることもできる。そのためには、アコーディオン全体の領域を囲う要素や属性の追加、また\ ``panel``\ クラスの利用が必須になる。\ `Bootstrap公式ウェブサイトのリファレンス\ <http://getbootstrap.com/javascript/#collapse>`_\ にあるサンプルを参考にすること。
+   このサンプルでは同時に複数のコンテンツ領域を展開することができるが、同時に複数のコンテンツ領域を展開できないようにすることもできる。そのためには、アコーディオン全体の領域を囲う要素や属性の追加、また\ ``panel``\ クラスの利用が必須になる。\ `Bootstrap公式ウェブサイトのリファレンス\ <https://getbootstrap.com/docs/3.3/javascript/#collapse>`_\ にあるサンプルを参考にすること。

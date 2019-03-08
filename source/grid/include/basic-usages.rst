@@ -14,7 +14,7 @@
      - |reference-page|
    * - SlickGrid
      - `SlickGrid基本構成サンプル <../samples/slickgrid/default.html>`_
-     - `SlickGrid Wiki <https://github.com/mleibman/SlickGrid/wiki>`_
+     - `SlickGrid Wiki <https://github.com/6pac/SlickGrid/wiki>`_
    * - tablesorter
      - `tablesorter基本構成サンプル <../samples/tablesorter/default.html>`_
      - `jQuery plugin: Tablesorter 2.0 <https://mottie.github.io/tablesorter/docs/>`_
@@ -119,7 +119,7 @@ JavaScript(js/default.js)では、\ ``Slick.Grid``\ コンストラクタを実�
 
 .. [#slickgrid-requires-jquery-ui] 公式ドキュメントではソート機能を有効化した場合のみ必要と記載されているが、他にカーソル操作での選択セル移動機能や、セルのコピーアンドペースト機能などにも使用されている。そのため、基本的には常に読み込んでおくほうが無難ではあるが、ファイルサイズが比較的大きいため、極力読み込ませずに済ませたい場合には、動作確認を充分に行うこと。
 .. [#slickgrid-not-requires-jqdrop] 公式ドキュメントでは依存ライブラリとして記載されているが、実際のところは利用されていない。よって、テストで正常に動作することが確認できれば、読み込まなくてもよい。
-.. [#slickgrid-dataview] データ表示条件を詳細に制御できる部品\ ``DataView``\ が利用可能になる。これによって、ページネーション、複数カラムでのソート、検索、グループ化などが可能になる。詳細は https://github.com/mleibman/SlickGrid/wiki/DataView を参照すること。
+.. [#slickgrid-dataview] データ表示条件を詳細に制御できる部品\ ``DataView``\ が利用可能になる。これによって、ページネーション、複数カラムでのソート、検索、グループ化などが可能になる。詳細は https://github.com/6pac/SlickGrid/wiki を参照すること。
 
 .. note::
    ウインドウの幅に併せてテーブルの幅を変更したい場合は、SlickGridの提供機能ではないが、次のように記述して対応できる。
@@ -155,6 +155,9 @@ JavaScript(js/default.js)では、\ ``Slick.Grid``\ コンストラクタを実�
 
    ただし、ウインドウサイズを変更するたびに処理が発生するため、動作がもたつくことがある。
    頻繁にウインドウサイズの変更を求められる画面では注意すること。
+
+.. note::
+   jquery.event.drag, jquery.event.drop については、`公式サイト <http://threedubmedia.com/>`_  で提供されている最終リリースバージョンは 2.2 であるが、SlickGrid(6pac) の依存ライブラリバージョンとして非公認であるバージョン 2.3 の利用を推奨していることから、本ガイドラインのサンプルプログラムにおいてもバージョン 2.3 を使用する。詳細は https://github.com/6pac/SlickGrid/wiki を参照すること。
 
 .. _basic-usages-tablesorter:
 

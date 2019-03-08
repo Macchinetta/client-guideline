@@ -1,3 +1,7 @@
+/*
+ *
+ * Copyright(c) 2018 NTT Corporation.
+ */
 // prevent-range-selection-all-elements.js
 
 'use strict';

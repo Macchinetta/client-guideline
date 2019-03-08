@@ -32,7 +32,7 @@ HTMLでは、jQueryと、ボタンの活性状態を制御するために実装�
 
 .. code-block:: html
 
-    <script src="../lib/vendor/jquery/1.11.1/jquery-1.11.1.min.js"></script>
+    <script src="../lib/vendor/jquery/3.3.1/jquery.min.js"></script>
     <script src="js/enable-and-disable-button.js"></script>
 
 JavaScript(enable-and-disable-button.js)では、チェックボックスの\ ``change``\ イベントハンドラ内で、

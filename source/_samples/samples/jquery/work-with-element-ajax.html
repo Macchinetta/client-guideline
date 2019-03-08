@@ -1,15 +1,14 @@
 <!DOCTYPE html>
+<!-- Copyright(c) 2018 NTT Corporation. -->
 <html>
   <head>
     <meta charset="utf-8">
-    <title>部品連動機能サンプル</title>
+    <title>画面要素間の連動</title>
   </head>
   <body>
-    <h1>画面要素間の連動サンプル</h1>
-    <ul>
-      <li>地域区分のドロップダウンリストが選択された際に、都道府県のドロップダウンリストを変更します</li>
-    </ul>
-    <br>
+    <h1>画面要素間の連動</h1>
+    <h2>非同期通信を使用したドロップダウンリストの連動</h2>
+    <p>地域区分のドロップダウンリストが選択された際に、都道府県のドロップダウンリストを変更します</p>
     <h3>地域区分：</h3>
     <select id="region">
       <option>-- 地域区分 --</option>
@@ -27,8 +26,16 @@
     <select id="prefecture">
       <option>-- 都道府県 --</option>
     </select>
+    <br>
+    <br>
+    <p>非同期通信挙動選択</p>
+    <p class="radio-area">
+      <input type="radio" name="behave" checked="checked">成功
+      <input type="radio" name="behave" >失敗
+    </p>
+    <div id="message-area"></div>
     <!-- jQueryと、独自に実装したJavaScriptを読み込む -->
-    <script src="../lib/vendor/jquery/1.11.1/jquery-1.11.1.min.js"></script>
+    <script src="../lib/vendor/jquery/3.3.1/jquery.min.js"></script>
     <script src="js/work-with-element-ajax.js"></script>
   </body>
 </html>

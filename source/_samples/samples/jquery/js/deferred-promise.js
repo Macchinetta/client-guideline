@@ -1,3 +1,7 @@
+/*
+ *
+ * Copyright(c) 2018 NTT Corporation.
+ */
 // deferred-promise.js
 'use strict';
 
@@ -65,7 +69,10 @@ $(function () {
 
     // Promiseオブジェクトのthenにコールバックを設定する
     .then(outputMessage2)
-    .then(outputMessage3);
+    .then(outputMessage3)
+    .catch(function () {
+      alert('failed!');
+    });
 
   });
 });

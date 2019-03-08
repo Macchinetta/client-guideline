@@ -36,12 +36,19 @@
    * - Bootstrap
      - - `基本的な使い方(マークアップ形式) <../samples/bootstrap/carousel-markup.html>`__
        - `基本的な使い方(JavaScript形式) <../samples/bootstrap/carousel-javascript.html>`__
-     - `Bootstrap - Carousel <http://getbootstrap.com/javascript/#carousel>`__
+     - `Bootstrap - Carousel <https://getbootstrap.com/docs/3.3/javascript/#carousel>`__
 
 .. _carouselHowToUse:
 
 利用方法(slick)
 ------------------------------------------------
+
+.. warning::
+
+   ブラウザによっては初期表示時に一瞬レイアウトが崩れて(カルーセル内のコンテンツが縦に並んで)見える事がある。
+   レイアウト崩れが許容できない場合、カルーセル部分に該当するdivタグを初期状態では表示させないようにし、
+   slick.jsの読み込み完了後に該当のdivタグを表示することで、縦に並ぶ瞬間を見えなくするなどの対処( :ref:`carouselLayout` を参照 )を行う必要がある。
+   しかし、初期表示時にカルーセル内のコンテンツが一瞬見えなくなるため、それらが許容できない場合、別のライブラリを検討する必要がある。
 
 .. _carouselBasic:
 
@@ -62,8 +69,8 @@
        <title>カルーセル</title>
 
        <!-- (1) -->
-       <link rel="stylesheet" href="../lib/vendor/slick/1.6.0/slick.css" />
-       <link rel="stylesheet" href="../lib/vendor/slick/1.6.0/slick-theme.css" />
+       <link rel="stylesheet" href="../lib/vendor/slick/1.8.1/slick.css" />
+       <link rel="stylesheet" href="../lib/vendor/slick/1.8.1/slick-theme.css" />
        <!-- (2) -->
        <link rel="stylesheet" href="./css/carousel-custom.css" />
 
@@ -88,8 +95,8 @@
        </div>
 
        <!-- (3) -->
-       <script src="../lib/vendor/jquery/1.11.1/jquery-1.11.1.min.js"></script>
-       <script src="../lib/vendor/slick/1.6.0/slick.js"></script>
+       <script src="../lib/vendor/jquery/3.3.1/jquery.min.js"></script>
+       <script src="../lib/vendor/slick/1.8.1/slick.js"></script>
        <script src="./js/carousel-basic.js"></script>
      </body>
 
@@ -287,6 +294,92 @@
    slickライブラリにはここで記載した他にもコンテンツのlazy loadやレスポンシブ対応などの様々なオプションが用意されている。
    詳しくは\ `slickライブラリ公式サイト\ <http://kenwheeler.github.io/slick/>`__\ を参照すること。
 
+.. _carouselLayout:
+
+初期表示時のレイアウト崩れの低減について
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+初期表示時にカルーセル内のコンテンツが縦に並んで見えるのを防止する場合、
+:ref:`carouselBasic` のHTMLサンプルの例では、次のような対処①または②を実施する。
+
+①display属性の利用
+
+.. code-block:: javascript
+
+  /* carousel-custom.css */
+  
+  div.carousel-basic{
+    /* (1) */
+    display: none;
+  }
+
+.. code-block:: javascript
+
+   // carousel-basic.js
+
+   'use strict';
+
+   $(function () {
+     // (2)
+     $('div.carousel-basic').show( );
+     
+     // 中略
+   });
+
+.. tabularcolumns:: |p{0.10\linewidth}|p{0.80\linewidth}|
+.. list-table::
+    :header-rows: 1
+    :widths: 10 80
+
+    * - 項番
+      - 説明
+    * - | (1)
+      - | 初期状態では、カルーセル内のコンテンツをdisplay属性で非表示にする
+    * - | (2)
+      - | DOM構成完了後に、show( )でカルーセル内のコンテンツを表示する。
+
+.. note::
+
+   誤ったdivタグに対して display: none; を指定すると、
+   非表示に位置ずれが発生するため、適切なdivタグに設定すること。
+
+②visibility属性の利用
+
+.. code-block:: javascript
+
+  /* carousel-custom.css */
+  
+  .sliderP {
+    /* 中略 */
+    /* (1) */
+    visibility: hidden;
+  }
+
+.. code-block:: javascript
+
+   // carousel-basic.js
+
+   'use strict';
+
+   $(function () {
+     // (2)
+     $('.sliderP').css({'visibility':'visible'});
+     
+     // 中略
+   });
+
+.. tabularcolumns:: |p{0.10\linewidth}|p{0.80\linewidth}|
+.. list-table::
+    :header-rows: 1
+    :widths: 10 80
+
+    * - 項番
+      - 説明
+    * - | (1)
+      - | 初期状態では、カルーセル内のコンテンツをvisibility属性で非表示にする
+    * - | (2)
+      - | DOM構成完了後に、visibility属性を変更しカルーセル内のコンテンツを表示する。
+
 .. _carouselHowToUse-bootstrap:
 
 利用方法(Bootstrap)
@@ -323,7 +416,7 @@
        <meta charset="utf-8">
        <title>マークアップ形式のカルーセル</title>
 
-       <link rel="stylesheet" href="../lib/vendor/bootstrap/3.2.0/css/bootstrap.min.css">
+       <link rel="stylesheet" href="../lib/vendor/bootstrap/3.3.7/css/bootstrap.min.css">
        <link rel="stylesheet" href="css/carousel.css">
      </head>
      <body>
@@ -381,8 +474,8 @@
          </div>
        </div>
 
-       <script src="../lib/vendor/jquery/1.11.1/jquery-1.11.1.min.js"></script>
-       <script src="../lib/vendor/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+       <script src="../lib/vendor/jquery/3.3.1/jquery.min.js"></script>
+       <script src="../lib/vendor/bootstrap/3.3.7/js/bootstrap.min.js"></script>
      </body>
    </html>
 
@@ -407,7 +500,7 @@
 | これは自動スライドの動作に影響する\ ``data-pause``\ 属性がデフォルトで\ ``hover``\ となっているためである。
 
 | 他にも、いくつかのオプションはオプション名に\ ``data-``\ というプレフィックスを追加することで設定できる。
-| オプションの詳細については\ `Bootstrapの公式サイト\ <http://getbootstrap.com/javascript/#carousel>`__\ を参照すること。
+| オプションの詳細については\ `Bootstrapの公式サイト\ <https://getbootstrap.com/docs/3.3/javascript/#carousel>`__\ を参照すること。
 
 基本的な使い方(JavaScript形式)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -423,7 +516,7 @@
        <meta charset="utf-8">
        <title>JavaScript形式のカルーセル</title>
 
-       <link rel="stylesheet" href="../lib/vendor/bootstrap/3.2.0/css/bootstrap.min.css">
+       <link rel="stylesheet" href="../lib/vendor/bootstrap/3.3.7/css/bootstrap.min.css">
        <link rel="stylesheet" href="css/carousel.css">
      </head>
      <body>
@@ -474,8 +567,8 @@
        </div>
 
        <!-- (3) -->
-       <script src="../lib/vendor/jquery/1.11.1/jquery-1.11.1.min.js"></script>
-       <script src="../lib/vendor/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+       <script src="../lib/vendor/jquery/3.3.1/jquery.min.js"></script>
+       <script src="../lib/vendor/bootstrap/3.3.7/js/bootstrap.min.js"></script>
        <script src="js/carousel-javascript.js"></script>
      </body>
    </html>
@@ -536,4 +629,3 @@
 
 | なお、上記のサンプルはカルーセル上にマウスカーソルを移動すると自動スライドが停止する。
 | これは自動スライドの動作に影響する\ ``pause``\ オプションがデフォルトで\ ``hover``\ となっているためである。
-

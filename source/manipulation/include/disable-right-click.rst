@@ -30,7 +30,7 @@ HTMLでは、jQueryと、右クリックを無効化するために実装したJ
 
 .. code-block:: html
 
-    <script src="../lib/vendor/jquery/1.11.1/jquery-1.11.1.min.js"></script>
+    <script src="../lib/vendor/jquery/3.3.1/jquery.min.js"></script>
     <script src="js/disable-right-click.js"></script>
 
 JavaScript(disable-right-click.js)では、\ ``contextmenu``\ イベントハンドラ内で、\ ``event.preventDefault``\ を実行することで、ウェブブラウザの標準動作（この例ではコンテキストメニューの表示）を停止している。

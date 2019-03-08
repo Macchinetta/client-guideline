@@ -1,11 +1,12 @@
 <!DOCTYPE html>
+<!-- Copyright(c) 2018 NTT Corporation. -->
 <html>
   <head>
     <meta charset="utf-8">
     <title>基本的なボタン</title>
 
     <!-- jQuery UIのスタイルシートの読み込み -->
-    <link rel="stylesheet" href="../lib/vendor/jquery-ui/1.11.1/jquery-ui.min.css">
+    <link rel="stylesheet" href="../lib/vendor/jquery-ui/1.12.1/jquery-ui.min.css">
   </head>
   <body>
 
@@ -20,17 +21,17 @@
     <br>
     <div>
       <!-- type="checkbox"やtype="radio"の場合はラベルが必要 -->
-      <input type="checkbox" id="checkbox1" class="buttonClass" />
+      <input type="checkbox" id="checkbox1" class="checkClass" />
       <label for="checkbox1">CheckBox</label>
-      <input type="radio" id="radio1" class="buttonClass" name="radio" />
+      <input type="radio" id="radio1" class="checkClass" name="radio" />
       <label for="radio1">RadioButton1</label>
-      <input type="radio" id="radio2" class="buttonClass" name="radio" />
+      <input type="radio" id="radio2" class="checkClass" name="radio" />
       <label for="radio2">RadioButton2</label>
     </div>
 
     <!-- jQueryとjQuery UIのJavaScript、独自に実装したJavaScriptの読み込み -->
-    <script src="../lib/vendor/jquery/1.11.1/jquery-1.11.1.min.js"></script>
-    <script src="../lib/vendor/jquery-ui/1.11.1/jquery-ui.min.js"></script>
+    <script src="../lib/vendor/jquery/3.3.1/jquery.min.js"></script>
+    <script src="../lib/vendor/jquery-ui/1.12.1/jquery-ui.min.js"></script>
     <script src="js/button-basic.js"></script>
   </body>
 </html>

@@ -8,7 +8,10 @@ Deferredによる非同期処理制御
 概要
 --------------------------------------------
 
-| Deferredは、複数のコールバックを柔軟に扱うことができるユーティリティー機能である。Deferredを利用することで、非同期処理実装時に陥りがちな、コールバックが多段階でネストする状態を避け、ソースコードの可読性・保守性を保つことができる。
+| Deferredは、非同期処理のコールバックを柔軟に管理・実行する機能である。
+
+| 例えば、非同期処理完了時にコールバックを渡して次の非同期処理を呼び出すような実装を考えた場合、
+| 連続した非同期処理を実装すると、コールバックのネストが発生し、ソースコードの可読性が低下する。
 
    .. figure:: /images/deferred-nested-callback.png
       :alt: deferred-nested-callback
@@ -17,7 +20,7 @@ Deferredによる非同期処理制御
 
       **図: コールバックのネスト例**
 
-
+| ここでは、Deferredを利用した非同期処理のコールバックのネストの解消方法を解説しながら非同期処理の実装方法について紹介する。
 
 .. list-table::
    :header-rows: 1
@@ -28,17 +31,17 @@ Deferredによる非同期処理制御
      - |reference-page|
    * - jQuery
      - \-
-     - `Deferred Object | jQuery <http://api.jquery.com/category/deferred-object/>`_
+     - `Deferred Object | jQuery <https://api.jquery.com/category/deferred-object/>`_
 
 .. _event-serializationAdvantage:
 
-Deferredのメリット
+非同期処理のネスト解消
 --------------------------------------------
 
-| Deferredを利用すると、非同期処理をネストすることなく実装できる。
-| ここでは、非同期処理のネストをDeferredを利用して解消する方法を紹介する。
+| Deferredを利用し、非同期処理完了後の後続処理を\ `then`\ メソッドで記述する。
+| これにより、非同期処理の後続処理をネストせず実装できる。以下にその例を示す。
 
-| まず、Deferredを利用せずに非同期処理を実装したサンプルを示す。以下は1秒毎にメッセージを3つ出力する。
+| まず、Deferredを利用せず非同期処理を実装したサンプルを示す。以下は1秒毎にメッセージを3つ出力する。
 
 .. list-table::
    :header-rows: 1
@@ -100,7 +103,12 @@ Deferredのメリット
     // (6)
     outputMessage1()
     .then(outputMessage2)
-    .then(outputMessage3);
+    .then(outputMessage3)
+
+    // (7)
+    .catch(function () {
+      alert('failed!');
+    });
 
 .. tabularcolumns:: |p{0.10\linewidth}|p{0.80\linewidth}|
 .. list-table::
@@ -112,54 +120,53 @@ Deferredのメリット
     * - | (1)
       - | 1秒後にメッセージ「1」を出力する関数。
     * - | (2)
-      - | deferredオブジェクトを生成する。
+      - | Deferredオブジェクトを生成する。
     * - | (3)
-      - | 非同期処理内で最後にdeferredオブジェクトの状態を変更する。
-        | deferredオブジェクトの状態については後述する。
+      - | 非同期処理内で最後に非同期処理の実行状態を変更する。
+        | 非同期処理の実行状態については後述する。
     * - | (4)
-      - | promiseオブジェクトを返却する。
+      - | Promiseオブジェクトを返却する。
     * - | (5)
       - | メッセージ「2」「3」を出力する関数。
-        | \ `outputMessage1`\ とほぼ同一であるため、実装は省略する。
+        | \ `outputMessage1`\ と同様のため、実装は省略する。
     * - | (6)
-      - | \ `outputMessage1`\ を実行し、\ `then`\ で後続の非同期処理を連結する。
-        | \ `then`\ については後述する。
+      - | 非同期処理完了後の後続処理を\ `then`\ で設定する。
+        | 直前の非同期処理が正常に完了すると、\ `then`\ に設定されたコールバックが実行される。
+    * - | (7)
+      - | 各非同期処理のエラーハンドリングを\ `catch`\ で設定する。
+        | \ `catch`\ については :ref:`event-serializationThenCatch` で説明する。
 
-| Deferred適用前後を比較すると、前者はメッセージ数分ネストしているが、後者はネストが解消している。Deferred特有の実装が必要だが、ネストを浅く保つことができる。
-
-.. note::
-
-   \ `then`\ を実行すると、promiseオブジェクトにコールバックを設定し、新たなpromiseオブジェクトが返却される。\ `then`\ を繰り返すとpromiseオブジェクトが連鎖し、コールバックが直列的に実行される。
-
-      .. figure:: /images/deferred-then.png
-         :alt: deferred-then
-         :align: center
-         :scale: 50%
-
-         **図: promiseオブジェクトの連鎖とコールバック**
+| Deferred適用前後を比較すると、前者はメッセージ数分ネストしているが、後者はネストが解消している。Deferred特有の実装が必要だが、ネストを浅く保てる。
 
 .. note::
 
-   promiseオブジェクトは、deferredオブジェクトから状態を変更するメソッドを削除したサブセットである。状態を変更できる箇所を限定することで、意図せず後続処理が実行されることを抑止する。
+   Deferredオブジェクトを生成すると、内部で非同期処理の実行状態を管理するためのPromiseオブジェクトが生成される。このPromiseオブジェクトには次の3つの実行状態がある。
 
-.. _event-serializationHowToUse:
+   (1) pending   （初期状態　＝　実行中）
+   (2) fulfilled （成功状態　＝　正常終了）
+   (3) rejected  （失敗状態　＝　異常終了）
 
-Deferredの利用方法
+   DeferredオブジェクトはこのPromiseオブジェクトの状態を2つのメソッド \ `Deferred.resolve()`\ , \ `Deferred.reject()`\ によってそれぞれfulfilled （成功）, rejected （失敗）の状態に変更できる。
+
+   この状態変化に応じて、以下のように\ `then`\ や \ `catch`\ で設定されたコールバックが実行される仕組みとなっている。
+
+   * fulfilledの状態　→　\ `then(successCallback)`\ が実行
+   * rejectedの状態　 →　\ `catch(errorCallback)`\ が実行
+
+.. _event-serializationThenCatch:
+
+非同期処理のエラーハンドリング
 --------------------------------------------
 
-.. _event-serializationBranchThen:
-
-Deferredによるコールバックの切り替え（then）
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-| :ref:`event-serializationAdvantage` では、\ `then`\ で非同期処理を連結した。\ `then`\ は非同期処理の連結だけでなく、deferredオブジェクトの状態に応じてコールバックを切り替えることもできる。
+| ここでは非同期処理のエラーハンドリングの方法を説明する。
+| 非同期処理内にて、Deferredメソッドの\ `Deferred.reject()`\ で、後続処理を実行せずエラーハンドリングできる。以下にその例を示す。
 
 .. list-table::
    :header-rows: 1
    :widths: 40
 
    * - |sample|
-   * - `thenによるコールバックの切り替え <../samples/jquery/deferred-promise-branch-then.html>`_
+   * - `非同期処理のエラーハンドリング <../samples/jquery/deferred-promise-branch-then.html>`_
 
 .. code-block:: javascript
 
@@ -174,15 +181,15 @@ Deferredによるコールバックの切り替え（then）
 
       setTimeout(function () {
         var result = random();
-        $('#deferred-area').append('<p>Result is ' + result + '.</p>');
+        $('#deferred-area').append('<p>ランダム処理の結果は' + result + '.</p>');
         if (result) {
 
           // (2)
-          dfd.resolve();
+          dfd.resolve('resolve');
         } else {
 
           // (2)
-          dfd.reject();
+          dfd.reject('reject');
         }
       }, 1000);
 
@@ -190,17 +197,20 @@ Deferredによるコールバックの切り替え（then）
     };
 
     // (3)
-    var success = function () {
-      $('#deferred-area').append('<p>success</p>');
+    var success = function (arg) {
+      $('#deferred-area').append('<p>' + arg + 'が実行されました。成功です。</p>');
     };
 
     // (3)
-    var failure = function () {
-      $('#deferred-area').append('<p>failure</p>');
+    var failure = function (arg) {
+      $('#deferred-area').append('<p>' + arg + 'が実行されました。失敗です。</p>');
     };
 
+    async()
+    .then(success)
+
     // (4)
-    async().then(success, failure);
+    .catch(failure);
 
 .. tabularcolumns:: |p{0.10\linewidth}|p{0.80\linewidth}|
 .. list-table::
@@ -212,111 +222,50 @@ Deferredによるコールバックの切り替え（then）
     * - | (1)
       - | trueかfalseをランダムに返却する関数。
     * - | (2)
-      - | ランダム関数の結果に応じてdeferredオブジェクトの状態を変更する。
+      - | ランダム関数の結果に応じてPromiseオブジェクトの状態を変更する。引数には文字列を設定する。
     * - | (3)
-      - | メッセージを出力する関数。
+      - | \ `resolve`\ または\ `reject`\ から文字列を受け取り、メッセージを出力する関数。
     * - | (4)
-      - | 引数にコールバックを渡す。
+      - | Promiseオブジェクトの状態がrejectedになると、\ `catch`\ で設定したコールバックを実行する。
 
-| \ `then`\ に設定したコールバックは、deferredオブジェクトの状態に応じて実行される。対応関係を以下に示す。
+| 上記のように、非同期処理内でPromiseオブジェクトの状態をrejectedにすると、\ `then`\ のコールバックは実行されず、\ `catch`\ のコールバックのみが実行される。
 
-.. tabularcolumns:: |p{0.10\linewidth}|p{0.10\linewidth}|p{0.20\linewidth}|p{0.60\linewidth}|
-.. list-table::
-    :header-rows: 1
-    :widths: 20 20 60
-
-    * - メソッド
-      - 状態
-      - 実行するコールバック
-    * - | \ `resolve`\
-      - | resolved
-      - | 第1引数
-    * - | \ `reject`\
-      - | rejected
-      - | 第2引数
-
-| なお、resolvedに対応するコールバックが不要の場合はnullを設定すればよい。
-
-.. _event-serializationBranchDoneFail:
-
-Deferredによるコールバックの切り替え（done・fail）
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-|  ここでは、\ `then`\ と同様に\ `done`\ ・\ `fail`\ でコールバックを切り替える方法を紹介する。
-
-.. list-table::
-   :header-rows: 1
-   :widths: 40
-
-   * - |sample|
-   * - `done・failによるコールバックの切り替え <../samples/jquery/deferred-promise-branch-done.html>`_
-
-| JavaScriptは :ref:`event-serializationBranchThen` との差分のみ記述する。
-
-.. code-block:: javascript
-
-    // (1)
-    async()
-    .done(success)
-    .fail(failure);
-
-.. tabularcolumns:: |p{0.10\linewidth}|p{0.80\linewidth}|
-.. list-table::
-    :header-rows: 1
-    :widths: 10 80
-
-    * - 項番
-      - 説明
-    * - | (1)
-      - | 引数にコールバックを渡す。
-
-| deferredオブジェクトの状態と、実行するコールバックの対応関係を以下に示す。
-
-.. tabularcolumns:: |p{0.10\linewidth}|p{0.10\linewidth}|p{0.20\linewidth}|p{0.60\linewidth}|
-.. list-table::
-    :header-rows: 1
-    :widths: 20 20 60
-
-    * - メソッド
-      - 状態
-      - 実行するコールバック
-    * - | \ `resolve`\
-      - | resolved
-      - | \ `done`\ の引数
-    * - | \ `reject`\
-      - | rejected
-      - | \ `fail`\ の引数
+| \ `catch`\ はPromiseチェーン（\ `.then().then()`\ のように連結可能なPromiseオブジェクトのメソッドのこと。チェーンとも呼ぶ。）の最後に置くことが基本だが、\ `.then().catch().then().catch()`\ とすると、各非同期処理ごとのエラーハンドリングもできる。
+| エラーハンドリングのみを設定したい場合は、\ `async().catch()`\ とすればよい。
 
 .. note::
 
-   \ `done`\ ・\ `fail`\ を実行すると、promiseオブジェクトにコールバックを設定し、同一のpromiseオブジェクトが返却される。\ `done`\ ・\ `fail`\ を繰り返すと1つのpromiseオブジェクトに複数のコールバックが積み上げられ、ほぼ同時に実行される。\ `then`\ と挙動が異なる点に注意すること。
-
-      .. figure:: /images/deferred-done-fail.png
-         :alt: deferred-done
-         :align: center
-         :scale: 50%
-
-         **図: promiseオブジェクトとコールバック**
+   \ `resolve`\ と\ `reject`\ は引数を設定でき、それぞれ\ `then`\ と\ `catch`\ のコールバックで受け取れる。
 
 .. note::
 
-   \ `then`\ ・\ `done`\ ・\ `fail`\ の他に\ `always`\ がある。\ `always`\ はresolved・rejectedのどちらの状態でも実行される。
+   \ `catch`\ をチェーンしない場合、\ `then`\ のコールバック内部で発生した例外を\ `then`\ の外側で捕捉できない問題が発生する。
+
+   `jQuery公式のUpgradeGuide\ <https://jquery.com/upgrade-guide/3.0/#callback-exit>`__\ では **「.catch()をPromiseチェーンの最後に追加することを強く推奨」** としている。
+
+
+.. warning::
+
+  \ `then`\ と \ `catch`\ の他に \ `done`\ と \ `fail`\ による後続処理やエラーハンドリングの方法もあるが、本ガイドラインでは以下の理由により\ `done`\ と \ `fail`\ の利用を非推奨としている。
+
+  * Promise標準のPromises/A+、ES6に準拠しておらず、後方互換性を保つために古い挙動を保持していることから今後非推奨となる可能性がある。
 
 .. _event-serializationParallel:
 
-非同期処理の並列連結（when）
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+非同期処理の待ち合わせ
+--------------------------------------------
 
-| ここでは、非同期処理を並列的に連結する方法を紹介する。\ `when`\ は、複数の非同期処理を並列に実行し、結果に応じてコールバックを切り替えることができる。
+| ここでは、非同期処理を並列的に実行し、各非同期処理の完了を待ち合わせる方法を紹介する。
+| \ `when`\ は、複数の非同期処理を並列に実行できるメソッドであり、\ `then`\ をチェーンさせることで各非同期処理の完了を待ち合わせることができる。以下にその例を示す。
 
 .. list-table::
    :header-rows: 1
    :widths: 40
 
    * - |sample|
-   * - `非同期処理の並列連結 <../samples/jquery/deferred-promise-parallel.html>`_
+   * - `非同期処理の待ち合わせ <../samples/jquery/deferred-promise-parallel.html>`_
 
-| JavaScriptは、非同期処理を3つ用意し、\ `when`\ の引数に設定する。
+| ここでは、並列実行する非同期処理を3つ用意し、\ `when`\ の引数に設定する。
 
 .. code-block:: javascript
 
@@ -326,7 +275,7 @@ Deferredによるコールバックの切り替え（done・fail）
       var dfd = new $.Deferred();
 
       setTimeout(function () {
-        $('#deferred-area').append('<p>functionA has ended.</p>');
+        $('#deferred-area').append('<p>Function A が終了しました</p>');
         dfd.resolve();
       }, 1000);
       return dfd.promise();
@@ -344,12 +293,15 @@ Deferredによるコールバックの切り替え（done・fail）
 
     // (3)
     var outputMessage = function () {
-      $('#deferred-area').append('<p>All of the function has ended.</p>');
+      $('#deferred-area').append('<p>全ての処理が終了しました</p>');
     };
 
     // (4)
     $.when(asyncFuncA(), asyncFuncB(), asyncFuncC())
-    .then(outputMessage);
+    .then(outputMessage)
+    .catch(function () {
+      alert('failed!');
+    });
 
 .. tabularcolumns:: |p{0.10\linewidth}|p{0.80\linewidth}|
 .. list-table::
@@ -362,71 +314,93 @@ Deferredによるコールバックの切り替え（done・fail）
       - | 非同期処理終了後にメッセージを出力する関数。
     * - | (2)
       - | 非同期処理終了後にメッセージを出力する関数。
-        | \ `asyncFuncA`\ と同様であるため、実装は省略。
+        | \ `asyncFuncA`\ と同様のため、実装は省略する。
     * - | (3)
-      - | 全ての処理が完了後にメッセージを出力する関数。
+      - | メッセージを出力する関数。
     * - | (4)
-      - | 非同期処理からpromiseオブジェクトを受け取る。
-        | \ `then`\ の引数にメッセージ出力処理を設定する。
+      - | 各非同期処理完了後の後続処理を\ `then`\ で設定する。
 
-| 上記の通り実装すると、各非同期処理の完了を待って\ `then`\ のコールバックが実行される。
+| 上記の通り実装すると、各非同期処理の完了を待って\ `then`\ で設定したコールバックが実行される。
 
 .. note::
 
-   \ `when`\ に複数の非同期処理を渡すと、pendingの状態を持つpromiseオブジェクトが返却される。
-   promiseオブジェクトは各非同期処理の状態を管理しており、全ての非同期処理がresolvedになるか、1つでもrejectedになると\ `then`\ のコールバックを実行する。
+   \ `when`\ に複数の非同期処理を渡すと、pendingの状態を持つPromiseオブジェクトが返却される。Promiseオブジェクトは各非同期処理の状態を管理しており、全ての非同期処理がfulfilledになると\ `then`\ で設定したコールバックを実行する。
 
-   なお、後者の場合は実行中の非同期処理の完了を待ったり、中断することなくコールバックの実行に移る。必要に応じて中断処理などを実装すること。
+   ただし、いずれかの非同期処理の状態が1つでもrejectedになると、実行中の非同期処理の完了を待たず、\ `catch`\ で設定したコールバックが実行される。その際、 **実行中の非同期処理が中断されない** ことに注意が必要である。
+
 .. _event-serializationHowToExtend:
 
-応用方法
+非同期通信へのDeferred適用
 --------------------------------------------
 
-.. _event-serializationHowToReuseAjax:
+| 非同期処理は、サーバもしくは外部ファイルの情報を非同期通信で取得した後、後続処理を実施したい場面で利用されることが想定される。ここでは非同期通信にDeferredを適用したサンプルを紹介する。
 
-Ajaxの再利用
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-| \ `ajax`\ は、非同期通信完了後にコールバックを実行できる。コールバックに業務処理を設定した場合、それらが密に結合される。Deferredを利用すると、非同期通信とコールバックの結合を疎にし、非同期通信のみ再利用することができる。
+| Deferredを非同期通信の実装に適用すると以下の効果が得られる。
+| 　(1) 連続した非同期処理の多段階ネストを解消
+| 　(2) 非同期通信処理の共通化でコードの再利用性向上
+| 以下にその例を示す。
 
 .. list-table::
    :header-rows: 1
    :widths: 40
 
    * - |sample|
-   * - `Ajaxの再利用 <../samples/jquery/deferred-promise-ajax.html>`_
+   * - `非同期通信へのDeferred適用 <../samples/jquery/deferred-promise-ajax.html>`_
 
 .. code-block:: javascript
 
-    var doAjax = function () {
+    var doAjax = function (path) {
 
       var dfd = new $.Deferred();
 
       // (1)
       $.ajax({
-        url : 'js/deferred-promise-sleep.js',
-        dataType : 'script'
+        'type' : 'GET',
+        'url' : path,
+        'dataType' : 'json'
+      })
 
       // (2)
-      }).then(dfd.resolve);
+      .then(function (data) {
+        $('#deferred-area').append('<p>' + path + 'の取得に成功しました。</p>');
+        dfd.resolve([path, data]);
+      })
+
+      // (3)
+      .catch(function () {
+        $('#deferred-area').append('<p>' + path + 'の取得に失敗しました。</p>');
+        dfd.reject(path);
+      });
       return dfd.promise();
     };
 
-    // (3)
-    var funcA = function () {
-      $('#deferred-area').append('<p>Do function A.</p>');
+    // (4)
+    var showData = function (data) {
+      for (var n = 0, len = data.length; n < len; n++) {
+        $('#deferred-area').append(data[n].text + ' : ' + data[n].value + '<br />');
+      }
     };
 
-    // (3)
-    var funcB = function () {
-      $('#deferred-area').append('<p>Do function B.</p>');
+    // (5)
+    var successCallback = function (array) {
+      $('#deferred-area').append('<p>' + array[0] + 'の読み込みが成功しました。</p>');
+      showData(array[1]);
     };
 
-    // (4)
-    doAjax().then(funcA);
+    // (6)
+    var errorCallback = function (path) {
+      $('#deferred-area').append('<p>' + path + 'の読み込みに失敗しました。</p>');
+    };
 
-    // (4)
-    doAjax().then(funcB);
+    // (7)
+    doAjax('data/dataA.json')
+    .then(successCallback)
+    .catch(errorCallback);
+
+    // (7)
+    doAjax('data/dataB_dummy.json')
+    .then(successCallback)
+    .catch(errorCallback);
 
 .. tabularcolumns:: |p{0.10\linewidth}|p{0.80\linewidth}|
 .. list-table::
@@ -438,15 +412,26 @@ Ajaxの再利用
     * - | (1)
       - | 非同期通信を実行する。
     * - | (2)
-      - | 非同期処理終了後に状態を変更する。
+      - | 非同期通信が成功した場合に以下を実行する。
+        | 1. メッセージを出力する。
+        | 2. \ `resolve`\ の引数にファイルパスとjsonデータを含む配列を設定し実行する。
     * - | (3)
-      - | メッセージを出力する関数。
+      - | 非同期通信が失敗した場合に以下を実行する。
+        | 1. メッセージを出力する。
+        | 2. \ `reject`\ の引数にファイルパスを設定し実行する。
     * - | (4)
-      - | 非同期通信を実行し、\ `then`\ の引数にメッセージを出力する関数を設定する。
+      - | 非同期通信で取得したjsonデータを画面に出力する関数。引数にjsonデータを受け取る。
+    * - | (5)
+      - | メッセージとリストを出力する関数。引数にファイルパスとjsonデータを含む配列を受け取る。
+    * - | (6)
+      - | メッセージを出力する関数。引数にファイルパスを受け取る。
+    * - | (7)
+      - | 引数にファイルパスを設定し、非同期処理を実行する。
+        | 非同期通信失敗時の挙動が確認できるよう、\ `dataB_dummy.json`\ は存在しないファイルパスを指定する。
 
-| 上記のサンプルを実行すると、非同期通信は同一だが、異なるメッセージを出力することができる。AjaxとDeferredを組み合わせることで、再利用性を高めることができる。
+| 上記のサンプルでは、Deferredを適用した非同期通信処理を共通化し、記述するソースコードを削減している。
+| このように非同期通信にDeferredを適用すると、多段階ネスト解消とコードの再利用性が向上する。
 
 .. note::
 
-   サンプルでは、\ `ajax`\ に\ `then`\ を実装している。
-   \ `ajax`\ は、jQuery XMLHttpRequest（以降、「jqXHR」とする。）を返却する。jqXHRはpromiseオブジェクトのインターフェースを実装しており、サンプルのように\ `then`\ や\ `done`\ ・\ `fail`\ を実行することが可能である。詳細は `jQuery公式ウェブサイトのリファレンス\ <http://jquery.com/>`__\ を参照すること。
+   \ `ajax`\ はThe jQuery XMLHttpRequest （以下、jqXHRとする）オブジェクトを返却する。jqXHRはPromiseインターフェースを実装しているため、\ `then`\ や\ `catch`\ をチェーンさせることができる。\ `ajax`\ の詳細な利用方法については :ref:`ajaxGearingServer` を参照すること。

@@ -20,9 +20,9 @@
     * - jQuery UI
       - * `ドラッグアンドドロップ <../samples/jquery-ui/drag-and-drop.html>`_
         * `リストでのドラッグアンドドロップ <../samples/jquery-ui/drag-and-drop-sortable.html>`_
-      - * `draggable | jQuery UI <http://jqueryui.com/draggable/>`_
-        * `droppable | jQuery UI <http://jqueryui.com/droppable/>`_
-        * `sortable | jQuery UI <http://jqueryui.com/sortable/>`_
+      - * `draggable | jQuery UI <https://jqueryui.com/draggable/>`_
+        * `droppable | jQuery UI <https://jqueryui.com/droppable/>`_
+        * `sortable | jQuery UI <https://jqueryui.com/sortable/>`_
 
 .. _drag-and-drop-howtouse:
 
@@ -108,7 +108,7 @@ JavaScript(drag-and-drop.js)では、次の処理を行っている。
       - | ドラッグ先に対し、droppableメソッドを実行する。
 
 上記のサンプルでは\ ``draggable``\ メソッドのプロパティにマウスカーソルの形状を指定する\ ``cursor``\ や、ドラッグの際の動作を設定する\ ``helper``\ を使用している。
-これらの詳細について知りたい場合は、`jQuery UI 公式ウェブサイトのリファレンス\ <http://api.jqueryui.com/draggable/>`__\ を参照すること。
+これらの詳細について知りたい場合は、`jQuery UI 公式ウェブサイトのリファレンス\ <https://api.jqueryui.com/draggable/>`__\ を参照すること。
 
 
 リストでのドラッグアンドドロップ
@@ -180,4 +180,4 @@ JavaScript(drag-and-drop-sortable.js)では、次の処理を行っている。
       - | ドラッグアンドドロップをし合うリストグループのセレクタを\ ``connectWith``\ プロパティに設定する。
 
 別のリスト間で相互に入れ替えられるようにする場合は、\ ``connectWith``\ プロパティに対象のリストのセレクタを設定する。
-他にも様々なプロパティが提供されている。これらの詳細について知りたい場合は、 `jQuery UI 公式ウェブサイトのリファレンス\ <http://api.jqueryui.com/sortable/>`__\ を参照すること。
+他にも様々なプロパティが提供されている。これらの詳細について知りたい場合は、 `jQuery UI 公式ウェブサイトのリファレンス\ <https://api.jqueryui.com/sortable/>`__\ を参照すること。

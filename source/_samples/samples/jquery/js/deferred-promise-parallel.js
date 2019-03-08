@@ -1,3 +1,7 @@
+/*
+ *
+ * Copyright(c) 2018 NTT Corporation.
+ */
 // deferred-promise-parallel.js
 'use strict';
 
@@ -69,6 +73,9 @@ $(function () {
     $.when(asyncFuncA(), asyncFuncB(), asyncFuncC())
 
     // コールバックを設定する
-    .then(outputMessage);
+    .then(outputMessage)
+    .catch(function () {
+      alert('failed!');
+    });
   });
 });

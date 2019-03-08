@@ -32,7 +32,7 @@ HTMLでは、jQueryと、二度押しを無効化するために実装したJava
 
 .. code-block:: html
 
-    <script src="../lib/vendor/jquery/1.11.1/jquery-1.11.1.min.js"></script>
+    <script src="../lib/vendor/jquery/3.3.1/jquery.min.js"></script>
     <script src="js/prevent-continuous-click.js"></script>
 
 JavaScript(prevent-continuous-click.js)は、次のように実装する。
@@ -59,9 +59,18 @@ JavaScript(prevent-continuous-click.js)は、次のように実装する。
         url : $form.attr('action'),
         type : $form.attr('method'),
         data : $form.serialize()
+      })
+
+      .then(function () {
+        console.log("成功")
+      })
+
+      .catch(function() {
+        console.log("失敗")
+      })
 
       // (3)
-      }).always(function () {
+      .then(function() {
         setTimeout(function () {
 
           // (4)
@@ -96,11 +105,11 @@ JavaScript(prevent-continuous-click.js)は、次のように実装する。
 .. note::
   本サンプルでは、通信失敗時や通信中にブラウザの停止ボタンを押下した場合などを考慮していない。
 
-  通信の成功(\ ``done``\ )、失敗(\ ``fail``\ )にかかわらず、常にボタンが再活性化する。(\ ``always``\ )
+  通信の成功(\ ``then``\ )、失敗(\ ``catch``\ )にかかわらず、常にボタンが再活性化する。
 
   実際のシステムでは業務要件に合わせて、通信成功／通信失敗、通信終了時それぞれで、活性化する／常に活性化しないなど処理を実装すること。
 
-  \ ``done``\ 、\ ``fail``\ 、\ ``always``\ の扱いなど、Ajax通信については\ :ref:`asynchronous-processing`\ と\ :ref:`ajaxGearingServer`\ も参照すること。
+  \ ``then``\ 、\ ``catch``\  の扱いなど、Ajax通信については\ :ref:`asynchronous-processing`\ と\ :ref:`ajaxGearingServer`\ も参照すること。
 
 .. _prevent-continuous-click-howtoextend:
 
@@ -115,7 +124,7 @@ JavaScript(prevent-continuous-click.js)は、次のように実装する。
 同一フォーム内に複数のボタンを設置する場合、遷移先情報をHTTPパラメータに設定し実現することが多い。
 jQueryの\ `submit`\ イベントハンドラ内では、本来HTTPパラメータにセットされるはずだった情報が設定されないため、実装を追加する必要がある。
 
-なお、以下のサンプルはMacchinettaオンライン版と連携することを前提としている。
+なお、以下のサンプルは |online-framework-name| と連携することを前提としている。
 
 - HTML
 
@@ -175,7 +184,7 @@ jQueryの\ `submit`\ イベントハンドラ内では、本来HTTPパラメー�
       - | 押下されたボタンのname属性を取得する関数を定義する。
 
 .. note::
-   サーバサイドの複数ボタンの設置についてはMacchinettaオンライン版 開発ガイドライン ( \ http://macchinetta.github.io/server/guideline/\ の Macchinetta Server Framework (1.x) Development Guideline ) を参照すること。
+   サーバサイドの複数ボタンの設置については |online-framework-name| ( \ https://macchinetta.github.io/server-guideline/current/ja/\ の Macchinetta Server Framework (1.x) Development Guideline ) を参照すること。
 
 また、非同期通信用のボタン等で個別に１ボタンずつ二度押しを無効化したい場合はjQueryの\ `click`\ イベントハンドラ内でボタン毎に制御を実装する。
 例えば以下のようなHTMLの場合、
@@ -270,7 +279,17 @@ jQueryの\ `submit`\ イベントハンドラ内では、本来HTTPパラメー�
             url: contextPath + '/api/v1/dummyServiceForLoading',
             type: 'POST',
             dataType: 'json',
-          }).always(function() {
+          })
+
+          .then(function () {
+            console.log("成功")
+          })
+
+          .catch(function() {
+            console.log("失敗")
+          })
+
+          .then(function() {
 
             // (5)
             $('#executeService').prop('disabled', false);
@@ -305,11 +324,11 @@ jQueryの\ `submit`\ イベントハンドラ内では、本来HTTPパラメー�
 | このサンプルではボタン押下のタイミングでAjax処理を実行する。
 | Ajax処理実行の直前でボタンを非活性にしている。これは２度押しによる不具合を回避するために設定する。
 | CSSスタイルに\ `display: none;`\ を指定し非表示にしていた領域をjQueryの\ `fadeIn`\ メソッドを使用することで表示させる。
-| Ajax処理完了後は\ `always`\ メソッドを使用することで、処理結果が\ `done`\ ・\ `fail`\ のどちらの場合でも実行されるように実装する。
+| Ajax処理完了後は\ `then`\ メソッドを使用することで、処理結果が成功(\ `then`\ )、失敗（\ `catch`\） のどちらの場合でも実行されるように実装する。
 
 .. note::
 
-   Ajaxを用いたサーバとの非同期通信の詳細についてはMacchinettaオンライン版 開発ガイドライン ( \ http://macchinetta.github.io/guideline/\ の Macchinetta Server Framework (1.x) Development Guideline ) を参照すること。
+   Ajaxを用いたサーバとの非同期通信の詳細については |online-framework-name| ( \ https://macchinetta.github.io/server-guideline/current/ja/\ の Macchinetta Server Framework (1.x) Development Guideline ) を参照すること。
 
 .. _prevent-continuous-click-howtoextend-alinktag:
 

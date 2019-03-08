@@ -19,7 +19,7 @@
      - |reference-page|
    * - SlickGrid
      - `SlickGridによる行の並び替えサンプル <../samples/slickgrid/move-row.html>`_
-     - `SlickGrid Wiki <https://github.com/mleibman/SlickGrid/wiki>`_
+     - `SlickGrid Wiki <https://github.com/6pac/SlickGrid/wiki>`_
 
 .. _move-row-howtouse:
 

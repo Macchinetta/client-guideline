@@ -19,7 +19,7 @@
      - |reference-page|
    * - SlickGrid
      - `SlickGridによるコピーアンドペースト編集サンプル <../samples/slickgrid/copy-and-paste.html>`_
-     - `SlickGrid Wiki <https://github.com/mleibman/SlickGrid/wiki>`_
+     - `SlickGrid Wiki <https://github.com/6pac/SlickGrid/wiki>`_
 
 .. _copy-and-paste-howtouse:
 

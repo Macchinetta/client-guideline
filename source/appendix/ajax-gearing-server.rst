@@ -10,7 +10,7 @@ Ajaxを利用した連携
 
 | ここでは、jQueryのajaxとMacchinetta Server Framework (1.x)を連携させる方法を紹介する。
 
-| クライアント側の実装に絞って説明するが、サーバ側の設定や実装も必要になる。詳細はMacchinettaオンライン版 開発ガイドライン ( http://macchinetta.github.io/server/guideline/の Macchinetta Server Framework (1.x) Development Guideline ) の「Ajax」節と「CSRF対策」節を参照すること。
+| クライアント側の実装に絞って説明するが、サーバ側の設定や実装も必要になる。詳細は |online-framework-name|  ( https://macchinetta.github.io/server-guideline/current/ja/の Macchinetta Server Framework (1.x) Development Guideline ) の「Ajax」節と「CSRF対策」節を参照すること。
 
 .. list-table::
    :header-rows: 1
@@ -21,7 +21,7 @@ Ajaxを利用した連携
      - |reference-page|
    * - jQuery
      - \-
-     - `Ajax | jQuery <http://api.jquery.com/category/ajax/>`_
+     - `Ajax | jQuery <https://api.jquery.com/category/ajax/>`_
 
 .. _serverGearingHowToUse:
 
@@ -69,7 +69,7 @@ GETを使ったサーバ連携
           <br /><label>Error： <span id="error"></span></label>
       </form>
       <!-- JavaScript -->
-      <script src="${pageContext.request.contextPath}/resources/app/vendor/jquery/jquery-1.11.1.min.js"></script>
+      <script src="${pageContext.request.contextPath}/resources/app/vendor/jquery/jquery.min.js"></script>
       <script src="${pageContext.request.contextPath}/resources/app/vendor/jquery-ui/jquery-ui.min.js"></script>
       <script src="${pageContext.request.contextPath}/resources/app/js/ajax.js"></script>
     </body>
@@ -106,7 +106,6 @@ GETを使ったサーバ連携
 
     // (2)
     $('#num1,#num2').on('change', function () {
-
       result.html('');
       error.html('');
 
@@ -121,15 +120,14 @@ GETを使ったサーバ連携
         timeout : 5000
 
       // (5)
-      }).done(function(data) {
+      }).then(function(data) {
         result.html(data.result);
         return false;
 
       // (6)
-      }).fail(function(jqXHR, textStatus, errorThrown) {
+      }).catch(function(jqXHR, textStatus, errorThrown) {
         if (textStatus === 'timeout') {
           error.html(errorThrown);
-
         }
         if (jqXHR.status === 400) {
           error.html(errorThrown);
@@ -156,7 +154,7 @@ GETを使ったサーバ連携
 
           .. note::
 
-             \ ``$.ajax``\ メソッドはThe jQuery XMLHttpRequest （以下、jqXHRとする）オブジェクトを返却する。jqXHR オブジェクトはPromiseインターフェースを実装しているため、\ ``done``\ メソッド・\ ``fail``\ メソッドが使用できる。Promise（とそのスーパーセットであるDeferred）については :ref:`event-serialization` や `jQuery公式ウェブサイトのリファレンス\ <https://api.jquery.com/category/deferred-object/>`__\ を参照すること。
+             \ ``$.ajax``\ メソッドはThe jQuery XMLHttpRequest （以下、jqXHRとする）オブジェクトを返却する。jqXHR オブジェクトはPromiseインターフェースを実装しているため、\ ``then``\ /\ ``catch``\ メソッドが使用できる。Promise（とそのスーパーセットであるDeferred）については :ref:`event-serialization` や `jQuery公式ウェブサイトのリファレンス\ <https://api.jquery.com/category/deferred-object/>`__\ を参照すること。
 
     * - | (4)
       - | \ ``$.serialize``\ メソッドを実行し、フォームデータをURLエンコードする。
@@ -178,7 +176,10 @@ GETを使ったサーバ連携
         | HTTPステータスコードは\ ``jqXHR.status``\ から取得できる。
 
 .. note::
-   Ajaxの処理結果に応じて実行されるコールバック関数は従来は\ `success`\ ・\ `error`\ ・\ `complete`\ であったが、jQuery1.8から非推奨となり\ `done`\ ・\ `fail`\ ・\ `always`\ に置き換えられた。
+
+   **【クロスドメインのscript取得について】**
+
+   \ ``$.ajax``\ で他のドメインからscriptを取得する場合、\ ``dataType: 'script'``\ の指定が **必須** となるため注意すること。
 
 .. _ajaxGearingServerUsingPost:
 
