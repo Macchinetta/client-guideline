@@ -19,7 +19,7 @@
      - |reference-page|
    * - SlickGrid
      - `SlickGridによるヘッダを固定したデータ行のスクロールサンプル <../samples/slickgrid/default.html>`_
-     - `SlickGrid Wiki <https://github.com/mleibman/SlickGrid/wiki>`_
+     - `SlickGrid Wiki <https://github.com/6pac/SlickGrid/wiki>`_
    * - tablesorter
      - `tablesorterによるヘッダを固定したデータ行のスクロールサンプル <../samples/tablesorter/fixed-header.html>`_
      - `jQuery plugin: Tablesorter 2.0 - Scroller Widget <https://mottie.github.io/tablesorter/docs/example-widget-scroller.html>`_
@@ -54,4 +54,4 @@ JavaScript(fixed-header.js)では、テーブル要素に対し\ ``tablesorter``
 .. literalinclude:: /_samples/samples/tablesorter/js/fixed-header.js
    :language: javascript
 
-\ ``widgetOptions``\ プロパティでテーブル要素の高さを設定できる\ ``scroller_height``\ などオプションが提供されている。これらの詳細について知りたい場合は、 `tablesorterの公式ウェブサイトのリファレンス <http://mottie.github.io/tablesorter/docs/example-widget-scroller.html>`__ を参照すること。
+\ ``widgetOptions``\ プロパティでテーブル要素の高さを設定できる\ ``scroller_height``\ などオプションが提供されている。これらの詳細について知りたい場合は、 `tablesorterの公式ウェブサイトのリファレンス <https://mottie.github.io/tablesorter/docs/example-widget-scroller.html>`__ を参照すること。

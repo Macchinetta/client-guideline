@@ -27,7 +27,7 @@
      - |reference-page|
    * - jQuery UI
      - `モードレスダイアログ表示 <../samples/jquery-ui/modeless.html>`_
-     - `Dialog | jQuery UI <http://jqueryui.com/dialog/>`_
+     - `Dialog | jQuery UI <https://jqueryui.com/dialog/>`_
 
 .. _modeless-dialog-howtouse:
 
@@ -98,4 +98,4 @@ JavaScript(modeless.js)は以下のように実装する。
     * - | (3)
       - | ボタンのクリックでモードレスダイアログを起動するイベントを設定する。
 
-上記のサンプルでは\ ``dialog``\メソッドの実行の際に、タイトルを設定する\ ``title``\プロパティを設定しているが、他にも多くのプロパティが提供されている。これらの詳細について知りたい場合は、\ `jQuery UI公式ウェブサイトのリファレンス <http://api.jqueryui.com/dialog/>`_\を参照すること。
+上記のサンプルでは\ ``dialog``\メソッドの実行の際に、タイトルを設定する\ ``title``\プロパティを設定しているが、他にも多くのプロパティが提供されている。これらの詳細について知りたい場合は、\ `jQuery UI公式ウェブサイトのリファレンス <https://api.jqueryui.com/dialog/>`_\を参照すること。

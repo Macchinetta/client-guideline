@@ -19,7 +19,8 @@
      - |sample|
      - |reference-page|
    * - Parsley
-     - `入力値チェック <../samples/parsleyjs/validation.html>`_
+     - - `入力値チェック <../samples/parsleyjs/validation.html>`_
+       - `カスタムバリデータ <../samples/parsleyjs/custom-validation.html>`_
      - `Parsley - The ultimate documentation <http://parsleyjs.org/doc/index.html>`__
 
 .. note::
@@ -39,16 +40,17 @@
 HTMLでは、次の順番でJavaScriptを読み込む。
 
 1. jQuery
-2. Parsley拡張プラグイン (日付形式検証などの、拡張プラグインとして提供されている機能を使用する場合のみ)
-3. Parsley本体
-4. Parsleyメッセージ定義ファイル (指定しない場合メッセージは英語で出力される。サンプルでは未設定。)
+2. Parsley本体
+3. Parsley拡張プラグイン (日付形式検証などの、拡張プラグインとして提供されている機能を使用する場合のみ)
+4. Parsleyメッセージ定義ファイル (指定しない場合メッセージは英語で出力される。)
 5. 独自実装したJavaScript
 
 .. code-block:: html
 
-    <script src="../lib/vendor/jquery/1.11.1/jquery-1.11.1.min.js"></script>
-    <script src="../lib/vendor/parsleyjs/2.0.6/extra/validator/dateiso.js"></script>
-    <script src="../lib/vendor/parsleyjs/2.0.6/parsley.js"></script>
+    <script src="../lib/vendor/jquery/3.3.1/jquery.min.js"></script>
+    <script src="../lib/vendor/parsleyjs/2.8.1/parsley.min.js"></script>
+    <script src="../lib/vendor/parsleyjs/2.8.1/extra/validator/dateiso.js"></script>
+    <script src="../lib/vendor/parsleyjs/2.8.1/i18n/ja.js"></script>
     <script src="js/validation.js"></script>
 
 検証ルールを適用するためには、対象の\ ``input``\ に対して\ ``data-parsley-検証ルール名``\ という属性を指定する。次の例は、年齢フィールドが「入力必須」「正の整数値」「20以上」であることを検証する例である。
@@ -60,9 +62,9 @@ HTMLでは、次の順番でJavaScriptを読み込む。
                data-parsley-type="digits"
                data-parsley-min="20" data-parsley-min-message="未成年は登録できません。">
 
-検証エラー時のメッセージは、エラーとなった検証ルールのデフォルトメッセージが表示される ( 設定方法は :ref:`parsley-setting-default-messages` を参照) 。ただし、上の例にある\ ``data-parsley-min-message="can not register age under 20"``\ のように、\ ``検証ルール属性-message``\ 属性を用いることで、特定の検証ルールのみメッセージを変更できる。
+検証エラー時のメッセージは、エラーとなった検証ルールのデフォルトメッセージが表示される ( 設定方法は :ref:`parsley-setting-default-messages` を参照) 。ただし、上の例にある\ ``data-parsley-min-message="未成年は登録できません。"``\ のように、\ ``検証ルール属性-message``\ 属性を用いることで、特定の検証ルールのみメッセージを変更できる。
 
-その他の検証ルールを適用する属性として、以下が使用できる。
+その他の検証ルールとして、以下が使用できる。
 
 .. list-table::
    :header-rows: 1
@@ -163,7 +165,7 @@ JavaScript(validation.js)では、 入力値チェック対象となるフォー
     * - | (8)
       - | エラーメッセージを追加する要素を指定する。(文字列、jQueryオブジェクト、またはそれらを返す関数)
     * - | (9)
-      - | 実装しない場合(オプション未指定時)や\ ``undefined``\ を返すと、input要素の次に作られる。
+      - | エラーメッセージの表示位置を指定する。実装しない場合(オプション未指定時)や\ ``undefined``\ を返すと、input要素の次に作られる。
     * - | (10)
       - | エラーメッセージの親要素に用いるHTML文字列を指定する。
     * - | (11)
@@ -187,7 +189,7 @@ Parsleyの出力するデフォルトのエラーメッセージは英語であ�
    <script src="parsley.min.js"></script>
    <script src="i18n/ja.js"></script>
 
-複数のロケールに対応する場合には、次のように複数の言語のメッセージ定義を読み込んだ後、\ ``ParsleyValidator.setLocale``\ メソッドを用いて適用するロケールを指定する。
+複数のロケールに対応する場合には、次のように複数の言語のメッセージ定義を読み込んだ後、\ ``Parsley.setLocale``\ メソッドを用いて適用するロケールを指定する。
 
 .. code-block:: html
 
@@ -198,13 +200,13 @@ Parsleyの出力するデフォルトのエラーメッセージは英語であ�
    <script type="text/javascript">
      var locale = (navigator.language || navigator.userLanguage).substring(0, 2);
      try {
-       window.ParsleyValidator.setLocale(locale);
+       window.Parsley.setLocale(locale);
      } catch (e) {
-       window.ParsleyValidator.setLocale('en');
+       window.Parsley.setLocale('en');
      }
    </script>
 
-この例は、\ ``ParsleyValidator.setLocale``\ メソッドで指定するロケールをウェブブラウザの設定言語から取得して適用する例である。
+この例は、\ ``Parsley.setLocale``\ メソッドで指定するロケールをウェブブラウザの設定言語から取得して適用する例である。
 この例では 'en', 'fr', 'ja' が有効となり、ウェブブラウザから取得したロケールから選択される。
 
 .. _parsley-custom-validator:
@@ -212,72 +214,89 @@ Parsleyの出力するデフォルトのエラーメッセージは英語であ�
 カスタムバリデータの実装方法
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-独自の検証ルールとメッセージを追加するためには、Parsley本体の読み込み後に、\ ``ParsleyValidator.addValidator``\ メソッドおよび\ ``ParsleyValidator.addMessage``\ メソッドを使用する。
+独自の検証ルールとメッセージを追加するためには、Parsley本体の読み込み後に、\ ``Parsley.addValidator``\ メソッドを使用する。
 
 次の例は、指定した数値の倍数であることを検証する独自の検証ルール ``multipleof`` の実装および使用例である。
 
-Javascriptでは以下のように実装する。
-
-.. code-block:: javascript
-
-   window.ParsleyValidator
-     .addValidator('multipleof', function (value, requirement) {
-       return 0 === value % requirement;
-     }, 32)
-     .addMessage('en', 'multipleof', 'This value should be a multiple of %s')
-     .addMessage('ja', 'multipleof', '%s の倍数である必要があります。');
-
-HTMLは以下のようなinput要素を設置する。
+HTMLでは以下のようなinput要素を設置する。
 
 .. code-block:: html
 
    <input type="text" data-parsley-multipleof="3">
 
+独自の検証ルール名 ``multipleof`` に合わせた ``data-parsley-multipleof`` 属性に値を指定する。
 
-\ ``ParsleyValidator.addValidator``\ および\ ``ParsleyValidator.addMessage``\ メソッドのシグネチャは次のとおり。
+Javascriptでは以下のように実装する。
 
-.. js:function:: ParsleyValidator.addValidator(name, fn, priority)
-   :noindex:
+.. code-block:: javascript
 
-   :param String name: 検証ルール名
-   :param Function fn: 検証を実行する関数。2つの引数として、対象の\ ``input``\ 要素の値と、オプション (\ ``data-parsley-multipleof="3"``\ のように使用した場合は\ ``3``\ ) を受け取る。成功時は\ ``true``\ 、失敗時は\ ``false``\ を返すように実装する。
-   :param Number priority: 優先順位。値が大きいほど優先的に検証される。
+  // (1)
+  Parsley.addValidator('multipleof', {
 
-.. js:function:: ParsleyValidator.addMessage(locale, name, message)
-   :noindex:
+    // (2)
+    requirementType: 'number',
 
-   :param String locale: ロケール
-   :param String name: メッセージに対応させる検証ルール名
-   :param String message: メッセージ本文。\ ``%s``\ プレースホルダを用いることでオプション値を埋め込むことができる。
+    // (3)
+    validateNumber: function (value, requirement) {
+      return 0 === value % requirement;
+    },
 
+    // (4)
+    messages: {
+      en: 'This value should be a multiple of %s',
+      ja: '%s の倍数である必要があります。'
+    }
+  });
+
+.. tabularcolumns:: |p{0.10\linewidth}|p{0.80\linewidth}|
+.. list-table::
+    :header-rows: 1
+    :widths: 10 80
+
+    * - 項番
+      - 説明
+    * - | (1)
+      - | 第1引数に検証ルール名、第2引数に検証ルールのオブジェクトを指定した\ ``addValidator``\メソッドを使用する。
+    * - | (2)
+      - | 要求パラメータの型。カスタムバリデータが期待している要求パラメータ(上記例では\ ``data-parsley-multipleof="3"``\)の型を指定する。
+          \ ``string``\、\ ``integer``\、\ ``number``\、\ ``date``\、\ ``regexp``\、\ ``boolean``\が用意されており、これらの配列も利用できる。
+    * - | (3)
+      - | 検証を実行する関数で、入力値が期待する型に合わせて、\ ``validateString``\、\ ``validateNumber``\、\ ``validateDate``\、\ ``validateMultiple``\の中から少なくとも1つを指定する必要がある。
+          2つの引数として、対象の\ ``input``\ 要素の値と、オプション (\ ``data-parsley-multipleof="3"``\ のように使用した場合は\ ``3``\ ) を受け取る。成功時は\ ``true``\ 、失敗時は\ ``false``\ を返すように実装する。
+    * - | (4)
+      - | 検証エラー時に表示されるメッセージを設定する。
+          keyにロケール、valueにメッセージ本文となるObjectとなるよう設定する。メッセージ本文には\ ``%s``\ プレースホルダを用いることでオプション値を埋め込むことができる。
 
 .. note::
 
-   より高度な入力チェックの例として、サーバ通信を伴う入力値チェックがある。具体例の一つとして、ユーザ登録フォームの「ユーザID」が利用可能かどうかを検証するためサーバに問い合わせるといったケースが考えられる。
+   より高度な入力値チェックの例として、サーバ通信を伴う入力値チェックがある。具体例の一つとして、ユーザ登録フォームの「ユーザID」が利用可能かどうかを検証するためサーバに問い合わせるといったケースが考えられる。
 
    このような機能も、カスタムバリデータを実装することで実現できる。
 
      .. code-block:: javascript
 
-        window.ParsleyValidator
-          .addValidator('registerable',
+        Parsley.addValidator('registerable', {
+          requirementType: 'string',
 
-                       // (1)
-                       function (value) {
-                         var status = $.ajax({
-                           url: '/userid_available',
+          // (1)
+          validateString: function (value) {
+            var status = $.ajax({
+              url: '/userid_available',
 
-                           // (2)
-                           data: 'id=' + value,
+              // (2)
+              data: 'id=' + value,
 
-                           // (3)
-                           async: false
-                         }).status;
+              // (3)
+              async: false
+            }).status;
 
-                         // (4)
-                         return status !== 409;
-                       }, 1)
-          .addMessage('en', 'registerable', 'this USER ID is already used');
+            // (4)
+            return status !== 409;
+          },
+          messages: {
+            en: 'this USER ID is already used'
+          }
+        });
 
      .. tabularcolumns:: |p{0.10\linewidth}|p{0.80\linewidth}|
      .. list-table::
@@ -297,6 +316,7 @@ HTMLは以下のようなinput要素を設置する。
 
    検証を実行する関数内で結果を返却するため、\ ``$.ajax``\ の\ ``async``\ オプションを\ ``false``\ にすることで同期的に処理する必要がある。
 
-   なお、非同期で検証を行えるカスタムバリデータを作成する専用APIとして、parsley.remote.js を読み込むことで利用可能になる\ ``Parsley.addAsyncValidator``\ メソッドがある (\ `参考 <http://parsleyjs.org/doc/index.html#remote>`__\ )。ただし、これを用いると、検証時に送信されるパラメータが ``name属性値=value`` で固定化され、変形することができない (上のサンプルコード中の ``data: 'id=' + value`` のように、パラメータ名を"id"に固定するといったことができない)。
+   なお、非同期で検証を行えるカスタムバリデータを作成する専用APIとして、\ ``Parsley.addAsyncValidator``\ メソッドがある (\ `参考 <http://parsleyjs.org/doc/index.html#remote>`__\ )。
+   ただし、これを用いると、検証時に送信されるパラメータが ``name属性値=value`` で固定化され、変形することができない (上のサンプルコード中の ``data: 'id=' + value`` のように、パラメータ名を"id"に固定するといったことができない)。
 
    よって、サーバのAPI仕様に合わせてパラメータを変形する必要がある場合は\ ``Parsley.addValidator``\ メソッドを、必要ない場合は\ ``Parsley.addAsyncValidator``\ メソッドを用いるとよい。

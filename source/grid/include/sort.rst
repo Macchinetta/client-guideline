@@ -19,7 +19,7 @@
      - |reference-page|
    * - SlickGrid
      - `SlickGridによるソートサンプル <../samples/slickgrid/sort.html>`_
-     - `SlickGrid Wiki <https://github.com/mleibman/SlickGrid/wiki>`_
+     - `SlickGrid Wiki <https://github.com/6pac/SlickGrid/wiki>`_
    * - tablesorter
      - `tablesorterによるソートサンプル <../samples/tablesorter/default.html>`_
      - `jQuery plugin: Tablesorter 2.0 - Scroller Widget <https://mottie.github.io/tablesorter/docs/example-widget-scroller.html>`_
@@ -71,7 +71,7 @@ tablesorterは標準でデータのソートが可能なため、特別な考慮
 
 なお、tablesorterは、デフォルトの設定で数値か文字かを自動的に判別しソートできる。
 また、複合キーによるソートが可能であり、Shiftキーを押した状態でのソートの操作、またはJavaScriptの実装により、実現できる。
-詳細は\ `tablesorterの公式ウェブサイトのリファレンス <http://mottie.github.io/tablesorter/docs/example-trigger-sort.html>`__\ を参照すること。
+詳細は\ `tablesorterの公式ウェブサイトのリファレンス <https://mottie.github.io/tablesorter/docs/example-trigger-sort.html>`__\ を参照すること。
 
 .. note::
    標準で提供されているソート機能を無効化したい場合は、無効化したいカラムの\ ``th``\ 要素に対して、\ ``data-sorter=false``\ の属性を設定する。

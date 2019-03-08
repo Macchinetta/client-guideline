@@ -12,9 +12,9 @@
    * - |using-library-name|
      - |reference-page|
    * - jQuery UI
-     - `jQuery UI <http://jqueryui.com/>`_
+     - `jQuery UI <https://jqueryui.com/>`_
    * - Bootstrap
-     - `Getting started・Bootstrap <http://getbootstrap.com/getting-started/#template>`_
+     - `Getting started・Bootstrap <https://getbootstrap.com/docs/3.3/getting-started/#template>`_
 
 
 .. _basic-usages-jqueryui:
@@ -35,17 +35,17 @@ HTML内でjQuery UI用のスタイルシートを読み込む。また、依存�
       <title>jQuery UI基本構成サンプル</title>
 
       <!-- (1) -->
-      <link rel="stylesheet" href="../lib/vendor/jquery-ui/1.11.1/jquery-ui.min.css">
+      <link rel="stylesheet" href="../lib/vendor/jquery-ui/1.12.1/jquery-ui.min.css">
     </head>
     <body>
 
       <h1>jQuery UI基本構成サンプル</h1>
 
       <!-- (2) -->
-      <script src="../lib/vendor/jquery/1.11.1/jquery-1.11.1.min.js"></script>
+      <script src="../lib/vendor/jquery/3.3.1/jquery.min.js"></script>
 
       <!-- (3) -->
-      <script src="../lib/vendor/jquery-ui/1.11.1/jquery-ui.min.js"></script>
+      <script src="../lib/vendor/jquery-ui/1.12.1/jquery-ui.min.js"></script>
 
       <!-- (4) -->
       <script src="js/default.js"></script>
@@ -86,17 +86,17 @@ HTML内でBootstrap用のスタイルシートを読み込む。また、依存�
       <title>Bootstrap基本構成サンプル</title>
 
       <!-- (1) -->
-      <link rel="stylesheet" href="../lib/vendor/bootstrap/3.2.0/css/bootstrap.min.css">
+      <link rel="stylesheet" href="../lib/vendor/bootstrap/3.3.7/css/bootstrap.min.css">
     </head>
     <body>
 
       <h1>Bootstrap基本構成サンプル</h1>
 
       <!-- (2) -->
-      <script src="../lib/vendor/jquery/1.11.1/jquery-1.11.1.min.js"></script>
+      <script src="../lib/vendor/jquery/3.3.1/jquery.min.js"></script>
 
       <!-- (3) -->
-      <script src="../lib/vendor/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+      <script src="../lib/vendor/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
       <!-- (4) -->
       <script src="js/default.js"></script>
@@ -128,6 +128,6 @@ HTML内でBootstrap用のスタイルシートを読み込む。また、依存�
 
    * 既定のルールを上書きするよう、独自にスタイルシートを作成する。変更箇所が少ない場合はこの方法が手軽である。
    * サードパーティが作成・配布しているテーマを探す。ただし動作や表示の確認を十分に行う必要がある。
-   * 公式サイトにあるテーマのカスタマイズページを利用する。jQuery UIは\ `ThemeRoller | jQuery <http://jqueryui.com/themeroller/>`_\ 、Bootstrapは\ `Customize and download・Bootstrap <http://getbootstrap.com/customize/>`_\ にある。
+   * 公式サイトにあるテーマのカスタマイズページを利用する。jQuery UIは\ `ThemeRoller | jQuery <https://jqueryui.com/themeroller/>`_\ 、Bootstrapは\ `Customize and download・Bootstrap <https://getbootstrap.com/docs/3.3/customize/>`_\ にある。
 
    * 公式リポジトリからソースコードを取得してビルドする。最も柔軟にカスタマイズできるが難易度は高い。

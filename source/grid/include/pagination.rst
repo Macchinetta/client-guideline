@@ -19,7 +19,7 @@
      - |reference-page|
    * - SlickGrid
      - `SlickGridによるページネーションサンプル <../samples/slickgrid/pagination.html>`_
-     - `SlickGrid Wiki <https://github.com/mleibman/SlickGrid/wiki>`_
+     - `SlickGrid Wiki <https://github.com/6pac/SlickGrid/wiki>`_
    * -  tablesorter
      - `tablesorterによるページネーションサンプル <../samples/tablesorter/pagination.html>`_
      - `jQuery plugin: Tablesorter 2.0 - Pager plugin <https://mottie.github.io/tablesorter/docs/example-pager.html>`_
@@ -97,6 +97,13 @@ JavaScript(pagination.js)では、ページ切り替え操作によって発生�
 .. note::
 
    ページ切り替えのたびにリクエストする場合には、\ ``onRowsChanged``\ イベントのタイミングでAjaxリクエストを実行し、レスポンスで得たデータを\ ``dataView.setItems``\ メソッドを用いてセットすればよい。
+
+.. note::
+
+  jQuery v.3.2.0以降の `バグ <https://github.com/jquery/jquery/issues/3571>`_ により、ページネーションの\ Auto\を使用する際、表示行数が異なる可能性がある。
+  jQuery内部で、width()かheight()を取得できない場合、offsetHeight/Widthを設定することで回避はしているものの、
+  実際に取得できる値は同じではなく、offsetHeightはボーダーを含む高さであるため、
+  \ Auto\選択時に表示される行数が表示領域に対して異なるという事象が発生します。
 
 
 TableSorterを用いた表示データのページネーション
@@ -188,4 +195,4 @@ JavaScript(pagination.js)では、次の処理を行う。
 \ ``tablesorterPager``\ メソッドで設定できるプロパティは他にも提供されている。これらの詳細について知りたい場合は、 `tablesorterの公式ウェブサイトのリファレンス <https://mottie.github.io/tablesorter/docs/index.html#pager-ajaxobject>`__ を参照すること。
 
 .. note::
-  ページ切り替え時にサーバから情報を取得することもできるが、その場合、クライアントでのソートができなくなるため、サーバサイドでソートを実装する必要がある。詳細は、 `tablesorterの公式ウェブサイトのリファレンス\ <http://mottie.github.io/tablesorter/docs/example-pager-ajax.html>`__\ を参照すること。
+  ページ切り替え時にサーバから情報を取得することもできるが、その場合、クライアントでのソートができなくなるため、サーバサイドでソートを実装する必要がある。詳細は、 `tablesorterの公式ウェブサイトのリファレンス\ <https://mottie.github.io/tablesorter/docs/example-pager-ajax.html>`__\ を参照すること。

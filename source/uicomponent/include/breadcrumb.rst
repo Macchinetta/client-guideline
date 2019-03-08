@@ -27,7 +27,7 @@
      - |reference-page|
    * - Bootstrap
      - `パンくずリスト表示 <../samples/bootstrap/breadcrumb.html>`_
-     - `Components - Bootstrap #breadcrumbs <http://getbootstrap.com/components/#breadcrumbs>`_
+     - `Components - Bootstrap #breadcrumbs <https://getbootstrap.com/docs/3.3/components/#breadcrumbs>`_
 
 .. _breadcrumb-howtouse:
 

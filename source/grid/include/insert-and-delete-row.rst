@@ -19,7 +19,7 @@
      - |reference-page|
    * - SlickGrid
      - `SlickGridによる行追加・削除・編集サンプル <../samples/slickgrid/insert-and-delete-row.html>`_
-     - `SlickGrid Wiki <https://github.com/mleibman/SlickGrid/wiki>`_
+     - `SlickGrid Wiki <https://github.com/6pac/SlickGrid/wiki>`_
    * - tablesorter
      - `tablesorterによる行追加・削除・編集サンプル <../samples/tablesorter/insert-and-delete-row.html>`_
      - * `jQuery plugin: Tablesorter 2.0 - Pager plugin <https://mottie.github.io/tablesorter/docs/example-pager.html>`_
@@ -89,7 +89,7 @@ JavaScript(insert-and-delete-row.js)では、ユーザインタフェースの�
 またカーソルキーで選択セルを移動できるようにするため、(4)でオプション\ ``autoEdit``\ を\ ``false``\ にして
 セル選択時に自動的に編集モードに入らないようにしている。
 
-.. [#slickgrid-editors] テキスト編集をする\ ``Slick.Editors.Text``\ 以外にも、数値を編集する\ ``Slick.Editors.Integer``\ 、日付を編集する\ ``Slick.Editors.Date``\ などの編集用オブジェクトが提供されている。ただしドキュメントが整備されていないため、何が利用できるかは\ `slick.editors.jsのソースコード <https://github.com/mleibman/SlickGrid/blob/master/slick.editors.js>`__\ を参照する必要がある。
+.. [#slickgrid-editors] テキスト編集をする\ ``Slick.Editors.Text``\ 以外にも、数値を編集する\ ``Slick.Editors.Integer``\ 、日付を編集する\ ``Slick.Editors.Date``\ などの編集用オブジェクトが提供されている。ただしドキュメントが整備されていないため、何が利用できるかは\ `slick.editors.jsのソースコード <https://github.com/6pac/SlickGrid/blob/master/slick.editors.js>`__\ を参照する必要がある。
 
 .. note::
    SlickGridでは、データの追加や削除などを画面に反映するために\ ``invalidate``\ および\ ``render``\ などのメソッドを実行する必要がある。
@@ -101,15 +101,15 @@ JavaScript(insert-and-delete-row.js)では、ユーザインタフェースの�
 
        * - メソッド名
          - 説明
-       * - `grid.render() <https://github.com/mleibman/SlickGrid/wiki/Slick.Grid#render>`__
+       * - `grid.render() <https://github.com/6pac/SlickGrid/wiki/Slick.Grid#render>`__
          - 再描画対象になっている行を再描画する。再描画対象を設定するには\ ``invalidateRow``\ などのメソッドを使用する。
-       * - `grid.invalidateRow(Number) <https://github.com/mleibman/SlickGrid/wiki/Slick.Grid#invalidateRow>`__
+       * - `grid.invalidateRow(Number) <https://github.com/6pac/SlickGrid/wiki/Slick.Grid#invalidateRow>`__
          - 特定行を再描画対象にする。引数には行インデックス番号(0から開始)を示す数値を与える。
-       * - `grid.invalidateRows(Array<Number>) <https://github.com/mleibman/SlickGrid/wiki/Slick.Grid#invalidateRows>`__
+       * - `grid.invalidateRows(Array<Number>) <https://github.com/6pac/SlickGrid/wiki/Slick.Grid#invalidateRows>`__
          - 複数の特定行を再描画対象にする。引数には行インデックス番号(0から開始)を示す数値の配列を与える。
-       * - `grid.invalidateAllRows() <https://github.com/mleibman/SlickGrid/wiki/Slick.Grid#invalidateAllRows>`__
+       * - `grid.invalidateAllRows() <https://github.com/6pac/SlickGrid/wiki/Slick.Grid#invalidateAllRows>`__
          - 全ての行を再描画対象にする。
-       * - `grid.invalidate() <https://github.com/mleibman/SlickGrid/wiki/Slick.Grid#invalidate>`__
+       * - `grid.invalidate() <https://github.com/6pac/SlickGrid/wiki/Slick.Grid#invalidate>`__
          - すべての行を再描画する。\ ``render``\ メソッドを実行しなくても再描画される。
 
 

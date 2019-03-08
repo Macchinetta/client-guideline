@@ -27,10 +27,10 @@
      - |reference-page|
    * - jQuery UI
      - `オートコンプリート <../samples/jquery-ui/autocomplete.html>`_
-     - `Autocomplete | jQuery UI <http://jqueryui.com/autocomplete/>`_
+     - `Autocomplete | jQuery UI <https://jqueryui.com/autocomplete/>`_
 
 .. note::
-  HTML5から\ ``input``\ などのフォームコントロールで\ `autocomplete <http://www.w3.org/TR/html5/forms.html#autofilling-form-controls:-the-autocomplete-attribute>`__\ 属性が使用できるようになっているが、これはユーザが過去に入力した値をもとに候補を表示する機能である。
+  HTML5から\ ``input``\ などのフォームコントロールで\ `autocomplete <https://www.w3.org/TR/html5/forms.html#autofilling-form-controls:-the-autocomplete-attribute>`__\ 属性が使用できるようになっているが、これはユーザが過去に入力した値をもとに候補を表示する機能である。
 
 .. _autocomplete-howtouse:
 
@@ -134,7 +134,7 @@ JavaScript(autocomplete.js)では、候補リストを表示するテキスト�
            data: {
            inputText : request.term
            }
-         }).done(function (data) {
+         }).then(function (data) {
            response(data);
          });
        }
@@ -144,7 +144,7 @@ JavaScript(autocomplete.js)では、候補リストを表示するテキスト�
 上記の例ではサーバへ送信する項目に \ ``request.term``\ を設定し、処理正常終了時に \ ``response``\ にサーバから返却された絞り込み済みの戻り値（リスト/配列）を設定している。
 
 .. note::
-  Ajaxを用いたサーバとの非同期通信の詳細についてはMacchinettaオンライン版 開発ガイドライン ( \ http://macchinetta.github.io/server/guideline/\ の Macchinetta Server Framework (1.x) Development Guideline ) を参照すること。
+  Ajaxを用いたサーバとの非同期通信の詳細については |online-framework-name| ( \ https://macchinetta.github.io/server-guideline/current/ja/\ の Macchinetta Server Framework (1.x) Development Guideline ) を参照すること。
 
 .. warning::
   本応用方法を用いた場合では、ユーザが文字を入力すると都度サーバへのリクエストが発生するため、通信量については注意する必要がある。

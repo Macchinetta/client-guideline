@@ -1,16 +1,17 @@
 <!DOCTYPE html>
+<!-- Copyright(c) 2018 NTT Corporation. -->
 <html>
   <head>
     <meta charset="utf-8">
-    <title>カレンダー</title>
+    <title>休日設定（背景色・休日選択不可・休日定義）</title>
 
     <!-- jQuery UIのスタイルシートの読み込み -->
-    <link rel="stylesheet" href="../lib/vendor/jquery-ui/1.11.1/jquery-ui.min.css">
+    <link rel="stylesheet" href="../lib/vendor/jquery-ui/1.12.1/jquery-ui.min.css">
     <link rel="stylesheet" href="css/datepicker-holiday.css">
   </head>
   <body>
 
-    <h1>カレンダー</h1>
+    <h1>休日設定（背景色・休日選択不可・休日定義）</h1>
     <h2>休日設定</h2>
     <p>日曜日・土曜日と以下に定義した祝日・休日にそれぞれ独自CSSスタイルを適用する</p>
     <table id="holidayInfo">
@@ -47,10 +48,10 @@
 
     <!-- jQueryとjQuery UIのJavaScript、カレンダーの日本語対応のJavaScript、
          独自に実装したJavaScriptの読み込み -->
-    <script src="../lib/vendor/jquery/1.11.1/jquery-1.11.1.min.js"></script>
-    <script src="../lib/vendor/jquery-ui/1.11.1/jquery-ui.min.js"></script>
+    <script src="../lib/vendor/jquery/3.3.1/jquery.min.js"></script>
+    <script src="../lib/vendor/jquery-ui/1.12.1/jquery-ui.min.js"></script>
     <!-- JQuery UI本体読み込み後にローカライズファイルを読み込む -->
-    <script src="../lib/vendor/jquery-ui/1.11.1/i18n/datepicker-ja.js"></script>
+    <script src="../lib/vendor/jquery-ui/1.12.1/i18n/datepicker-ja.js"></script>
     <script src="js/datepicker-holiday.js"></script>
     <script src="js/datepicker-holiday-definition.js"></script>
   </body>

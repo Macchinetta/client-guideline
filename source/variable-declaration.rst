@@ -1,6 +1,7 @@
 .. 変数定義
 
 .. |framework-name| replace:: Macchinetta Client (1.x)
+.. |online-framework-name| replace:: Macchinettaオンライン版 開発ガイドライン
 
 .. |name| replace:: ライブラリ名
 .. |version| replace:: 規定バージョン

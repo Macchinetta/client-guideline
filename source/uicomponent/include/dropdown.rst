@@ -25,10 +25,10 @@
      - |reference-page|
    * - jQuery UI
      - `セレクトメニュー <../samples/jquery-ui/selectmenu.html>`_
-     - `Selectmenu | jQuery UI <http://jqueryui.com/selectmenu/>`_
+     - `Selectmenu | jQuery UI <https://jqueryui.com/selectmenu/>`_
    * - Bootstrap
      - `ドロップダウンリスト <../samples/bootstrap/dropdownmenu.html>`_
-     - `Components - Bootstrap #dropdowns <http://getbootstrap.com/components/#dropdowns>`_
+     - `Components - Bootstrap #dropdowns <https://getbootstrap.com/docs/3.3/components/#dropdowns>`_
 
 .. _selectmenu-howtouse:
 

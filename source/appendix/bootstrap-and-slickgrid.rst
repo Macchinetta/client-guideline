@@ -7,10 +7,10 @@ BootstrapとSlickGridを同時に使用する際の注意点
 
 .. _grid-solution-label:
 
-スタイル競合によるテーブルの表示崩れ
+スタイル競合によるテーブルのレイアウト崩れ
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-スタイル競合によりテーブルの表示が崩れる。
+スタイル競合によりテーブルのレイアウト崩れ。
 
 `不具合事象サンプル <samples/bootstrap-and-slickgrid-header/header-before.html>`__
 
@@ -20,7 +20,7 @@ BootstrapとSlickGridを同時に使用する際の注意点
 
    **図: ヘッダとデータ行がずれる例**
 
-SlickGridでは、\ ``box-sizing``\プロパティの値が\ ``content-box``\ であることを前提にセルの幅と高さを計算してレイアウトを生成するが、Bootstrapはすべての要素に対して\ ``box-sizing``\ プロパティの値に\ ``border-box``\ を設定する。その結果、SlickGridとBootstrapの併用時にテーブルの表示が崩れる。
+SlickGridでは、\ ``box-sizing``\プロパティの値が\ ``content-box``\ であることを前提にセルの幅と高さを計算してレイアウトを生成するが、Bootstrapはすべての要素に対して\ ``box-sizing``\ プロパティの値に\ ``border-box``\ を設定する。その結果、SlickGridとBootstrapの併用時にテーブルのレイアウト崩れが発生する。
 
 .. note::
   \ ``border-box``\ は、髙さと幅のプロパティである\ ``width``\ 、\ ``height``\ に線の幅とパディングを含める設定（\ ``width``\ 、\ ``height``\ が画面上の表示サイズと等しい）である。一方で\ ``content-box``\ は線の幅とパディングを含めない設定（\ ``width``\ 、\ ``height``\ に線の幅とパディングを含めたものが画面上の表示サイズと等しい）である。
@@ -55,14 +55,14 @@ SlickGridでは、\ ``box-sizing``\プロパティの値が\ ``content-box``\ �
 * \ `Support the "box-sizing: border-box;" css rule for column headers #699 <https://github.com/mleibman/SlickGrid/issues/699>`_\
 * \ `Conflict with bootstrap 3 #742 <https://github.com/mleibman/SlickGrid/issues/742>`_\
 
-タブ内へのテーブル表示の際の表示崩れ
+タブ内へのテーブル表示の際のレイアウト崩れ
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 初期状態で選択されていないタブのペイン内にテーブルを表示する場合、タブを切り替えてテーブルを表示すると右側のカラムが途中で欠ける場合がある。
 
 これは、タブのペインが\ ``display: none``\ で非表示となっていることで、SligkGridがレイアウトする際に幅を計算できないことが原因である。
 
-`公式ページ <http://mleibman.github.io/SlickGrid/examples/example-explicit-initialization.html>`_\ でも\ ``display: none``\ では正確に計算できないと記載がある。
+`公式ページ <https://6pac.github.io/SlickGrid/examples/example-explicit-initialization.html>`_\ でも\ ``display: none``\ では正確に計算できないと記載がある。
 
 `不具合事象サンプル <samples/bootstrap-and-slickgrid-tab/tab-before.html>`__
 

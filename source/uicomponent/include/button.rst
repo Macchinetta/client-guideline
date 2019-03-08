@@ -6,8 +6,8 @@
 概要
 ------------------------------------------------
 
-| jQuery UI やBootStrap を用いると、button要素やinput要素だけでなく、a要素によるリンクもボタンとして扱う事ができる。
-| ここでは、jQuery UIとBootStrapそれぞれを用いたボタンの実装方法を説明する。
+| jQuery UI やBootstrap を用いると、button要素やinput要素だけでなく、a要素によるリンクもボタンとして扱う事ができる。
+| ここでは、jQuery UIとBootstrapそれぞれを用いたボタンの実装方法を説明する。
 
 .. figure:: /images/button.png
    :alt: button
@@ -24,13 +24,15 @@
      - |reference-page|
    * - jQuery UI
      - - `基本的なボタン <../samples/jquery-ui/button-basic.html>`_
-       - `ボタンのグループ化 <../samples/jquery-ui/button-buttonset.html>`_
-     - `Button | jQuery UI <http://jqueryui.com/button/>`_
+       - `ボタンのグループ化 <../samples/jquery-ui/button-controlgroup.html>`_
+     - - `Button | jQuery UI <https://jqueryui.com/button/>`_
+       - `Checkboxradio | jQuery UI <https://jqueryui.com/checkboxradio/>`_
+       - `Controlgroup | jQuery UI <https://jqueryui.com/controlgroup/>`_
    * - Bootstrap
      - - `基本的なボタン <../samples/bootstrap/button-basic.html>`__
-       - `ボタンのグループ化 <../samples/bootstrap/button-buttonset.html>`__
-     - - `CSS - Bootstrap #Buttons <http://getbootstrap.com/css/#buttons>`_
-       - `Components - Bootstrap #Button groups <http://getbootstrap.com/components/#btn-groups>`_
+       - `ボタンのグループ化 <../samples/bootstrap/button-buttongroup.html>`__
+     - - `CSS - Bootstrap #Buttons <https://getbootstrap.com/docs/3.3/css/#buttons>`_
+       - `Components - Bootstrap #Button groups <https://getbootstrap.com/docs/3.3/components/#btn-groups>`_
 
 .. _buttonHowToUse:
 
@@ -58,11 +60,11 @@
     <br>
     <div>
       <!-- (2) -->
-      <input type="checkbox" id="checkbox1" class="buttonClass" />
+      <input type="checkbox" id="checkbox1" class="checkClass" />
       <label for="checkbox1">CheckBox</label>
-      <input type="radio" id="radio1" class="buttonClass" name="radio" />
+      <input type="radio" id="radio1" class="checkClass" name="radio" />
       <label for="radio1">RadioButton1</label>
-      <input type="radio" id="radio2" class="buttonClass" name="radio" />
+      <input type="radio" id="radio2" class="checkClass" name="radio" />
       <label for="radio2">RadioButton2</label>
     </div>
 
@@ -76,7 +78,7 @@
     * - | (1)
       - | ボタンを生成するbutton要素やinput要素、a要素にclass属性を付与し、\ ``buttonClass``\ を指定する。
     * - | (2)
-      - | (1)と同様にinput要素にclass属性を付与し、\ ``buttonClass``\ を指定する。
+      - | (1)と同様にtype属性がcheckboxやradioのinput要素にclass属性を付与し、\ ``checkClass``\ を指定する。
         | input要素のtype属性がcheckboxやradioの場合、label要素を定義する。
 
 | JavaScriptは以下の通り実装する。
@@ -87,9 +89,17 @@
 
     'use strict';
 
-    // (1)
     $(function () {
+
+      // (1)
       $('.buttonClass').button({
+      });
+
+      // (2)
+      $('.checkClass').checkboxradio({
+
+        // (3)
+        icon: false
       });
     });
 
@@ -102,6 +112,10 @@
       - 説明
     * - | (1)
       - | ボタンを生成する対象に対して、\ ``button``\ メソッドを実行する。
+    * - | (2)
+      - | チェックボックスとラジオボタンのボタンを生成する対象に対して、\ ``checkboxradio``\ メソッドを実行する。
+    * - | (3)
+      - | チェックボックスとラジオボタンのチェックマークを非表示にするオプションを設定する。
 
 .. _buttonBasicNote-DescriptionOfElements:
 
@@ -110,42 +124,44 @@
     ボタンはbutton要素、input要素、a要素以外にも、span要素やdiv要素などからも生成できる。
     なお、span要素やdiv要素などから生成したボタンは、そのままではフォーカスを維持したりTabキーでフォーカス遷移する事ができないが、tabindex属性を指定することで可能になる。また、keypress、keyup、keydownなどのイベントハンドラを実装する場合も、同様にtabindex属性を指定する必要がある。
 
-.. _buttonButtonset:
+.. _button-Controlgroup:
 
 ボタンのグループ化
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 | ここでは、複数のボタンを隙間なく並べて、1つのグループの画面項目として表示する方法を説明する。
-| ボタンのグループ化は\ ``buttonset``\ メソッドを利用する。
+| ボタンのグループ化は\ ``controlgroup``\ メソッドを利用する。
 
 | :ref:`basic-usages-jqueryui`\ で示したHTMLに、ボタンを構成する表示領域を追加する。
 
 .. code-block:: html
 
     <!-- (1) -->
-    <div class="buttonset">
+    <div class="buttongroup">
       <p>Button</p>
       <a href="#" >button1</a>
       <a href="#" >button2</a>
       <a href="#" >button3</a>
     </div>
-    <div class="buttonset">
+    <br>
+    <div class="buttongroup">
       <p>Checkbox</p>
-      <input type="checkbox" id="checkbox1" />
-      <label for="checkbox1">checkbox1</label>
-      <input type="checkbox" id="checkbox2" />
-      <label for="checkbox2">checkbox2</label>
-      <input type="checkbox" id="checkbox3" />
-      <label for="checkbox3">checkbox3</label>
+      <input type="checkbox" id="checkbox1" class="checkClass" />
+      <label for="checkbox1">CheckBox1</label>
+      <input type="checkbox" id="checkbox2" class="checkClass" />
+      <label for="checkbox2">CheckBox2</label>
+      <input type="checkbox" id="checkbox3" class="checkClass" />
+      <label for="checkbox3">CheckBox3</label>
     </div>
-    <div class="buttonset">
-      <p>Radio Button</p>
-      <input type="radio" id="radio1" name="radio" />
-      <label for="radio1">radiobutton1</label>
-      <input type="radio" id="radio2" name="radio" />
-      <label for="radio2">radiobutton2</label>
-      <input type="radio" id="radio3" name="radio" />
-      <label for="radio3">radiobutton3</label>
+    <br>
+    <div class="buttongroup">
+      <p>RadioButton</p>
+      <input type="radio" id="radio1" name="radio" class="checkClass" />
+      <label for="radio1">RadioButton1</label>
+      <input type="radio" id="radio2" name="radio" class="checkClass" />
+      <label for="radio2">RadioButton2</label>
+      <input type="radio" id="radio3" name="radio" class="checkClass" />
+      <label for="radio3">RadioButton3</label>
     </div>
 
 .. tabularcolumns:: |p{0.10\linewidth}|p{0.80\linewidth}|
@@ -156,21 +172,28 @@
     * - 項番
       - 説明
     * - | (1)
-      - | グループ化する対象をdiv要素で囲う。この際、div要素にはclass属性を付与し、\ ``buttonset``\ を指定する。
+      - | グループ化する対象をdiv要素で囲う。この際、div要素にはclass属性を付与し、\ ``buttongroup``\ を指定する。
 
 | JavaScriptは以下の通り実装する。
 
 .. code-block:: javascript
 
-    // button-buttonset.js
+    // button-controlgroup.js
 
     'use strict';
 
-    // (1)
     $(function () {
-      $('.buttonset').buttonset({
+
+      // (1)
+      $('.checkClass').checkboxradio({
+        icon: false
+      });
+
+      // (2)
+      $('.buttongroup').controlgroup({
       });
     });
+
 
 .. tabularcolumns:: |p{0.10\linewidth}|p{0.80\linewidth}|
 .. list-table::
@@ -180,57 +203,50 @@
     * - 項番
       - 説明
     * - | (1)
-      - | ボタンを生成する対象のグループに対して、buttonsetメソッドを実行する。
+      - | チェックボックスとラジオボタンにオプションを設定する場合は、事前にcheckboxradioメソッドを実行する。
+    * - | (2)
+      - | ボタンを生成する対象のグループに対して、controlgroupメソッドを実行する。
 
-| \ ``buttonset``\ メソッドを利用することで、複数のボタンが1つのグループとして表示される。
+| \ ``controlgroup``\ メソッドを利用することで、複数のボタンが1つのグループとして表示される。
 | ボタンをグループ化すると、ボタン間の隙間はなくなり、両端のボタンのみ角が丸くなる。
 
 .. note::
 
-    \ ``buttonset``\ メソッドは、次の条件に当てはまる要素をグループ化できる。
+    \ ``controlgroup``\ メソッドは、次の条件に当てはまる要素をグループ化できる。
 
-    * button要素
-    * input要素のうち、typeがbutton、submit、reset、checkbox、radioのいずれか
-    * a要素
-    * 事前に\ ``button``\ メソッドでボタン化した要素
+    .. list-table::
+      :header-rows: 1
+      :widths: 20 50 30
 
-    このため、span要素やdiv要素など、上記に当てはまらない要素をグループ化する場合、事前に対象の要素を\ ``button``\ メソッドでボタン化し、\ ``buttonset``\ メソッドを実行する必要がある。
+      * - 分類
+        - 要素
+        - 概要
+      * - button
+        - - button要素
+          - input要素のうち、typeがbutton、submit、resetのいずれか
+          - a要素
+        - 通常のボタン
+      * - checkboxradio
+        - input要素のうち、typeがcheckbox、radioのいずれか
+        - チェックボックス、ラジオボタン
+      * - selectmenu
+        - select要素
+        - ドロップダウンリスト
+      * - spinner
+        - input要素のうち、classにui-spinner-inputを設定
+        - 増減ボタン付きの数値入力用テキストボックス
+      * - controlgroupLabel
+        - classにui-controlgroup-labelが指定されたlabel要素やspan要素、div要素
+        - 文字の表示のみでボタンの機能を有しないラベル
 
-      .. code-block:: html
+    各分類名のメソッドによって、\ ``controlgroup``\ メソッドより先に生成された部品も、同様にグループ化できる。
 
-          <div class="buttonset">
-            <span class="buttonClass">span</span>
-            <div class="buttonClass">div</div>
-          </div>
+    なお、\ ``controlgroup``\ メソッドは、a要素とbutton要素の組み合わせなど、異なる要素同士でも1つのグループとすることができる。
 
-      .. code-block:: javascript
+    また、spinnerに利用するinput要素のtype属性がnumberの場合、増減ボタンがinputにも作成されてしまうため、CSSで非表示にする必要がある。
 
-          $(function () {
+    詳細は、\ `jQuery UI公式ウェブサイトのリファレンス <https://api.jqueryui.com/controlgroup/#option-items>`__\を参照すること。
 
-            // (1)
-            $('.buttonClass').button({
-            });
-
-            // (2)
-            $('.buttonset').buttonset({
-            });
-          });
-
-      .. tabularcolumns:: |p{0.10\linewidth}|p{0.80\linewidth}|
-      .. list-table::
-          :header-rows: 1
-          :widths: 10 80
-
-          * - 項番
-            - 説明
-          * - | (1)
-            - | 先に対象の部品をボタンとして生成する。
-          * - | (2)
-            - | グループに対してbuttonsetを実行する。
-
-    なお、``buttonset``\ メソッドは、a要素とbutton要素の組み合わせなど、異なる要素同士でも1つのグループとすることができる。
-
-    詳細は、\ `jQuery UI公式ウェブサイトのリファレンス <http://api.jqueryui.com/buttonset/#option-items>`__\を参照すること。
 
 .. _button-bootstrapHowToUse:
 
@@ -281,7 +297,7 @@
       - 説明
     * - | (1)
       - | ボタンを生成するbutton要素やinput要素、a要素にclass属性を付与し、\ ``btn``\ (必須)とスタイルを決める\ ``btn-default``\ を指定する。
-        | 上記以外にも、ボタン用のクラスが提供されている。これらの詳細について知りたい場合は、\ `BootStrap 公式ウェブサイトのリファレンス\ <http://getbootstrap.com/css/#buttons>`__\ を参照すること。
+        | 上記以外にも、ボタン用のクラスが提供されている。これらの詳細について知りたい場合は、\ `Bootstrap 公式ウェブサイトのリファレンス\ <https://getbootstrap.com/docs/3.3/css/#buttons>`__\ を参照すること。
     * - | (2)
       - | input要素のtype属性が\ ``checkbox``\ や\ ``radio``\ の場合、対象のinput要素をlabel要素とdiv要素で囲う。
         | この際、div要素にdata-toggle属性を付与し\ ``buttons``\ を指定する。またlabel要素にclass属性を付与しボタン用のクラスを指定する。
@@ -291,7 +307,7 @@
     ボタンは上記以外に、span要素やdiv要素などからも生成できる。
     なお、フォーカスの維持などjQuery UIと同様の配慮が必要になる。詳細は、利用方法(jQuery UI)の基本的な使い方に記載した\ :ref:`Note<buttonBasicNote-DescriptionOfElements>`\ を参照すること。
 
-.. _buttonset-bootstrap:
+.. _buttongroup-bootstrap:
 
 ボタンのグループ化
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
