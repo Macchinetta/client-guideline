@@ -1,5 +1,7 @@
 # Macchinetta Client (1.x) Development Guideline
 
+**NOTE**: This repository is **OBSOLETE**. It has not been updated since March 2019.
+
 This guideline helps to proceed with the software development (mainly coding) smoothly.
 
 ## Source files
